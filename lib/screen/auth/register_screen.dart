@@ -31,15 +31,11 @@ class RegisterScreen extends StatelessWidget {
               CustomTextField(label: 'Phone Number', hint: 'Your phone number, e.g : +01 112 xxx xxx',),
               CustomTextField(label: 'Password', hint: 'Your password, at least 8 character.',),
               CustomTextField(label: 'Confirm Password' , hint: 'Re-type your password'),
-              SizedBox(height: 22,),
-             Align(
-              alignment: Alignment.centerRight,
-              child:  Text('Forgot password?' , style: GoogleFonts.montserrat(color: appDarkGrey , fontWeight: FontWeight.w500))
-             ),
-             SizedBox(height: 34,),
+             
+             const SizedBox(height: 34,),
              GestureDetector(
               onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreen()));
               },
               child: Container(
                 height: 70,
@@ -50,31 +46,35 @@ class RegisterScreen extends StatelessWidget {
                 child: Center(child: Text('Sign Up' , style: GoogleFonts.montserrat(color: appWhite , fontWeight: FontWeight.bold , fontSize: 24)))
               ),
              ),
-             SizedBox(height: 8),
+              const SizedBox(height: 8),
              Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('Already have an account? Login ' , style: GoogleFonts.montserrat(fontSize: 12 , fontWeight: FontWeight.bold)),
                 GestureDetector(  
                   onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreen()));
                   },
                   child: Text('here' , style: GoogleFonts.montserrat(fontSize: 12 , fontWeight: FontWeight.bold , color: appGold)),)
 
               ],
              ),
-             SizedBox(height: 30,),
-             Row(
+            const SizedBox(height: 30,),
+             SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+              
               children: [
                 SvgPicture.asset(SvgDir.lineLight),
-                SizedBox(width: 2,),
+                const SizedBox(width: 2,),
                 Text('Or Sign Up With' , style: GoogleFonts.montserrat(fontSize: 12 , fontWeight: FontWeight.w500)),
-                SizedBox(width: 3,),
+                const SizedBox(width: 3,),
                 SvgPicture.asset(SvgDir.lineLightRight)
               ],
              ),
-             SizedBox(height: 28,),
-             LoginAlternative()
+             ),
+             const SizedBox(height: 28,),
+             const LoginAlternative()
 
             
 

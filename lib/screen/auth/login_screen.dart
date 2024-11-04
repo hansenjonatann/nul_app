@@ -19,11 +19,11 @@ class LoginScreen extends StatelessWidget {
           scrollDirection: Axis.vertical,
           child: Column(
           children: [
-            SizedBox(height: 49,),
+            const SizedBox(height: 49,),
             Center(child: Image.asset(ImageDir.waterAuthLogo)),
-            SizedBox(height: 60,),
+            const SizedBox(height: 60,),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30) ,
+              padding: const EdgeInsets.symmetric(horizontal: 30) ,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text('Login Details' , style: GoogleFonts.montserrat(fontWeight: FontWeight.w500 , fontSize: 24))
                   ),
-                  SizedBox(height: 11,),
+                  const SizedBox(height: 11,),
                   TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                       
                     ),
                   ),
-                  SizedBox(height: 11,),
+                  const SizedBox(height: 11,),
                   TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -52,15 +52,15 @@ class LoginScreen extends StatelessWidget {
                     ),
                     
                   ),
-                  SizedBox(height: 7,),
+                  const SizedBox(height: 7,),
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton( onPressed: () {} , child: Text('Forgot Password?' , style: GoogleFonts.montserrat(color: appDarkGrey , fontSize: 16 , fontWeight: FontWeight.w500)),)
                   ),
-                  SizedBox(height: 34,),
+                  const SizedBox(height: 34,),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>   HomeScreen()));
                     },
                     child: Container(
                     width: double.infinity,
@@ -71,31 +71,34 @@ class LoginScreen extends StatelessWidget {
                     ),
                     child: Center(child: Text('Login' , style: GoogleFonts.montserrat(fontWeight: FontWeight.bold , fontSize: 24, color: appWhite)))
                   ),),
-                   SizedBox(height: 8),
+                   const SizedBox(height: 8),
                Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Don't have an account yet ? Register " , style: GoogleFonts.montserrat(fontSize: 12 , fontWeight: FontWeight.bold)),
                   GestureDetector(  
                     onTap: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RegisterScreen()));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const RegisterScreen()));
                     },
                     child: Text('here' , style: GoogleFonts.montserrat(fontSize: 12 , fontWeight: FontWeight.bold , color: appGold)),)
           
                 ],
                ),
-               SizedBox(height: 30,),
-               Row(
+               const SizedBox(height: 30,),
+               SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
                 children: [
                   SvgPicture.asset(SvgDir.lineLight),
-                  SizedBox(width: 2,),
+                  const SizedBox(width: 2,),
                   Text('Or Login With' , style: GoogleFonts.montserrat(fontSize: 12 , fontWeight: FontWeight.w500)),
-                  SizedBox(width: 3,),
+                  const SizedBox(width: 3,),
                   SvgPicture.asset(SvgDir.lineLightRight)
                 ],
                ),
-               SizedBox(height: 28,),
-               LoginAlternative(),
+               ),
+               const SizedBox(height: 28,),
+               const LoginAlternative(),
                SvgPicture.asset(SvgDir.wave)
                 ],
               )

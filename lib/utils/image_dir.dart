@@ -12,4 +12,6 @@ class ImageDir {
   static const String menuIcon = '${image}icon/menu.png';
   static const String hairCutIcon = '${image}icon/haircut.png';
   static const String solariaImage = '${image}solaria.png';
+  static const String luisFoodShop = '${image}luisfoodshop.png';
+  static const String profile = '${image}bailu.jpg';
 }
