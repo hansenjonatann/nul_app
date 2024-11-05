@@ -14,4 +14,7 @@ class ImageDir {
   static const String solariaImage = '${image}solaria.png';
   static const String luisFoodShop = '${image}luisfoodshop.png';
   static const String profile = '${image}bailu.jpg';
+  static const String baksoWonogiri = '${image}wonogiri.png';
+  static const String rivs = '${image}rivs.png';
+  static const String kfc = '${image}kfc.png';
 }

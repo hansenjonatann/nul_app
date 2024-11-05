@@ -6,3 +6,5 @@ const appGrey = Color(0xffADADAD);
 const appDarkGrey = Color(0xff635C5C);
 const appWhite = Color(0xffffffff);
 const appLightGrey = Color(0xffECE9EC);
+const appLightBlue = Color(0xff0BDBFC);
+const appRed = Color(0xffEB4335);

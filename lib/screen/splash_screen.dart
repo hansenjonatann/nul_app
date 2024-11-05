@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nul_app/constants/color.dart';
-import 'package:nul_app/screen/auth/register_screen.dart';
+import 'package:nul_app/screen/auth/login_screen.dart';
 import 'package:nul_app/utils/image_dir.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed( const Duration(seconds: 3) , () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RegisterScreen() ));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen() ));
     });
   }
   Widget build(BuildContext context) {

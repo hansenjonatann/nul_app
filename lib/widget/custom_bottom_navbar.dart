@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nul_app/constants/color.dart';
+import 'package:nul_app/screen/activity_screen.dart';
+import 'package:nul_app/screen/favorite_screen.dart';
 import 'package:nul_app/screen/home_screen.dart';
 
 class CustomBottomNavbar extends StatefulWidget {
@@ -38,12 +40,13 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
         }  ,icon: Icon(Icons.home , color: widget.currentIndex == 0 ? appPrimary : Colors.black)) , label: 'Home'  ),
         BottomNavigationBarItem( icon: IconButton( onPressed: () {
           onTapped(1);
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const ActivityScreen()));
 
-        }  ,icon: Icon(Icons.menu)) , label: 'Aktivitas'),
+        }  ,icon:  Icon(Icons.menu , color: widget.currentIndex == 1 ? appPrimary : Colors.black)) , label: 'Aktivitas'),
         BottomNavigationBarItem(icon: IconButton( onPressed: () {
           onTapped(2);
-        }  ,icon: Icon(Icons.favorite)) , label: 'Favorit'),
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>  FavoriteScreen()));
+        }  ,icon: const Icon(Icons.favorite) , color: widget.currentIndex == 2 ? appPrimary : Colors.black) , label: 'Favorit'),
       ]);
   }
 }

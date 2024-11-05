@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
+import 'package:nul_app/screen/profile_screen.dart';
 import 'package:nul_app/utils/image_dir.dart';
 import 'package:nul_app/widget/custom_bottom_navbar.dart';
 
@@ -51,14 +52,19 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: appPrimary,
-                        borderRadius: BorderRadius.circular(50),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileScreen()));
+                      },
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: appPrimary,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: const CircleAvatar( radius: 50, backgroundImage: AssetImage(ImageDir.profile ),)
                       ),
-                      child: CircleAvatar( radius: 50, backgroundImage: AssetImage(ImageDir.profile ),)
                     ),
                   ],
                 ),
@@ -93,6 +99,10 @@ class HomeScreen extends StatelessWidget {
                       buildCategoryItem(ImageDir.cafeIcon, 'Cafe'),
                       const SizedBox(width: 16),
                       buildCategoryItem(ImageDir.shirtIcon, 'Clothes'),
+                      const SizedBox(
+                      height: 16.0,
+                      ),
+                      buildCategoryItem(ImageDir.toolsIcon, 'Tools')
                     ],
                   ),
                 ),
@@ -104,8 +114,6 @@ class HomeScreen extends StatelessWidget {
                       buildCategoryItem(ImageDir.fitnessIcon, 'Fitness'),
                       const SizedBox(width: 16),
                       buildCategoryItem(ImageDir.hairCutIcon, 'Barber'),
-                      const SizedBox(width: 16),
-                      buildCategoryItem(ImageDir.toolsIcon, 'Tools'),
                       const SizedBox(width: 16),
                       buildCategoryItem(ImageDir.menuIcon, 'Menu'),
                     ],

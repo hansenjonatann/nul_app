@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
           child: Column(
           children: [
             const SizedBox(height: 49,),
-            Center(child: Image.asset(ImageDir.waterAuthLogo)),
+            Center(child: Image.asset(ImageDir.waterAuthLogo , fit: BoxFit.cover)),
             const SizedBox(height: 60,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30) ,
