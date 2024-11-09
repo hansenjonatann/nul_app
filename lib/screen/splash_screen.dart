@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nul_app/constants/color.dart';
+import 'package:nul_app/core/navigation.dart';
 import 'package:nul_app/screen/auth/login_screen.dart';
 import 'package:nul_app/utils/image_dir.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
+  static const routeName = '/splash-screen';
   @override
   
   State<SplashScreen> createState() => _SplashScreenState();
@@ -19,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed( const Duration(seconds: 3) , () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen() ));
+      NullAppNavigation().pushReplacementNamed(LoginScreen.routeName);
     });
   }
   Widget build(BuildContext context) {

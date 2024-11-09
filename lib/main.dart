@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nul_app/core/navigation.dart';
 import 'package:nul_app/screen/splash_screen.dart';
 
 void main () => runApp(const NulApp());
@@ -8,9 +9,12 @@ class NulApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen()
+      initialRoute: SplashScreen.routeName,
+      routes: NullAppNavigation.routes,
+      navigatorKey: NullAppNavigation.navigatorKey,
+
     );
   }
 }

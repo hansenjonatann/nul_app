@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
+import 'package:nul_app/models/activity_model.dart';
 import 'package:nul_app/widget/activity_card.dart';
 import 'package:nul_app/widget/custom_bottom_navbar.dart';
 
 class ActivityScreen extends StatelessWidget {
-  const ActivityScreen({super.key});
+   ActivityScreen({super.key});
+
+  static const routeName = '/activity-screen';
+
+  List<ActivityModel> activityList = [
+    ActivityModel(placeName: 'RM Bakso Wonogiri', menu: 
+      'Mie Ayam x2 (55.000)',
+     total: 65000, orderDate: 'Senin , 14 Oktober 2024', orderTime: '18:04:37'),
+                   ActivityModel(placeName: "Solaria's Cafe", menu: 
+                    'Nasi Goreng Kambing x1 (33.500)'
+                   , total: 33500, orderDate: 'Minggu , 13 Oktober 2024', orderTime: '11:22:41'),
+                   ActivityModel(placeName: "Solaria's Cafe", menu: 'Kwetiau Seafood Siram x4 (124.000)', total: 124000, orderDate: 'Jumat , 11 Oktober 2024', orderTime: '17:04:30'),
+                   ActivityModel(placeName: "KFC Batu Aji, Batam", menu: 'Super Komplit Paket x3 (144.000)', total: 144000, orderDate: 'Selasa , 8 Oktober 2024', orderTime: '19:04:37'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -16,18 +30,7 @@ class ActivityScreen extends StatelessWidget {
           child: Column(children: [
             const SizedBox(height: 20,),
             
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              
-              children: [
-                const SizedBox(width: 20,),
-                GestureDetector( onTap: () {
-                  Navigator.of(context).pop();
-                }  ,child: const Icon(Icons.arrow_circle_left_outlined, size: 30, )),
-                const SizedBox(width: 100,),
-                Text('Aktivitas' , style: GoogleFonts.montserrat(fontWeight: FontWeight.bold , fontSize: 20))
-              ],
-            ),
+            Center(child:  Text('Aktivitas' , style: GoogleFonts.montserrat(fontWeight: FontWeight.bold , fontSize: 20))),
           
             const SizedBox(height: 20,),
             Center(
@@ -53,16 +56,14 @@ class ActivityScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Column(
-                children: [
-                  const ActivityCard(placeName: 'RM Bakso Wonogiri', menu: 'Mie Ayam x2 (55.000)', total: '65.000', orderDate: 'Senin , 14 Oktober 2024', orderTime: '18:04:37'),
-                  const SizedBox(height: 15,),
-                  const ActivityCard(placeName: "Solaria's Cafe", menu: 'Nasi Goreng Kambing x1 (33.500)', total: '33.500', orderDate: 'Minggu , 13 Oktober 2024', orderTime: '11:22:41'),
-                  const SizedBox(height: 15,),
-                  const ActivityCard(placeName: "Solaria's Cafe", menu: 'Kwetiau Seafood Siram x4 (124.000)', total: '124.000', orderDate: 'Jumat , 11 Oktober 2024', orderTime: '17:04:30'),
-                  const SizedBox(height: 15,),
-                  const ActivityCard(placeName: "KFC Batu Aji, Batam", menu: 'Super Komplit Paket x3 (144.000)', total: '144.000', orderDate: 'Selasa , 8 Oktober 2024', orderTime: '19:04:37'),
-                  const SizedBox(height: 15,),
-                ],
+                children: List.generate(activityList.length, (index) => Column(
+                  children: [
+                    ActivityCard(activityModel: activityList[index]),
+                    const SizedBox(
+                    height: 15.0,
+                    ),
+                  ],
+                )),
               )
             )
           ],),

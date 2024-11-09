@@ -1,26 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
+import 'package:nul_app/models/card_model.dart';
+import 'package:nul_app/models/category_model.dart';
 import 'package:nul_app/screen/profile_screen.dart';
 import 'package:nul_app/utils/image_dir.dart';
+import 'package:nul_app/widget/card_item.dart';
+import 'package:nul_app/widget/categoryitem.dart';
 import 'package:nul_app/widget/custom_bottom_navbar.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  List cardList = [
-    {
-      "id": 1,
-      "title": "Solaria's Cafe ",
-      "description": "Solaria's Cafe menyajikan hidangan lezat yang cocok untuk segala suasana. Beragam pilihan menu mulai dari masakan Indonesia hingga Western.",
-      "image": ImageDir.solariaImage
-    },
-    {
-      "id": 2,
-      "title": "LUIS FruitShop",
-      "description": "Luis FruitShop menghadirkan buah-buahan segar berkualitas tinggi dengan harga spesial! Segarkan hari Anda dengan buah-buahan terbaik dari Luis FruitShop.",
-      "image": ImageDir.luisFoodShop
-    }
+  static const routeName = '/home-screen';
+
+  List<CategoryModel> categoryList1 = [
+    CategoryModel(iconPath: ImageDir.foodIcon, label: 'Food Stall'),
+    CategoryModel(iconPath: ImageDir.marketIcon, label: 'Market'),
+    CategoryModel(iconPath: ImageDir.cafeIcon , label: 'Cafe'),
+    CategoryModel(iconPath: ImageDir.shirtIcon , label: 'Clothes'),
+    CategoryModel(iconPath: ImageDir.toolsIcon , label: 'Tools'),
+
+
+  ];
+
+  List<CategoryModel> categoryList2 = [
+    CategoryModel(iconPath: ImageDir.fitnessIcon , label: 'Fitness'),
+    CategoryModel(iconPath: ImageDir.hairCutIcon , label: 'Barber'),
+    CategoryModel(iconPath: ImageDir.menuIcon , label: 'More')
+  ];
+
+  
+
+  List<CardModel> cardList = [
+    CardModel(id: 1, title: "Solaria's Cafe" , description: "Solaria's Cafe menyajikan hindangan lezat yang cocok untuk segala suasana , beragam pilihan menu mulai dari masakan Indonesia hingga Western." , image: ImageDir.solariaImage),
+    CardModel(id: 2, title: 'LUIS FruitShop' , description: 'Luis FruitShop menghadirkan buah - buahan segar berkualitas tingi dengan harga spesial! \n Segarkan hari Anda dengan buah-buahan terbaik dari Luis FruitShop' , image: ImageDir.luisFoodShop)
   ];
 
   @override
@@ -91,32 +105,24 @@ class HomeScreen extends StatelessWidget {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: [
-                      buildCategoryItem(ImageDir.foodIcon, 'Food Stall'),
-                      const SizedBox(width: 16),
-                      buildCategoryItem(ImageDir.marketIcon, 'Market'),
-                      const SizedBox(width: 16),
-                      buildCategoryItem(ImageDir.cafeIcon, 'Cafe'),
-                      const SizedBox(width: 16),
-                      buildCategoryItem(ImageDir.shirtIcon, 'Clothes'),
-                      const SizedBox(
-                      height: 16.0,
-                      ),
-                      buildCategoryItem(ImageDir.toolsIcon, 'Tools')
-                    ],
+                    children: List.generate(categoryList1.length, (index) {
+                      return Row(children: [CategoryItem(categoryModel: categoryList1[index],) , const SizedBox(width: 16) ],);
+                    })
+                    ,
                   ),
                 ),
                 const SizedBox(height: 20),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: [
-                      buildCategoryItem(ImageDir.fitnessIcon, 'Fitness'),
-                      const SizedBox(width: 16),
-                      buildCategoryItem(ImageDir.hairCutIcon, 'Barber'),
-                      const SizedBox(width: 16),
-                      buildCategoryItem(ImageDir.menuIcon, 'Menu'),
-                    ],
+                    children: List.generate(categoryList2.length ,  (index)  {
+                      return Row(
+                        children: [
+                          CategoryItem(categoryModel: categoryList2[index],),
+                          const SizedBox(width: 16),
+                        ],
+                      );
+                    }),
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -138,10 +144,10 @@ class HomeScreen extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
-                    var cardItem = cardList[index];
-                    return buildCardItem(cardItem);
+                    return CardItem(cardModel: cardList[index]);
                   },
                 ),
+                const SizedBox(height: 120,),
               ],
             ),
           ),
@@ -151,78 +157,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildCategoryItem(String iconPath, String label) {
-    return Container(
-      width: 90,
-      height: 90,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: appLightGrey,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(iconPath),
-          const SizedBox(height: 7),
-          Text(
-            label,
-            style: GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 10),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
+  
 
-  Widget buildCardItem(Map cardItem) {
-    return Container(
-      decoration: BoxDecoration(
-        color: appWhite,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            spreadRadius: 2,
-            offset: const Offset(0, 5),
-          )
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-            child: Image.asset(
-              cardItem['image'],
-              width: double.infinity,
-              height: 120,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  cardItem['title'],
-                  style: GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 12),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  cardItem['description'],
-                  style: GoogleFonts.montserrat(fontSize: 10),
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+ 
 }

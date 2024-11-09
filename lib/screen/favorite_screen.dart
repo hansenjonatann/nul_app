@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nul_app/constants/color.dart';
 import 'package:nul_app/screen/home_screen.dart';
 import 'package:nul_app/utils/image_dir.dart';
 import 'package:nul_app/widget/custom_bottom_navbar.dart';
@@ -8,6 +7,8 @@ import 'package:nul_app/widget/favorite_card.dart';
 
 class FavoriteScreen extends StatelessWidget {
    const FavoriteScreen({super.key});
+
+   static const routeName = '/favorite-screen';
 
   // List favoriteList = [
   //   {

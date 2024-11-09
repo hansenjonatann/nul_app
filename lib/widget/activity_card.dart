@@ -3,13 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
 
 class ActivityCard extends StatelessWidget {
-  const ActivityCard({super.key , required this.placeName , required this.menu , required this.total , required this.orderDate , required this.orderTime});
+  const ActivityCard({ required this.activityModel});
 
-  final String placeName;
-  final String menu;
-  final String total;
-  final String orderDate; 
-  final String orderTime;
+  final activityModel;
 
 
   @override
@@ -29,15 +25,15 @@ class ActivityCard extends StatelessWidget {
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(placeName , style: GoogleFonts.montserrat(fontSize: 16 , fontWeight: FontWeight.bold)),
+                            Text(activityModel.placeName , style: GoogleFonts.montserrat(fontSize: 16 , fontWeight: FontWeight.bold)),
                             const SizedBox(height: 10,),
-                            Text(menu, style: GoogleFonts.montserrat(fontSize: 12 )),
+                            Text(activityModel.menu, style: GoogleFonts.montserrat(fontSize: 12 )),
                             const SizedBox(height: 8,),
                            Row(
                               children: [
                                 Text('Total' , style: GoogleFonts.montserrat(fontSize: 12)),
                                 const SizedBox(width: 10),
-                                Text(total , style: GoogleFonts.montserrat(fontSize: 12)),
+                                Text(activityModel.total.toString() , style: GoogleFonts.montserrat(fontSize: 12)),
                                 
                               ],
                             ),
@@ -59,9 +55,9 @@ class ActivityCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                             
                               children: [
-                                Text(orderDate , style: GoogleFonts.montserrat(fontSize: 12, )),
+                                Text(activityModel.orderDate , style: GoogleFonts.montserrat(fontSize: 12, )),
                                 const SizedBox(height: 20),
-                                Text(orderTime , style: GoogleFonts.montserrat(fontSize: 12)),
+                                Text(activityModel.orderTime , style: GoogleFonts.montserrat(fontSize: 12)),
                               ],
                             ),
                           ),

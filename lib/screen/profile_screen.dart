@@ -6,6 +6,8 @@ import 'package:nul_app/utils/image_dir.dart';
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
+  static const routeName = '/profile-screen';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

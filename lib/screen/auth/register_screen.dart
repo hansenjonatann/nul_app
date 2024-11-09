@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
+import 'package:nul_app/core/navigation.dart';
 import 'package:nul_app/screen/auth/login_screen.dart';
 import 'package:nul_app/utils/svg_dir.dart';
 import 'package:nul_app/widget/custom_textfield.dart';
@@ -9,6 +10,8 @@ import 'package:nul_app/widget/login_alternative.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
+
+  static const routeName = '/register-screen';
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,7 @@ class RegisterScreen extends StatelessWidget {
              const SizedBox(height: 34,),
              GestureDetector(
               onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreen()));
+                NullAppNavigation().pushReplacementNamed(LoginScreen.routeName);
               },
               child: Container(
                 height: 70,
@@ -53,7 +56,7 @@ class RegisterScreen extends StatelessWidget {
                 Text('Already have an account? Login ' , style: GoogleFonts.montserrat(fontSize: 12 , fontWeight: FontWeight.bold)),
                 GestureDetector(  
                   onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreen()));
+                   NullAppNavigation().pushReplacementNamed(LoginScreen.routeName);
                   },
                   child: Text('here' , style: GoogleFonts.montserrat(fontSize: 12 , fontWeight: FontWeight.bold , color: appGold)),)
 
