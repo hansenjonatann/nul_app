@@ -101,7 +101,9 @@ class LoginScreen extends StatelessWidget {
                ),
                ),
                const SizedBox(height: 28,),
-               const LoginAlternative(),
+               Container( height: 40, decoration: BoxDecoration(color: appPrimary , borderRadius: BorderRadius.circular(10)),  child: Center(child: Text('Login as Seller' , style: GoogleFonts.niramit(fontSize: 20 , fontWeight: FontWeight.bold , color: appWhite)))),
+               const SizedBox(height: 15,)
+               ,const LoginAlternative(),
                SvgPicture.asset(SvgDir.wave)
                 ],
               )
