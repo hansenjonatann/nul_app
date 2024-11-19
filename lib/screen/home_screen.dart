@@ -15,19 +15,19 @@ class HomeScreen extends StatelessWidget {
   static const routeName = '/home-screen';
 
   List<CategoryModel> categoryList1 = [
-    CategoryModel(iconPath: ImageDir.foodIcon, label: 'Food Stall'),
-    CategoryModel(iconPath: ImageDir.marketIcon, label: 'Market'),
-    CategoryModel(iconPath: ImageDir.cafeIcon , label: 'Cafe'),
-    CategoryModel(iconPath: ImageDir.shirtIcon , label: 'Clothes'),
-    CategoryModel(iconPath: ImageDir.toolsIcon , label: 'Tools'),
+    CategoryModel(id: 1, iconPath: ImageDir.foodIcon, label: 'Food Stall'),
+    CategoryModel(id: 2, iconPath: ImageDir.marketIcon, label: 'Market'),
+    CategoryModel(id: 3, iconPath: ImageDir.cafeIcon , label: 'Cafe'),
+    CategoryModel(id: 4, iconPath: ImageDir.shirtIcon , label: 'Clothes'),
+    CategoryModel(id: 5, iconPath: ImageDir.toolsIcon , label: 'Tools'),
 
 
   ];
 
   List<CategoryModel> categoryList2 = [
-    CategoryModel(iconPath: ImageDir.fitnessIcon , label: 'Fitness'),
-    CategoryModel(iconPath: ImageDir.hairCutIcon , label: 'Barber'),
-    CategoryModel(iconPath: ImageDir.menuIcon , label: 'More')
+    CategoryModel(id: 6,iconPath: ImageDir.fitnessIcon , label: 'Fitness'),
+    CategoryModel(id: 7,iconPath: ImageDir.hairCutIcon , label: 'Barber'),
+    CategoryModel(id: 0,iconPath: ImageDir.menuIcon , label: 'More')
   ];
 
   

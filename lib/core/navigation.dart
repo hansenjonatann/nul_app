@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nul_app/screen/activity_screen.dart';
 import 'package:nul_app/screen/auth/login_screen.dart';
 import 'package:nul_app/screen/auth/register_screen.dart';
+import 'package:nul_app/screen/card_detail_screen.dart';
+import 'package:nul_app/screen/category_detail_screen.dart';
 import 'package:nul_app/screen/favorite_screen.dart';
 import 'package:nul_app/screen/home_screen.dart';
 import 'package:nul_app/screen/profile_screen.dart';
@@ -18,7 +20,9 @@ class NullAppNavigation {
     HomeScreen.routeName: (context) => HomeScreen(),
     FavoriteScreen.routeName: (context) => const FavoriteScreen(),
     ProfileScreen.routeName: (context) => const ProfileScreen(),
-    ActivityScreen.routeName: (context) =>  ActivityScreen()
+    ActivityScreen.routeName: (context) =>  ActivityScreen(),
+    CategoryDetailScreen.routeName: (context) => CategoryDetailScreen(),
+    CardDetailScreen.routeName : (context) => CardDetailScreen(),
 
   };
 
