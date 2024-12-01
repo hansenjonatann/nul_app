@@ -67,16 +67,16 @@ class FavoriteScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 41,),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 10),
                       child: Column(
                         children: [
                           FavoriteCard(storeName: 'RM Bakso Wonogiri', storeTag: 'Aneka Bakso , Cepat Saji', quantityTotalOrder: 40, storeImage: ImageDir.baksoWonogiri),
-                          const SizedBox(
+                          SizedBox(
                           height: 30.0,
                           ),
                           FavoriteCard(storeName: 'RIVS Kemeja', storeTag: 'Kemeja Pria dan Wanita', quantityTotalOrder: 28, storeImage: ImageDir.rivs),
-                          const SizedBox(
+                          SizedBox(
                           height: 30.0,
                           ),
                           FavoriteCard(storeName: 'KFC Batu Aji , Batam', storeTag: 'Aneka Ayam , Cepat Saji', quantityTotalOrder: 21, storeImage: ImageDir.kfc)
@@ -90,7 +90,7 @@ class FavoriteScreen extends StatelessWidget {
 
         
       ),
-      bottomNavigationBar: CustomBottomNavbar(currentIndex: 2),
+      bottomNavigationBar: const CustomBottomNavbar(currentIndex: 2),
     );
   }
 }

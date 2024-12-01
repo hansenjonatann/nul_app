@@ -4,7 +4,7 @@ import 'package:nul_app/constants/color.dart';
 import 'package:nul_app/core/navigation.dart';
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({ required this.categoryModel});
+  const CategoryItem({super.key,  required this.categoryModel});
 
   final categoryModel;
 
@@ -15,8 +15,8 @@ class CategoryItem extends StatelessWidget {
         NullAppNavigation().pushNamed('/category-detail' , arguments: {'categoryModel' : categoryModel});
       },
       child: Container(
-        width: 90,
-        height: 90,
+        width: 108,
+        height: 108,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: appLightGrey,
@@ -24,11 +24,11 @@ class CategoryItem extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(categoryModel.iconPath),
+            Image.asset(categoryModel.iconPath ,),
             const SizedBox(height: 7),
             Text(
               categoryModel.label,
-              style: GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 10),
+              style: GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 14),
               textAlign: TextAlign.center,
             ),
           ],

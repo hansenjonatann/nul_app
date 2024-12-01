@@ -1,5 +1,6 @@
 class ActivityModel {
   String placeName;
+  String? image;
   String menu;
   String orderDate;
   String orderTime; 
@@ -7,6 +8,7 @@ class ActivityModel {
 
   ActivityModel({
     required this.placeName , 
+     this.image,
     required this.menu , 
     required this.orderTime , 
     required this.total , 

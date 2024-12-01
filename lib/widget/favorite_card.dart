@@ -15,8 +15,8 @@ class FavoriteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(children: [
                       Container(
-                        width: 185,
-                        height: 185,
+                        width: 150,
+                        height: 150,
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
                         child: Image.asset(storeImage)
                       ),
@@ -25,28 +25,21 @@ class FavoriteCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(storeName , style: GoogleFonts.montserrat(fontWeight: FontWeight.bold , fontSize: 16 )),
-                          Text('#${storeTag}' , style: GoogleFonts.montserrat(fontSize: 12)),
+                          Text('#$storeTag' , style: GoogleFonts.montserrat(fontSize: 14)),
                           const SizedBox(height: 11,),
                           Container(
                           height: 72,
                           width: 131,
                           decoration: const BoxDecoration(
-                          color: Colors.blue,
+                          color:appPrimary,
                           ),
                           child: Center(
-                            child: Text('${quantityTotalOrder} ORDER' , style: GoogleFonts.montserrat(fontSize: 16 , fontWeight: FontWeight.bold, ))
+                            child: Text('$quantityTotalOrder Order' , style: GoogleFonts.montserrat(fontSize: 16 , fontWeight: FontWeight.bold, color: appWhite ))
                           ),
                           ),
 
                           const SizedBox(height: 18,),
-                          Row(
-                            children: [
-                              Icon(Icons.trolley),
-                              SizedBox(width: 16),
-                              Text('Cek Lagi' , style: GoogleFonts.montserrat(color: appPrimary , fontWeight: FontWeight.bold,))
-                            ],
-                          )
-
+                          
 
                         ],
                       )

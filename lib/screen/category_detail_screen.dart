@@ -37,7 +37,7 @@ class CategoryDetailScreen extends StatelessWidget {
                   onPressed: () {
                     NullAppNavigation().pop();
                   },
-                  icon: Icon(Icons.arrow_back_ios)),
+                  icon: const Icon(Icons.arrow_back_ios)),
                    SizedBox(
                   width: MediaQuery.of(context).size.width * 0.2
                   ),

@@ -29,11 +29,11 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(height: 19,),
               Center(child: Text('Register' , style: GoogleFonts.montserrat(fontSize: 24 , fontWeight: FontWeight.w500))),
               const SizedBox(height: 9,),
-              CustomTextField(label: 'Name', hint: 'Your name , e.g: John Doe'),
-              CustomTextField(label: 'Email', hint: 'Your email, e.g : johndoe@gmail.com'),
-              CustomTextField(label: 'Phone Number', hint: 'Your phone number, e.g : +01 112 xxx xxx',),
-              CustomTextField(label: 'Password', hint: 'Your password, at least 8 character.',),
-              CustomTextField(label: 'Confirm Password' , hint: 'Re-type your password'),
+              const CustomTextField(label: 'Name', hint: 'Your name , e.g: John Doe'),
+              const CustomTextField(label: 'Email', hint: 'Your email, e.g : johndoe@gmail.com'),
+              const CustomTextField(label: 'Phone Number', hint: 'Your phone number, e.g : +01 112 xxx xxx',),
+              const CustomTextField(label: 'Password', hint: 'Your password, at least 8 character.',),
+              const CustomTextField(label: 'Confirm Password' , hint: 'Re-type your password'),
              
              const SizedBox(height: 34,),
              GestureDetector(

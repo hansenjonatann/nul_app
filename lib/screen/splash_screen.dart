@@ -24,11 +24,12 @@ class _SplashScreenState extends State<SplashScreen> {
       NullAppNavigation().pushReplacementNamed(LoginScreen.routeName);
     });
   }
+  @override
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: appPrimary,
       body: Center(
-        child: Image.asset('${ImageDir.splashImage}')
+        child: Image.asset(ImageDir.splashImage)
       )
     );
   }

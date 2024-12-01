@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
+import 'package:nul_app/core/navigation.dart';
+import 'package:nul_app/screen/auth/login_screen.dart';
 import 'package:nul_app/utils/image_dir.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -14,10 +16,12 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(onPressed: () {
           Navigator.of(context).pop();
-        }, icon: Icon(Icons.arrow_back_ios)),
+        }, icon: const Icon(Icons.arrow_back_ios)),
         backgroundColor: Colors.transparent , 
         actions: [
-          TextButton(onPressed: () {}, child: Text('Logout' , style: GoogleFonts.montserrat(color: appRed , fontSize: 15 )))
+          TextButton(onPressed: () {
+            NullAppNavigation().pushReplacementNamed(LoginScreen.routeName);
+          }, child: Text('Logout' , style: GoogleFonts.montserrat(color: appRed , fontSize: 15 )))
         ],
         title: Text('Edit Profil' , style: GoogleFonts.montserrat( fontWeight: FontWeight.bold , fontSize: 20)),
         centerTitle: true,
@@ -25,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: 24,),
+            const SizedBox(height: 24,),
             Center(
               child: Container(
                 width: 175,
@@ -33,7 +37,7 @@ class ProfileScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(175)
                 ),
-                child: CircleAvatar(
+                child: const CircleAvatar(
                   radius: 175,
                   backgroundImage: AssetImage(ImageDir.profile),
                 ),

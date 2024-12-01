@@ -5,6 +5,7 @@ import 'package:nul_app/constants/color.dart';
 import 'package:nul_app/core/navigation.dart';
 import 'package:nul_app/screen/auth/register_screen.dart';
 import 'package:nul_app/screen/home_screen.dart';
+import 'package:nul_app/screen/seller/auth/login_seller.dart';
 import 'package:nul_app/utils/image_dir.dart';
 import 'package:nul_app/utils/svg_dir.dart';
 import 'package:nul_app/widget/login_alternative.dart';
@@ -23,15 +24,39 @@ class LoginScreen extends StatelessWidget {
           child: Column(
           children: [
             const SizedBox(height: 49,),
-            Center(child: Image.asset(ImageDir.waterAuthLogo , fit: BoxFit.cover)),
+            Center(child: Image.asset(ImageDir.waterAuthLogo ,  width: 230,)),
             const SizedBox(height: 60,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30) ,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-          
+                  
+                  _buildLoginFormField(),
+                  
+                  const SizedBox(height: 7,),
                   Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton( onPressed: () {} , child: Text('Forgot Password?' , style: GoogleFonts.montserrat(color: appDarkGrey , fontSize: 16 , fontWeight: FontWeight.w500)),)
+                  ),
+                  const SizedBox(height: 34,),
+                  _buildLoginFooter()
+                ],
+              )
+            )
+          ],
+                ),
+        )
+      )
+    );
+  }
+}
+
+
+Widget _buildLoginFormField () {
+  return Column(
+    children: [
+      Align(
                     alignment: Alignment.centerLeft,
                     child: Text('Login Details' , style: GoogleFonts.montserrat(fontWeight: FontWeight.w500 , fontSize: 24))
                   ),
@@ -54,14 +79,17 @@ class LoginScreen extends StatelessWidget {
                       hintText: 'Password'
                     ),
                     
-                  ),
-                  const SizedBox(height: 7,),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton( onPressed: () {} , child: Text('Forgot Password?' , style: GoogleFonts.montserrat(color: appDarkGrey , fontSize: 16 , fontWeight: FontWeight.w500)),)
-                  ),
-                  const SizedBox(height: 34,),
-                  GestureDetector(
+                  )
+    ]
+  );
+}
+
+
+Widget _buildLoginFooter () {
+  return (
+    Column(
+      children: [
+        GestureDetector(
                     onTap: () {
                       NullAppNavigation().pushReplacementNamed(HomeScreen.routeName);
                     },
@@ -101,17 +129,13 @@ class LoginScreen extends StatelessWidget {
                ),
                ),
                const SizedBox(height: 28,),
-               Container( height: 40, decoration: BoxDecoration(color: appPrimary , borderRadius: BorderRadius.circular(10)),  child: Center(child: Text('Login as Seller' , style: GoogleFonts.niramit(fontSize: 20 , fontWeight: FontWeight.bold , color: appWhite)))),
+               InkWell( onTap: () {
+                NullAppNavigation().pushReplacementNamed(LoginSellerScreen.routeName);
+               } , child: Container( height: 40, decoration: BoxDecoration(color: appPrimary , borderRadius: BorderRadius.circular(10)),  child: Center(child: Text('Login as Seller' , style: GoogleFonts.niramit(fontSize: 20 , fontWeight: FontWeight.bold , color: appWhite))))),
                const SizedBox(height: 15,)
                ,const LoginAlternative(),
                SvgPicture.asset(SvgDir.wave)
-                ],
-              )
-            )
-          ],
-                ),
-        )
-      )
-    );
-  }
+      ],
+    )
+  );
 }

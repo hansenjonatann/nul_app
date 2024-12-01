@@ -3,70 +3,100 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
 
 class ActivityCard extends StatelessWidget {
-  const ActivityCard({ required this.activityModel});
+  const ActivityCard({super.key, required this.activityModel});
 
   final activityModel;
-
 
   @override
   Widget build(BuildContext context) {
     return Container(
-              height: 136,
-              decoration: BoxDecoration(
-                color: appLightBlue
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8 , horizontal: 14),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(activityModel.placeName , style: GoogleFonts.montserrat(fontSize: 16 , fontWeight: FontWeight.bold)),
-                            const SizedBox(height: 10,),
-                            Text(activityModel.menu, style: GoogleFonts.montserrat(fontSize: 12 )),
-                            const SizedBox(height: 8,),
-                           Row(
-                              children: [
-                                Text('Total' , style: GoogleFonts.montserrat(fontSize: 12)),
-                                const SizedBox(width: 10),
-                                Text(activityModel.total.toString() , style: GoogleFonts.montserrat(fontSize: 12)),
-                                
-                              ],
-                            ),
-                            const SizedBox(height: 18,),
-                            Row(
-                              children: [
-                                  const Icon(Icons.trolley),
-                                  const SizedBox(width: 14,),
-                                  Text('Order lagi' , style: GoogleFonts.montserrat(fontWeight: FontWeight.bold))
-                                ],)
-                          ],
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          
-                          child:   Container(
-
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                            
-                              children: [
-                                Text(activityModel.orderDate , style: GoogleFonts.montserrat(fontSize: 12, )),
-                                const SizedBox(height: 20),
-                                Text(activityModel.orderTime , style: GoogleFonts.montserrat(fontSize: 12)),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
+      height: 136,
+      decoration: BoxDecoration(
+        color: appWhite,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: appPrimary, width: 1),
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text('${activityModel.orderDate} ,'),
+                    const SizedBox(
+                      width: 2.0,
                     ),
+                    Text(activityModel.orderTime)
+                  ],
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                Row(children: [
+                  Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Image.asset(
+                        activityModel.image,
+                        fit: BoxFit.cover,
+                      )),
+                  const SizedBox(width: 8.0),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(activityModel.placeName,
+                          style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.bold,
+                          )),
+                      Text(activityModel.menu,
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w400)),
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                            
+                            Text('Rp ${activityModel.total}',
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            const SizedBox(
+                              height: 4.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Icon(Icons.trolley, color: appPrimary),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
+                            Text('Order lagi?',
+                                style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.bold,
+                                ))
+                              ],
+                            )
+                          ])
+                        ],
+                      )
+                    ],
                   )
-                ],
-              ),
-            );
+                ]),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

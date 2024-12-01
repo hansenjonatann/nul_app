@@ -5,7 +5,7 @@ import 'package:nul_app/core/navigation.dart';
 import 'package:nul_app/screen/card_detail_screen.dart';
 
 class CardItem extends StatelessWidget {
-  const CardItem({required this.cardModel});
+  const CardItem({super.key, required this.cardModel});
 
   final cardModel;
 

@@ -17,7 +17,7 @@ class CardDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             height: 300,
             child: Image.asset(cardModel.image.toString() , fit: BoxFit.cover)
@@ -35,7 +35,7 @@ class CardDetailScreen extends StatelessWidget {
         height: 10.0,
         ),
         Text(cardModel.description , style: GoogleFonts.montserrat(fontSize: 16)),
-         SizedBox(
+         const SizedBox(
           height: 130,
          
         ),

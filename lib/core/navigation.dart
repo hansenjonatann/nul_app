@@ -7,6 +7,8 @@ import 'package:nul_app/screen/category_detail_screen.dart';
 import 'package:nul_app/screen/favorite_screen.dart';
 import 'package:nul_app/screen/home_screen.dart';
 import 'package:nul_app/screen/profile_screen.dart';
+import 'package:nul_app/screen/seller/auth/login_seller.dart';
+import 'package:nul_app/screen/seller/home_seller_screen.dart';
 import 'package:nul_app/screen/splash_screen.dart';
 
 class NullAppNavigation {
@@ -22,8 +24,9 @@ class NullAppNavigation {
     ProfileScreen.routeName: (context) => const ProfileScreen(),
     ActivityScreen.routeName: (context) =>  ActivityScreen(),
     CategoryDetailScreen.routeName: (context) => CategoryDetailScreen(),
-    CardDetailScreen.routeName : (context) => CardDetailScreen(),
-
+    CardDetailScreen.routeName : (context) => const CardDetailScreen(),
+    LoginSellerScreen.routeName : (context) => const LoginSellerScreen(),
+    HomeSellerScreen.routeName : (context) =>  HomeSellerScreen()
   };
 
   void pushNamed (String routeName , {Object? arguments}) {

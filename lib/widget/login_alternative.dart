@@ -20,7 +20,7 @@ class LoginAlternative extends StatelessWidget {
                   ),
                   child: GestureDetector(child: Center(child: SvgPicture.asset(SvgDir.google)),)
                 ),
-                SizedBox(width: 16,),
+                const SizedBox(width: 16,),
                 Container(
                   width: 52,
                   height: 52,
@@ -30,7 +30,7 @@ class LoginAlternative extends StatelessWidget {
                   ),
                   child: GestureDetector(child: Center(child: SvgPicture.asset(SvgDir.facebook)))
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Container(
                   width: 52,
                   height: 52,
