@@ -5,10 +5,14 @@ class ActivityModel {
   String orderDate;
   String orderTime; 
   int total;
+  int qty;
+  int price;
 
   ActivityModel({
     required this.placeName , 
      this.image,
+     required this.qty,
+     required this.price,
     required this.menu , 
     required this.orderTime , 
     required this.total , 

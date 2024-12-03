@@ -13,6 +13,9 @@ class CardDetailScreen extends StatelessWidget {
     final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String,dynamic>{}) as Map;
     CardModel cardModel = arguments['cardModel'] as CardModel;
     return  Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,20 +54,7 @@ class CardDetailScreen extends StatelessWidget {
         const SizedBox(
         height: 10.0,
         ),
-        InkWell(
-          onTap: () {
-            NullAppNavigation().pop();
-          },
-          child: Container(
-            width: double.infinity,
-            height: 50,
-            decoration: BoxDecoration(
-              color: appLightBlue,
-              borderRadius: BorderRadius.circular(10)
-            ),
-            child: Center(child: Text('Back to Products' , style: GoogleFonts.montserrat(color: appWhite , fontWeight: FontWeight.bold,)))
-          ),
-        )
+        
             ],
           )
         ),

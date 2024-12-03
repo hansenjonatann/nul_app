@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nul_app/screen/activity_detail_screen.dart';
 import 'package:nul_app/screen/activity_screen.dart';
 import 'package:nul_app/screen/auth/login_screen.dart';
 import 'package:nul_app/screen/auth/register_screen.dart';
@@ -26,7 +27,8 @@ class NullAppNavigation {
     CategoryDetailScreen.routeName: (context) => CategoryDetailScreen(),
     CardDetailScreen.routeName : (context) => const CardDetailScreen(),
     LoginSellerScreen.routeName : (context) => const LoginSellerScreen(),
-    HomeSellerScreen.routeName : (context) =>  HomeSellerScreen()
+    HomeSellerScreen.routeName : (context) =>  HomeSellerScreen(),
+    ActivityDetailScreen.routeName: (context) => ActivityDetailScreen(),
   };
 
   void pushNamed (String routeName , {Object? arguments}) {

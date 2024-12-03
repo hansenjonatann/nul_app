@@ -4,8 +4,8 @@ import 'package:nul_app/constants/color.dart';
 import 'package:nul_app/core/navigation.dart';
 import 'package:nul_app/models/card_model.dart';
 import 'package:nul_app/models/category_model.dart';
+import 'package:nul_app/screen/card_detail_screen.dart';
 import 'package:nul_app/utils/image_dir.dart';
-import 'package:nul_app/widget/favorite_card.dart';
 
 class CategoryDetailScreen extends StatelessWidget {
 
@@ -61,18 +61,23 @@ class CategoryDetailScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     children: [
-                      Container(
-                      height: 120,
-                      width: 120,
-                      decoration:  BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(20)
-                      
-                      ),
-                      child: Image.asset(
-                        cardList[index].image.toString(),
-                        fit: BoxFit.cover
-                      )
+                      InkWell(
+                        onTap: () {
+                          NullAppNavigation().pushNamed(CardDetailScreen.routeName , arguments: {'cardModel' : cardList[index]});
+                        },
+                        child: Container(
+                        height: 120,
+                        width: 120,
+                        decoration:  BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(20)
+                        
+                        ),
+                        child: Image.asset(
+                          cardList[index].image.toString(),
+                          fit: BoxFit.cover
+                        )
+                        ),
                       ),
                       const SizedBox(
                       width: 10.0,

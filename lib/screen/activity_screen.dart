@@ -13,13 +13,13 @@ class ActivityScreen extends StatelessWidget {
 
   List<ActivityModel> activityList = [
     ActivityModel(placeName: 'RM Bakso Wonogiri', menu: 
-      'Mie Ayam x2 (55.000)',
+      'Mie Ayam ' , qty: 2 , price: 55000,
      total: 65000, orderDate: '14 Oktober 2024', orderTime: '18:04:37' , image: ImageDir.baksoWonogiri),
                    ActivityModel(placeName: "Solaria's Cafe", menu: 
-                    'Nasi Goreng Kambing x1 (33.500)'
+                    'Nasi Goreng Kambing ' , price: 33500 , qty: 1
                    , total: 33500, orderDate: '13 Oktober 2024', orderTime: '11:22:41' , image: ImageDir.solariaImage),
-                   ActivityModel(placeName: "Solaria's Cafe", menu: 'Kwetiau Seafood Siram x4 (124.000)', total: 124000, orderDate: '11 Oktober 2024', orderTime: '17:04:30' , image: ImageDir.solariaImage),
-                   ActivityModel(placeName: "KFC Batu Aji, Batam", menu: 'Super Komplit Paket x3 (144.000)', total: 144000, orderDate: '8 Oktober 2024', orderTime: '19:04:37' , image: ImageDir.kfc),
+                   ActivityModel(placeName: "Solaria's Cafe", menu: 'Kwetiau Seafood Siram', qty: 4, price: 31000, total: 124000, orderDate: '11 Oktober 2024', orderTime: '17:04:30' , image: ImageDir.solariaImage),
+                   ActivityModel(placeName: "KFC Batu Aji, Batam", menu: 'Super Komplit Paket ', price: 21000, qty: 3, total: 63000, orderDate: '8 Oktober 2024', orderTime: '19:04:37' , image: ImageDir.kfc),
   ];
 
   @override
