@@ -10,6 +10,8 @@ import 'package:nul_app/widget/card_item.dart';
 import 'package:nul_app/widget/categoryitem.dart';
 import 'package:nul_app/widget/custom_bottom_navbar.dart';
 
+import '../models/menu_model.dart';
+
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
@@ -211,13 +213,23 @@ Widget _buildRecomendationSection() {
         title: "Solaria's Cafe",
         description:
             "Solaria's Cafe menyajikan hindangan lezat yang cocok untuk segala suasana , beragam pilihan menu mulai dari masakan Indonesia hingga Western.",
-        image: ImageDir.solariaImage),
+        image: ImageDir.solariaImage,
+        menu: [
+          MenuModel(name: "Nasi Goreng", price: 20000),
+          MenuModel(name: "Ayam Bakar", price: 25000)
+        ]
+        ),
     CardModel(
         id: 2,
         title: 'LUIS FruitShop',
         description:
             'Luis FruitShop menghadirkan buah - buahan segar berkualitas tingi dengan harga spesial! \n Segarkan hari Anda dengan buah-buahan terbaik dari Luis FruitShop',
-        image: ImageDir.luisFoodShop)
+        image: ImageDir.luisFoodShop,
+        menu: [
+          MenuModel(name: 'Apple', price: 5000),
+          MenuModel(name: 'Orange', price: 4000),
+        ]
+        )
   ];
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
