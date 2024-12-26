@@ -37,10 +37,33 @@ class CardDetailScreen extends StatelessWidget {
         const SizedBox(
         height: 10.0,
         ),
-        Text(cardModel.description , style: GoogleFonts.montserrat(fontSize: 16)),
-         const SizedBox(
-          height: 130,
-         
+        SingleChildScrollView(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+          Text(cardModel.description, style: GoogleFonts.montserrat(fontSize: 16)),
+          const SizedBox(height: 10.0),
+          Text("MENU", style: GoogleFonts.montserrat(fontSize: 40, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 10.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: cardModel.menu!.map<Widget>((menuItem) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(menuItem.name, style: GoogleFonts.montserrat(fontSize: 16)),
+              Text('\$${menuItem.price.toString()}', style: GoogleFonts.montserrat(fontSize: 16)),
+            ],
+                ),
+              );
+            }).toList(),
+          ),
+              ],
+            ),
+          ),
         ),
         Container(
           width: double.infinity,
