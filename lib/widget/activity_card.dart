@@ -13,7 +13,8 @@ class ActivityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        NullAppNavigation().pushNamed(ActivityDetailScreen.routeName , arguments: {'activityModel' : activityModel});
+        NullAppNavigation().pushNamed(ActivityDetailScreen.routeName,
+            arguments: {'activityModel': activityModel});
       },
       child: Container(
         height: 136,
@@ -62,47 +63,52 @@ class ActivityCard extends StatelessWidget {
                             style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.bold,
                             )),
-                       Row(children: [
-                         Text(activityModel.menu,
-                            style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w400)),
-                          Text('${activityModel.qty.toString()} x' , style: GoogleFonts.montserrat(fontWeight: FontWeight.w400)) ,
-                          const SizedBox(
-                          width: 8.0,
-                          ),
-                          Text('${activityModel.price.toString()} ' , style: GoogleFonts.montserrat(fontWeight: FontWeight.w400)) 
-                       ],),
+                        Row(
+                          children: [
+                            Text(activityModel.menu,
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w400)),
+                            Text('${activityModel.qty.toString()} x',
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w400)),
+                            const SizedBox(
+                              width: 8.0,
+                            ),
+                            Text('${activityModel.price.toString()} ',
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w400))
+                          ],
+                        ),
                         const SizedBox(
-                        height: 4.0,
+                          height: 4.0,
                         ),
                         Row(
                           children: [
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                              
-                              Text('Rp ${activityModel.total}',
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  )),
-                              const SizedBox(
-                                height: 4.0,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(Icons.trolley, color: appPrimary),
-                              const SizedBox(
-                                width: 10.0,
-                              ),
-                              Text('Order lagi?',
-                                  style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.bold,
-                                  ))
-                                ],
-                              )
-                            ])
+                                  Text('Rp ${activityModel.total}',
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                      )),
+                                  const SizedBox(
+                                    height: 4.0,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Icon(Icons.trolley, color: appPrimary),
+                                      const SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      Text('Order lagi?',
+                                          style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.bold,
+                                          ))
+                                    ],
+                                  )
+                                ])
                           ],
                         )
                       ],

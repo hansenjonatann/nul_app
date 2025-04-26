@@ -22,9 +22,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-  // 
-  
+  //
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 40),
 
                 _buildRecomendationSection(),
-                
+
                 const SizedBox(
                   height: 120,
                 ),
@@ -135,20 +133,17 @@ Widget _buildCategorySection() {
     CategoryModel(id: 1, iconPath: ImageDir.foodIcon, label: 'Food Stall'),
     CategoryModel(id: 2, iconPath: ImageDir.marketIcon, label: 'Market'),
     CategoryModel(id: 3, iconPath: ImageDir.cafeIcon, label: 'Cafe'),
-    
   ];
 
   List<CategoryModel> categoryList2 = [
     CategoryModel(id: 6, iconPath: ImageDir.fitnessIcon, label: 'Fitness'),
-        CategoryModel(id: 4, iconPath: ImageDir.shirtIcon, label: 'Clothes'),
+    CategoryModel(id: 4, iconPath: ImageDir.shirtIcon, label: 'Clothes'),
     CategoryModel(id: 5, iconPath: ImageDir.toolsIcon, label: 'Tools'),
-
   ];
 
   List<CategoryModel> categoryList3 = [
-        CategoryModel(id: 7, iconPath: ImageDir.hairCutIcon, label: 'Barber'),
+    CategoryModel(id: 7, iconPath: ImageDir.hairCutIcon, label: 'Barber'),
     CategoryModel(id: 0, iconPath: ImageDir.menuIcon, label: 'More')
-
   ];
 
   return Column(
@@ -205,7 +200,6 @@ Widget _buildCategorySection() {
   );
 }
 
-
 Widget _buildRecomendationSection() {
   List<CardModel> cardList = [
     CardModel(
@@ -217,8 +211,7 @@ Widget _buildRecomendationSection() {
         menu: [
           MenuModel(name: "Nasi Goreng", price: 20000),
           MenuModel(name: "Ayam Bakar", price: 25000)
-        ]
-        ),
+        ]),
     CardModel(
         id: 2,
         title: 'LUIS FruitShop',
@@ -228,34 +221,29 @@ Widget _buildRecomendationSection() {
         menu: [
           MenuModel(name: 'Apple', price: 5000),
           MenuModel(name: 'Orange', price: 4000),
-        ]
-        )
+        ])
   ];
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-                  'Rekomendasi dari kami',
-                  style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-                const SizedBox(height: 10),
-                // GridView for recommendations
-                GridView.builder(
-                  padding: EdgeInsets.zero,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: 0.7,
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                  ),
-                  itemCount: cardList.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return CardItem(cardModel: cardList[index]);
-                  },
-                ),
-    ]
-  );
+  return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    Text(
+      'Rekomendasi dari kami',
+      style: GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 16),
+    ),
+    const SizedBox(height: 10),
+    // GridView for recommendations
+    GridView.builder(
+      padding: EdgeInsets.zero,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        childAspectRatio: 0.7,
+        crossAxisCount: 2,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+      ),
+      itemCount: cardList.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (BuildContext context, int index) {
+        return CardItem(cardModel: cardList[index]);
+      },
+    ),
+  ]);
 }

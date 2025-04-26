@@ -1,4 +1,4 @@
-class MenuModel{
+class MenuModel {
   String name;
   int price;
 

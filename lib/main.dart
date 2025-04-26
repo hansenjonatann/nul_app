@@ -1,3 +1,5 @@
+import 'package:nul_app/core.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:nul_app/core/navigation.dart';
 import 'package:nul_app/screen/splash_screen.dart';
@@ -9,7 +11,7 @@ class NulApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return  GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: SplashScreen.routeName,
       routes: NullAppNavigation.routes,

@@ -10,11 +10,11 @@ class CardItem extends StatelessWidget {
   final cardModel;
 
   @override
-
   Widget build(BuildContext context) {
-    return   InkWell(
+    return InkWell(
       onTap: () {
-        NullAppNavigation().pushNamed(CardDetailScreen.routeName  , arguments: {'cardModel' : cardModel});
+        NullAppNavigation().pushNamed(CardDetailScreen.routeName,
+            arguments: {'cardModel': cardModel});
       },
       child: Container(
         decoration: BoxDecoration(
@@ -33,7 +33,8 @@ class CardItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(20)),
               child: Image.asset(
                 cardModel.image,
                 width: double.infinity,
@@ -48,7 +49,8 @@ class CardItem extends StatelessWidget {
                 children: [
                   Text(
                     cardModel.title,
-                    style: GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 12),
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.bold, fontSize: 12),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

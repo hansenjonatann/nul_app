@@ -13,40 +13,46 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(onPressed: () {
-          Navigator.of(context).pop();
-        }, icon: const Icon(Icons.arrow_back_ios)),
-        backgroundColor: Colors.transparent , 
-        actions: [
-          TextButton(onPressed: () {
-            NullAppNavigation().pushReplacementNamed(LoginScreen.routeName);
-          }, child: Text('Logout' , style: GoogleFonts.montserrat(color: appRed , fontSize: 15 )))
-        ],
-        title: Text('Edit Profil' , style: GoogleFonts.montserrat( fontWeight: FontWeight.bold , fontSize: 20)),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 24,),
-            Center(
-              child: Container(
+        appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(Icons.arrow_back_ios)),
+          backgroundColor: Colors.transparent,
+          actions: [
+            TextButton(
+                onPressed: () {
+                  NullAppNavigation()
+                      .pushReplacementNamed(LoginScreen.routeName);
+                },
+                child: Text('Logout',
+                    style: GoogleFonts.montserrat(color: appRed, fontSize: 15)))
+          ],
+          title: Text('Edit Profil',
+              style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.bold, fontSize: 20)),
+          centerTitle: true,
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 24,
+              ),
+              Center(
+                  child: Container(
                 width: 175,
                 height: 175,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(175)
-                ),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(175)),
                 child: const CircleAvatar(
                   radius: 175,
                   backgroundImage: AssetImage(ImageDir.profile),
                 ),
-              )
-            )
-
-          ],
-        ),
-      )
-    );
+              ))
+            ],
+          ),
+        ));
   }
 }

@@ -9,28 +9,22 @@ class SplashScreen extends StatefulWidget {
 
   static const routeName = '/splash-screen';
   @override
-  
   State<SplashScreen> createState() => _SplashScreenState();
-
-
 }
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-
   void initState() {
     super.initState();
-    Future.delayed( const Duration(seconds: 3) , () {
+    Future.delayed(const Duration(seconds: 3), () {
       NullAppNavigation().pushReplacementNamed(LoginScreen.routeName);
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      backgroundColor: appPrimary,
-      body: Center(
-        child: Image.asset(ImageDir.splashImage)
-      )
-    );
+    return Scaffold(
+        backgroundColor: appPrimary,
+        body: Center(child: Image.asset(ImageDir.splashImage)));
   }
 }

@@ -8,14 +8,23 @@ import 'package:nul_app/screen/card_detail_screen.dart';
 import 'package:nul_app/utils/image_dir.dart';
 
 class CategoryDetailScreen extends StatelessWidget {
-
   static const String routeName = '/category-detail';
   CategoryDetailScreen({super.key});
 
   List<CardModel> cardList = [
-    CardModel(id: 1, title: "Solaria's Cafe" , description: "Solaria's Cafe menyajikan hindangan lezat yang cocok untuk segala suasana , beragam pilihan menu mulai dari masakan Indonesia hingga Western." , image: ImageDir.solariaImage),
-    CardModel(id: 2, title: 'LUIS FruitShop' , description: 'Luis FruitShop menghadirkan buah - buahan segar berkualitas tingi dengan harga spesial! \n Segarkan hari Anda dengan buah-buahan terbaik dari Luis FruitShop' , image: ImageDir.luisFoodShop)
-   ];
+    CardModel(
+        id: 1,
+        title: "Solaria's Cafe",
+        description:
+            "Solaria's Cafe menyajikan hindangan lezat yang cocok untuk segala suasana , beragam pilihan menu mulai dari masakan Indonesia hingga Western.",
+        image: ImageDir.solariaImage),
+    CardModel(
+        id: 2,
+        title: 'LUIS FruitShop',
+        description:
+            'Luis FruitShop menghadirkan buah - buahan segar berkualitas tingi dengan harga spesial! \n Segarkan hari Anda dengan buah-buahan terbaik dari Luis FruitShop',
+        image: ImageDir.luisFoodShop)
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -38,23 +47,20 @@ class CategoryDetailScreen extends StatelessWidget {
                     NullAppNavigation().pop();
                   },
                   icon: const Icon(Icons.arrow_back_ios)),
-                   SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.2
-                  ),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.2),
               Text(categoryModel.label,
                   style: GoogleFonts.montserrat(
-                    color: appPrimary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20
-                  ))
+                      color: appPrimary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20))
             ],
           ),
         ),
         const SizedBox(
-        height: 30.0,
+          height: 30.0,
         ),
         Column(
-          children: List.generate(cardList.length , (index) {
+          children: List.generate(cardList.length, (index) {
             return Column(
               children: [
                 Padding(
@@ -63,49 +69,50 @@ class CategoryDetailScreen extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          NullAppNavigation().pushNamed(CardDetailScreen.routeName , arguments: {'cardModel' : cardList[index]});
+                          NullAppNavigation().pushNamed(
+                              CardDetailScreen.routeName,
+                              arguments: {'cardModel': cardList[index]});
                         },
                         child: Container(
-                        height: 120,
-                        width: 120,
-                        decoration:  BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(20)
-                        
-                        ),
-                        child: Image.asset(
-                          cardList[index].image.toString(),
-                          fit: BoxFit.cover
-                        )
-                        ),
+                            height: 120,
+                            width: 120,
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Image.asset(cardList[index].image.toString(),
+                                fit: BoxFit.cover)),
                       ),
                       const SizedBox(
-                      width: 10.0,
+                        width: 10.0,
                       ),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(cardList[index].title , style: GoogleFonts.montserrat(fontWeight: FontWeight.bold,)),
-                          const SizedBox(
-                          height: 10.0,
-                          ),
-                          Text(cardList[index].description , overflow: TextOverflow.fade,)
-                        ],
+                          children: [
+                            Text(cardList[index].title,
+                                style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            Text(
+                              cardList[index].description,
+                              overflow: TextOverflow.fade,
+                            )
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(
-                height: 15.0,
+                  height: 15.0,
                 ),
               ],
             );
           }),
         )
-       
-        
       ],
     )));
   }

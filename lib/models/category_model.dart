@@ -3,9 +3,6 @@ class CategoryModel {
   String iconPath;
   String label;
 
-  CategoryModel({
-    required this.id,
-    required this.iconPath , 
-    required this.label
-  });
+  CategoryModel(
+      {required this.id, required this.iconPath, required this.label});
 }
