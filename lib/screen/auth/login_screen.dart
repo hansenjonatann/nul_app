@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
-import 'package:nul_app/core/navigation.dart';
-import 'package:nul_app/screen/auth/register_screen.dart';
-import 'package:nul_app/screen/auth/umkm/login_screen.dart';
-import 'package:nul_app/screen/home_screen.dart';
+import 'package:get/get.dart';
+import 'package:nul_app/core.dart';
 import 'package:nul_app/utils/image_dir.dart';
 import 'package:nul_app/utils/svg_dir.dart';
 import 'package:nul_app/widget/login_alternative.dart';
+import 'package:nul_app/widget/custom_textfield.dart';
 
+  final authC = Get.put(AuthController());
+      final TextEditingController nameC = new TextEditingController();
+  final TextEditingController passwordC = new TextEditingController();
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
 
-  static const routeName = '/login-screen';
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +69,7 @@ class LoginScreen extends StatelessWidget {
 }
 
 Widget _buildLoginFormField() {
+
   return Column(children: [
     Align(
         alignment: Alignment.centerLeft,
@@ -75,19 +79,21 @@ Widget _buildLoginFormField() {
     const SizedBox(
       height: 11,
     ),
-    TextField(
-      decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-          hintText: 'Name'),
+    CustomTextField(
+     hidden: false,
+     fieldController: nameC,
+     hint: 'Your Name',
+     label: 'Name',
     ),
     const SizedBox(
       height: 11,
     ),
-    TextField(
-      decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-          hintText: 'Password'),
-    )
+      CustomTextField(
+     hidden: true,
+     hint: 'Your Password',
+     label: 'Password',
+     fieldController: passwordC,
+    ),
   ]);
 }
 
@@ -96,7 +102,8 @@ Widget _buildLoginFooter() {
     children: [
       GestureDetector(
         onTap: () {
-          NullAppNavigation().pushReplacementNamed(HomeScreen.routeName);
+          
+          authC.login(name: nameC.text , password: passwordC.text);
         },
         child: Container(
             width: double.infinity,
@@ -104,11 +111,11 @@ Widget _buildLoginFooter() {
             decoration: BoxDecoration(
                 color: appPrimary, borderRadius: BorderRadius.circular(5)),
             child: Center(
-                child: Text('Login',
+                child: Obx(() => Text(authC.isLoading.value == true ? 'Wait a moment ...' : 'Login',
                     style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
-                        color: appWhite)))),
+                        color: appWhite)))),)
       ),
       const SizedBox(height: 8),
       Row(
@@ -119,8 +126,7 @@ Widget _buildLoginFooter() {
                   fontSize: 12, fontWeight: FontWeight.bold)),
           GestureDetector(
             onTap: () {
-              NullAppNavigation()
-                  .pushReplacementNamed(RegisterScreen.routeName);
+              Get.offNamed('/register');
             },
             child: Text('here',
                 style: GoogleFonts.montserrat(
@@ -157,7 +163,7 @@ Widget _buildLoginFooter() {
         height: 20.0,
       ),
       GestureDetector( onTap: () => {
-        NullAppNavigation().pushNamed(UMKMLoginScreen.routeName)
+        Get.offNamed('/umkm/login')
       } , child: Container(width: double.infinity, height: 45 , decoration: BoxDecoration(borderRadius: BorderRadius.circular(20) , color: appPrimary.withOpacity(0.8)) , child: Center(child: Text('Login as UMKM' , style: GoogleFonts.montserrat(color: appWhite ,  fontWeight: FontWeight.w500))))),
       SvgPicture.asset(SvgDir.wave)
     ],

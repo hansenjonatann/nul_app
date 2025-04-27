@@ -1,28 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
-import 'package:nul_app/core/navigation.dart';
+import 'package:nul_app/controller/category_controller.dart';
 import 'package:nul_app/models/card_model.dart';
-import 'package:nul_app/models/category_model.dart';
-import 'package:nul_app/screen/profile_screen.dart';
 import 'package:nul_app/utils/image_dir.dart';
 import 'package:nul_app/widget/card_item.dart';
 import 'package:nul_app/widget/categoryitem.dart';
 import 'package:nul_app/widget/custom_bottom_navbar.dart';
+import 'package:get/get.dart';
 
 import '../models/menu_model.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  
+class HomeScreen extends StatelessWidget{
 
-  static const routeName = '/home-screen';
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  //
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +79,7 @@ Widget _buildProfileSection() {
           ),
           InkWell(
             onTap: () {
-              NullAppNavigation().pushNamed(ProfileScreen.routeName);
+              Get.toNamed('/profile');
             },
             child: Container(
                 width: 50,
@@ -129,22 +120,11 @@ Widget _buildBanner() {
 }
 
 Widget _buildCategorySection() {
-  List<CategoryModel> categoryList1 = [
-    CategoryModel(id: 1, iconPath: ImageDir.foodIcon, label: 'Food Stall'),
-    CategoryModel(id: 2, iconPath: ImageDir.marketIcon, label: 'Market'),
-    CategoryModel(id: 3, iconPath: ImageDir.cafeIcon, label: 'Cafe'),
-  ];
-
-  List<CategoryModel> categoryList2 = [
-    CategoryModel(id: 6, iconPath: ImageDir.fitnessIcon, label: 'Fitness'),
-    CategoryModel(id: 4, iconPath: ImageDir.shirtIcon, label: 'Clothes'),
-    CategoryModel(id: 5, iconPath: ImageDir.toolsIcon, label: 'Tools'),
-  ];
-
-  List<CategoryModel> categoryList3 = [
-    CategoryModel(id: 7, iconPath: ImageDir.hairCutIcon, label: 'Barber'),
-    CategoryModel(id: 0, iconPath: ImageDir.menuIcon, label: 'More')
-  ];
+ 
+ final categoryC = Get.put(CategoryController());
+  final categoryList1 = categoryC.categories.value.take(3).toList();
+  final categoryList2 = categoryC.categories.value.take(2).toList();
+  final categoryList3 = categoryC.categories.value.take(1).toList();
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,

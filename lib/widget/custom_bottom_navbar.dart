@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nul_app/constants/color.dart';
-import 'package:nul_app/core/navigation.dart';
-import 'package:nul_app/screen/activity_screen.dart';
-import 'package:nul_app/screen/favorite_screen.dart';
-import 'package:nul_app/screen/home_screen.dart';
+import 'package:get/get.dart';
 
 class CustomBottomNavbar extends StatefulWidget {
   const CustomBottomNavbar({super.key, required this.currentIndex});
@@ -36,8 +33,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
               icon: IconButton(
                   onPressed: () {
                     onTapped(0);
-                    NullAppNavigation()
-                        .pushReplacementNamed(HomeScreen.routeName);
+                    Get.offNamed('/home');
                   },
                   icon: Icon(Icons.home,
                       color: widget.currentIndex == 0
@@ -48,8 +44,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
               icon: IconButton(
                   onPressed: () {
                     onTapped(1);
-                    NullAppNavigation()
-                        .pushReplacementNamed(ActivityScreen.routeName);
+                    Get.offNamed('/activity');
                   },
                   icon: Icon(Icons.menu,
                       color: widget.currentIndex == 1
@@ -60,8 +55,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
               icon: IconButton(
                   onPressed: () {
                     onTapped(2);
-                    NullAppNavigation()
-                        .pushReplacementNamed(FavoriteScreen.routeName);
+                  Get.offNamed('/favorite');
                   },
                   icon: const Icon(Icons.favorite),
                   color: widget.currentIndex == 2 ? appPrimary : Colors.black),

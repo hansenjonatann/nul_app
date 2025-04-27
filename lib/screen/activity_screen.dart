@@ -6,10 +6,10 @@ import 'package:nul_app/utils/image_dir.dart';
 import 'package:nul_app/widget/activity_card.dart';
 import 'package:nul_app/widget/custom_bottom_navbar.dart';
 
+// ignore: must_be_immutable
 class ActivityScreen extends StatelessWidget {
    ActivityScreen({super.key});
 
-  static const routeName = '/activity-screen';
 
   List<ActivityModel> activityList = [
     ActivityModel(placeName: 'RM Bakso Wonogiri', menu: 

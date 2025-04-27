@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nul_app/core.dart';
+import'package:get/get.dart';
+import 'package:nul_app/constants/color.dart';
+import 'package:nul_app/utils/image_dir.dart';
 
 class UMKMLoginScreen extends StatelessWidget {
   const UMKMLoginScreen({super.key});
-  static const routeName = '/login-umkm-screen';
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +33,7 @@ class UMKMLoginScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    NullAppNavigation()
-                        .pushReplacementNamed(HomeScreen.routeName);
+                    Get.offNamed('/home');
                   },
                   child: Container(
                       width: double.infinity,
@@ -57,7 +57,7 @@ class UMKMLoginScreen extends StatelessWidget {
                     Text('You are not UMKM? ' , style: GoogleFonts.montserrat(fontWeight: FontWeight.w600))
                     ,
                     GestureDetector(onTap: () {
-                      NullAppNavigation().pushReplacementNamed(LoginScreen.routeName);
+                      Get.offNamed('/login');
                     }, child: Text('Login User' , style: GoogleFonts.montserrat(color: appPrimary , fontWeight: FontWeight.bold , fontSize: 16))),
                   ],
                 ))

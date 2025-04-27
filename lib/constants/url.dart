@@ -1,0 +1,1 @@
+final String API_URL = "https://nulapp-backend-production.up.railway.app/";

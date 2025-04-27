@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
-import 'package:nul_app/core/navigation.dart';
+import 'package:get/get.dart';
 
 class CategoryItem extends StatelessWidget {
   const CategoryItem({super.key, required this.categoryModel});
@@ -12,8 +12,9 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        NullAppNavigation().pushNamed('/category-detail',
-            arguments: {'categoryModel': categoryModel});
+        
+
+        Get.toNamed('/category-detail' , arguments: {'categoryModel' : categoryModel});
       },
       child: Container(
         width: 108,
@@ -25,12 +26,12 @@ class CategoryItem extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              categoryModel.iconPath,
+            Image.network(
+              categoryModel.icon,
             ),
             const SizedBox(height: 7),
             Text(
-              categoryModel.label,
+              categoryModel.name,
               style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.bold, fontSize: 14),
               textAlign: TextAlign.center,

@@ -1,8 +1,7 @@
 import 'package:nul_app/core.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:nul_app/core/navigation.dart';
-import 'package:nul_app/screen/splash_screen.dart';
+import 'package:nul_app/screen/auth/umkm/login_screen.dart';
 
 void main () => runApp(const NulApp());
 
@@ -13,10 +12,18 @@ class NulApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: SplashScreen.routeName,
-      routes: NullAppNavigation.routes,
-      navigatorKey: NullAppNavigation.navigatorKey,
-
+      home: const SplashScreen(),
+      getPages: [
+        GetPage(name: '/login' , page: () =>   LoginScreen()),
+        GetPage(name: '/home' , page: () =>  HomeScreen()),
+        GetPage(name: '/register' , page: () =>   RegisterScreen()),
+        GetPage(name: '/umkm/login' , page: () =>   UMKMLoginScreen()),
+        GetPage(name: '/profile'  , page: () =>   ProfileScreen()),
+        GetPage(name: '/card-detail' , page: () =>   CardDetailScreen()),
+        GetPage(name: '/activity-detail' , page: () =>   ActivityDetailScreen()),
+        GetPage(name: '/activity'  , page: () => ActivityScreen()),
+        GetPage(name: '/favorite' , page: () => FavoriteScreen())
+      ],
     );
   }
 }

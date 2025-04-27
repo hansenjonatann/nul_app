@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
-import 'package:nul_app/core/navigation.dart';
 import 'package:nul_app/models/card_model.dart';
 
 class CardDetailScreen extends StatelessWidget {
-  static const String routeName = '/card-detail';
   const CardDetailScreen({super.key});
 
   @override

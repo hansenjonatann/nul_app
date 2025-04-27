@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
-import 'package:nul_app/core/navigation.dart';
-import 'package:nul_app/screen/card_detail_screen.dart';
+import 'package:get/get.dart';
 
 class CardItem extends StatelessWidget {
   const CardItem({super.key, required this.cardModel});
@@ -13,7 +12,7 @@ class CardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        NullAppNavigation().pushNamed(CardDetailScreen.routeName,
+        Get.toNamed('/card-detail',
             arguments: {'cardModel': cardModel});
       },
       child: Container(

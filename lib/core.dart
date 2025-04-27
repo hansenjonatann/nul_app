@@ -6,7 +6,6 @@ it means you have to rename it to something more unique.
 export 'package:nul_app/constants/color.dart';
 export 'package:nul_app/controller/auth/auth_controller.dart';
 export 'package:nul_app/controller/category_controller.dart';
-export 'package:nul_app/core/navigation.dart';
 export 'package:nul_app/screen/activity_detail_screen.dart';
 export 'package:nul_app/screen/activity_screen.dart';
 export 'package:nul_app/screen/auth/login_screen.dart';

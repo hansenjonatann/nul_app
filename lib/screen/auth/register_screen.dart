@@ -2,16 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
-import 'package:nul_app/core/navigation.dart';
-import 'package:nul_app/screen/auth/login_screen.dart';
+import 'package:nul_app/controller/auth/auth_controller.dart';
 import 'package:nul_app/utils/svg_dir.dart';
 import 'package:nul_app/widget/custom_textfield.dart';
 import 'package:nul_app/widget/login_alternative.dart';
+import 'package:get/get.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+  final authC = Get.put(AuthController());
 
-  static const routeName = '/register-screen';
+  final TextEditingController nameC = new TextEditingController();
+  final TextEditingController emailC = new TextEditingController();
+  final TextEditingController phoneC = new TextEditingController();
+  final TextEditingController passwordC = new TextEditingController();
+  final TextEditingController confirmPasswordC = new TextEditingController();
+
+  RegisterScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,28 +42,37 @@ class RegisterScreen extends StatelessWidget {
                   const SizedBox(
                     height: 9,
                   ),
-                  const CustomTextField(
+                   CustomTextField(
+                    hidden: false,
+                    fieldController: nameC,
                       label: 'Name', hint: 'Your name , e.g: John Doe'),
-                  const CustomTextField(
+                   CustomTextField(
+                    hidden: false,
+                      fieldController: emailC,
                       label: 'Email',
                       hint: 'Your email, e.g : johndoe@gmail.com'),
-                  const CustomTextField(
+                   CustomTextField(
+                    hidden: false,
+                    fieldController: phoneC,
                     label: 'Phone Number',
                     hint: 'Your phone number, e.g : +01 112 xxx xxx',
                   ),
-                  const CustomTextField(
+                   CustomTextField(
+                    hidden: true,
+                    fieldController: passwordC,
                     label: 'Password',
                     hint: 'Your password, at least 8 character.',
                   ),
-                  const CustomTextField(
+                   CustomTextField(
+                    hidden: true,
+                    fieldController: confirmPasswordC,
                       label: 'Confirm Password', hint: 'Re-type your password'),
                   const SizedBox(
                     height: 34,
                   ),
                   GestureDetector(
                     onTap: () {
-                      NullAppNavigation()
-                          .pushReplacementNamed(LoginScreen.routeName);
+                  authC.register(name: nameC.text, email: emailC.text, phone: phoneC.text, password: passwordC.text, confirmPassword: confirmPasswordC.text);
                     },
                     child: Container(
                         height: 70,
@@ -64,11 +80,11 @@ class RegisterScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5),
                             color: appPrimary),
                         child: Center(
-                            child: Text('Sign Up',
+                            child: Obx(() => Text(authC.isLoading.value == true ? 'Signuping...' : 'Sign Up',
                                 style: GoogleFonts.montserrat(
                                     color: appWhite,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 24)))),
+                                    fontSize: 24)))),),
                   ),
                   const SizedBox(height: 8),
                   Row(
@@ -79,8 +95,7 @@ class RegisterScreen extends StatelessWidget {
                               fontSize: 12, fontWeight: FontWeight.bold)),
                       GestureDetector(
                         onTap: () {
-                          NullAppNavigation()
-                              .pushReplacementNamed(LoginScreen.routeName);
+                        Get.offNamed('/login');
                         },
                         child: Text('here',
                             style: GoogleFonts.montserrat(

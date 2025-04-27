@@ -1,12 +1,15 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({super.key, required this.label, required this.hint});
+  const CustomTextField({super.key, required this.label, required this.hint , this.fieldController , required this.hidden});
 
   final String label;
   final String hint;
+  final TextEditingController? fieldController;
+  final bool hidden;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +23,8 @@ class CustomTextField extends StatelessWidget {
           height: 10,
         ),
         TextField(
+          obscureText: hidden  ,
+          controller: fieldController ,
           decoration: InputDecoration(
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(5)),

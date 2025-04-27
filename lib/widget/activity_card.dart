@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
-import 'package:nul_app/core/navigation.dart';
-import 'package:nul_app/screen/activity_detail_screen.dart';
+import 'package:get/get.dart';
 
 class ActivityCard extends StatelessWidget {
   const ActivityCard({super.key, required this.activityModel});
@@ -13,7 +12,7 @@ class ActivityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        NullAppNavigation().pushNamed(ActivityDetailScreen.routeName,
+        Get.toNamed('/activity-detail',
             arguments: {'activityModel': activityModel});
       },
       child: Container(

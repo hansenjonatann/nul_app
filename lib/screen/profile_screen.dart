@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
-import 'package:nul_app/core/navigation.dart';
-import 'package:nul_app/screen/auth/login_screen.dart';
 import 'package:nul_app/utils/image_dir.dart';
-
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
-  static const routeName = '/profile-screen';
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +19,7 @@ class ProfileScreen extends StatelessWidget {
           actions: [
             TextButton(
                 onPressed: () {
-                  NullAppNavigation()
-                      .pushReplacementNamed(LoginScreen.routeName);
+                
                 },
                 child: Text('Logout',
                     style: GoogleFonts.montserrat(color: appRed, fontSize: 15)))

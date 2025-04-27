@@ -5,7 +5,6 @@ import 'package:nul_app/models/activity_model.dart';
 class ActivityDetailScreen extends StatelessWidget {
   const ActivityDetailScreen({super.key});
 
-  static const routeName = '/activity-detail';
   @override
   Widget build(BuildContext context) {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
