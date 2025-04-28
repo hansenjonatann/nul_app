@@ -1,0 +1,2 @@
+D:/project/university/mobile_apps/nul_app/android/app/.cxx/Debug/2i6o3h2o/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/project/university/mobile_apps/nul_app/android/app/.cxx/Debug/2i6o3h2o/armeabi-v7a/CMakeFiles/rebuild_cache.dir
