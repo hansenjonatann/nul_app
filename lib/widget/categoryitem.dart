@@ -12,9 +12,8 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        
-
-        Get.toNamed('/category-detail' , arguments: {'categoryModel' : categoryModel});
+        Get.toNamed('/category-detail',
+            arguments: {'categoryModel': categoryModel});
       },
       child: Container(
         width: 108,
@@ -28,6 +27,8 @@ class CategoryItem extends StatelessWidget {
           children: [
             Image.network(
               categoryModel.icon,
+              width: 40,
+              height: 40,
             ),
             const SizedBox(height: 7),
             Text(

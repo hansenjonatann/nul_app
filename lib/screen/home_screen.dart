@@ -11,11 +11,9 @@ import 'package:get/get.dart';
 
 import '../models/menu_model.dart';
 
-  
-class HomeScreen extends StatelessWidget{
-
-
+class HomeScreen extends StatelessWidget {
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -120,31 +118,41 @@ Widget _buildBanner() {
 }
 
 Widget _buildCategorySection() {
- 
- final categoryC = Get.put(CategoryController());
-  final categoryList1 = categoryC.categories.value.take(3).toList();
-  final categoryList2 = categoryC.categories.value.take(2).toList();
-  final categoryList3 = categoryC.categories.value.take(1).toList();
+  CategoryController _categoryC = Get.put(CategoryController());
+
+  // Pastikan data kategori sudah ada dan cukup
+  final categoryList1 = _categoryC.categories.take(3).toList();
+  final categoryList2 = _categoryC.categories.skip(3).take(3).toList();
+  final categoryList3 = _categoryC.categories.skip(6).take(1).toList();
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      // --- List 1 (3 categories in first row)
       SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: Row(
-          children: List.generate(categoryList1.length, (index) {
-            return Row(
-              children: [
-                CategoryItem(
-                  categoryModel: categoryList1[index],
-                ),
-                const SizedBox(width: 16)
-              ],
-            );
-          }),
-        ),
+        child: Obx(() {
+          return _categoryC.isLoading.value
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Row(
+                  children: List.generate(categoryList1.length, (index) {
+                    return Row(
+                      children: [
+                        CategoryItem(
+                          categoryModel: categoryList1[index],
+                        ),
+                        const SizedBox(width: 16)
+                      ],
+                    );
+                  }),
+                );
+        }),
       ),
       const SizedBox(height: 20),
+
+      // --- List 2 (3 categories in second row)
       SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -154,13 +162,15 @@ Widget _buildCategorySection() {
                 CategoryItem(
                   categoryModel: categoryList2[index],
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: 16)
               ],
             );
           }),
         ),
       ),
       const SizedBox(height: 20),
+
+      // --- List 3 (1 category in third row)
       SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -170,7 +180,7 @@ Widget _buildCategorySection() {
                 CategoryItem(
                   categoryModel: categoryList3[index],
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: 16)
               ],
             );
           }),

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
+import 'package:nul_app/controller/auth/auth_controller.dart';
 import 'package:nul_app/utils/image_dir.dart';
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+import 'package:get/get.dart';
 
+class ProfileScreen extends StatelessWidget {
+  final authC = Get.put(AuthController());
+  ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class ProfileScreen extends StatelessWidget {
           actions: [
             TextButton(
                 onPressed: () {
-                
+                  authC.logout();
                 },
                 child: Text('Logout',
                     style: GoogleFonts.montserrat(color: appRed, fontSize: 15)))

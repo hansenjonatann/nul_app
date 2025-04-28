@@ -53,13 +53,32 @@ class UMKMLoginScreen extends StatelessWidget {
                 ),
                 Center(child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('You are not UMKM? ' , style: GoogleFonts.montserrat(fontWeight: FontWeight.w600))
+                    Text('You are not registered UMKM? ' , style: GoogleFonts.montserrat(fontWeight: FontWeight.w600))
                     ,
+                    const SizedBox(
+                      width: 5.0,
+                    ),
                     GestureDetector(onTap: () {
-                      Get.offNamed('/login');
-                    }, child: Text('Login User' , style: GoogleFonts.montserrat(color: appPrimary , fontWeight: FontWeight.bold , fontSize: 16))),
+                      Get.offNamed('/umkm/register');
+                    }, child: Text('Sign up ' , style: GoogleFonts.montserrat(color: appPrimary , fontWeight: FontWeight.bold , fontSize: 16))),
                   ],
+                )),
+
+                const SizedBox(
+                  height: 20.0,
+                ),
+                GestureDetector( onTap: () {
+                  Get.offNamed('/login');
+                } , child: Container(
+                  width: double.infinity,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.brown,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Center(child: Text('Login as User' , style: GoogleFonts.montserrat(color: appWhite, fontWeight: FontWeight.bold , fontSize: 16)))
                 ))
               ],
             ))

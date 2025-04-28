@@ -14,7 +14,7 @@ class CategoryDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
-    CategoryModel categoryModel = arguments['categoryModel'] as CategoryModel;
+    Datum categoryModel = arguments['categoryModel'] as Datum;
     return Scaffold(
         body: SafeArea(
             child: Column(
@@ -28,7 +28,7 @@ class CategoryDetailScreen extends StatelessWidget {
             children: [
               IconButton(
                   onPressed: () {
-                   Get.back();
+                    Get.back();
                   },
                   icon: const Icon(Icons.arrow_back_ios)),
               SizedBox(width: MediaQuery.of(context).size.width * 0.2),
@@ -53,7 +53,7 @@ class CategoryDetailScreen extends StatelessWidget {
         //             children: [
         //               InkWell(
         //                 onTap: () {
-                          
+
         //                   Get.toNamed('/card-detail'  , arguments: {'cardModel' : cardList[index]});
         //                 },
         //                 child: Container(
