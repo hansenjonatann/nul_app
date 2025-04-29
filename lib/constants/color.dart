@@ -8,3 +8,4 @@ const appWhite = Color(0xffffffff);
 const appLightGrey = Color(0xffECE9EC);
 const appLightBlue = Color(0xff0BDBFC);
 const appRed = Color(0xffEB4335);
+const appSuccess = Color(0xff28a745);

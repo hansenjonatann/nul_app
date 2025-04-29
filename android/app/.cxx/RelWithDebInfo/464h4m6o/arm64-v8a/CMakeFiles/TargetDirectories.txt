@@ -1,0 +1,2 @@
+D:/project/university/mobile_apps/nul_app/android/app/.cxx/RelWithDebInfo/464h4m6o/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/project/university/mobile_apps/nul_app/android/app/.cxx/RelWithDebInfo/464h4m6o/arm64-v8a/CMakeFiles/rebuild_cache.dir
