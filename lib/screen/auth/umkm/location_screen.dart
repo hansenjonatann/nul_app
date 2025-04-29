@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
+import 'package:get/get.dart';
 
 class UMKMLocationScreen extends StatelessWidget {
   const UMKMLocationScreen({super.key});
@@ -7,6 +9,11 @@ class UMKMLocationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(onPressed: () {
+          Get.back();
+        }, icon: Icon(Icons.arrow_back_ios)),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -23,16 +30,31 @@ class UMKMLocationScreen extends StatelessWidget {
                   children: [
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
+                      
                       child: Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text('#'),
+                        child: Center(child: Text('#' , style: GoogleFonts.montserrat(color: appWhite , fontSize: 16)),),
                       ),
                     ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text('Name'),
+                        child: Center(child: Text('Name' , style: GoogleFonts.montserrat( fontWeight: FontWeight.bold, color: appWhite , fontSize: 16),),),
+                      ),
+                    ),
+                     TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Center(child: Text('Image' , style: GoogleFonts.montserrat( fontWeight: FontWeight.bold, color: appWhite , fontSize: 16),),),
+                      ),
+                    ),
+                     TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Center(child: Text('Action' , style: GoogleFonts.montserrat( fontWeight: FontWeight.bold, color: appWhite , fontSize: 16),),),
                       ),
                     ),
                   ],
