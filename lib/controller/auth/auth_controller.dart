@@ -104,16 +104,13 @@ class AuthController extends GetxController {
         ),
       );
 
-      print(response);
 
       if (response.statusCode == 200) {
-        // kalau sukses, hapus token dari local storage
+        isLoading.value = false; 
         await box.remove('token');
-
-        isLoading.value = false;
-
-        // redirect ke login page atau landing page
-        Get.offAllNamed('/login'); // sesuaikan dengan route kamu
+    Get.snackbar('Success' , 'Logout Success' , backgroundColor: appSuccess , colorText: appWhite);
+  print('token' , );
+        Get.offAllNamed('/login'); 
       } else {
         isLoading.value = false;
         Get.snackbar(

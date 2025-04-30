@@ -6,6 +6,8 @@ import 'package:nul_app/core.dart';
 class UMKMMainScreen extends StatelessWidget {
   UMKMMainScreen({super.key});
 
+  AuthController _authC = Get.put(AuthController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,27 +34,39 @@ class UMKMMainScreen extends StatelessWidget {
                 ),
                 Align(
                     alignment: Alignment.center,
-                    child: Container(
-                      width: 108,
-                      height: 108,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: appRed,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.logout, size: 30, color: appWhite),
-                          const SizedBox(height: 7),
-                          Text(
-                            'Sign Out',
-                            style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                                color: appWhite),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+                    child: GestureDetector(
+                      onTap: () {
+                        _authC.logout();
+                      },
+                      child: Container(
+                        width: 108,
+                        height: 108,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: appRed,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.logout, size: 30, color: appWhite),
+                            const SizedBox(height: 7),
+                           Obx(() => _authC.isLoading.value == true ?  Text(
+                              'Please wait...',
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  color: appWhite),
+                              textAlign: TextAlign.center,
+                            ) : Text(
+                              'Sign Out',
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  color: appWhite),
+                              textAlign: TextAlign.center,
+                            ), )
+                          ],
+                        ),
                       ),
                     )),
               ],

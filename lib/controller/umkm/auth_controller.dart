@@ -59,4 +59,6 @@ class UMKMAuthController extends GetxController {
           backgroundColor: appRed, colorText: appWhite);
     }
   }
+
+  
 }
