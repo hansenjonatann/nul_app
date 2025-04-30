@@ -14,7 +14,7 @@ class CategoryDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
-    Datum categoryModel = arguments['categoryModel'] as Datum;
+    Category categoryModel = arguments['categoryModel'] as Category;
     return Scaffold(
         body: SafeArea(
             child: Column(
@@ -32,7 +32,7 @@ class CategoryDetailScreen extends StatelessWidget {
                   },
                   icon: const Icon(Icons.arrow_back_ios)),
               SizedBox(width: MediaQuery.of(context).size.width * 0.2),
-              Text(categoryModel.name,
+              Text('Name',
                   style: GoogleFonts.montserrat(
                       color: appPrimary,
                       fontWeight: FontWeight.bold,

@@ -23,7 +23,7 @@ class AuthController extends GetxController {
             backgroundColor: const Color(0xff28a745), colorText: appWhite);
         box.write('token', response.data['token']);
         print(response.data['token']);
-        Get.toNamed('/home');
+        Get.offNamed('/home');
       } else if (response.statusCode == 500) {
         isLoading.value = false;
         Get.snackbar('Failed', 'Invalid Credentialas!',

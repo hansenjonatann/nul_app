@@ -51,7 +51,7 @@ class UMKMAuthController extends GetxController {
             'Success Login as UMKM');
 
         box.write('token', response.data['token']);
-        Get.toNamed('/umkm/main');
+        Get.offNamed('/umkm/main');
       }
     } catch (e) {
       isLoading.value = false;

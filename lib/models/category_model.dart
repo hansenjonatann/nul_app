@@ -1,62 +1,26 @@
-// To parse this JSON data, do
-//
-//     final categoryModel = categoryModelFromJson(jsonString);
+class Category {
+  int? id;
+  String? name;
+  String? icon;
 
-import 'dart:convert';
+  Category({this.id, this.name, this.icon});
 
-CategoryModel categoryModelFromJson(String str) =>
-    CategoryModel.fromJson(json.decode(str));
+  Category.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    icon = json['icon'];
+  }
 
-String categoryModelToJson(CategoryModel data) => json.encode(data.toJson());
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['icon'] = icon;
+    return data;
+  }
 
-class CategoryModel {
-  List<Datum> data;
-
-  CategoryModel({
-    required this.data,
-  });
-
-  factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-      };
-}
-
-class Datum {
-  int id;
-  String name;
-  String icon;
-  dynamic createdAt;
-  dynamic updatedAt;
-  dynamic deletedAt;
-
-  Datum({
-    required this.id,
-    required this.name,
-    required this.icon,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt,
-  });
-
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        id: json["id"],
-        name: json["name"],
-        icon: json["icon"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
-        deletedAt: json["deleted_at"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "icon": icon,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
-        "deleted_at": deletedAt,
-      };
+  static List<Category> fromJsonList(List list) {
+    if (list.length == 0) return List<Category>.empty();
+    return list.map((item) => Category.fromJson(item)).toList();
+  }
 }
