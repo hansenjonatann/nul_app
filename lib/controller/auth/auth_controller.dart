@@ -14,7 +14,7 @@ class AuthController extends GetxController {
   void login({required String name, required String password}) async {
     try {
       isLoading.value = true;
-      final response = await dio.post('${API_URL}user/auth/login',
+      final response = await dio.post('${API_DEV_URL}user/auth/login',
           data: {'name': name, 'password': password});
 
       if (response.statusCode == 200) {
@@ -61,7 +61,7 @@ class AuthController extends GetxController {
         return;
       }
 
-      final response = await dio.post('${API_URL}user/auth/register', data: {
+      final response = await dio.post('${API_DEV_URL}user/auth/register', data: {
         'name': name,
         'email': email,
         'phoneNumber': phone,

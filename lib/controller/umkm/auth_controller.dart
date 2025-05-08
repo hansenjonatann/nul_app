@@ -16,7 +16,7 @@ class UMKMAuthController extends GetxController {
       required String phoneNumber}) async {
     try {
       isLoading.value = true;
-      final response = await dio.post('${API_URL}umkm/auth/register', data: {
+      final response = await dio.post('${API_DEV_URL}umkm/auth/register', data: {
         'name': name,
         'email': email,
         'phoneNumber': phoneNumber,
@@ -39,7 +39,7 @@ class UMKMAuthController extends GetxController {
   void login({required String email, required String password}) async {
     try {
       isLoading.value = true;
-      final response = await dio.post('${API_URL}umkm/auth/login',
+      final response = await dio.post('${API_DEV_URL}umkm/auth/login',
           data: {'email': email, 'password': password});
 
       if (response.statusCode == 200) {
