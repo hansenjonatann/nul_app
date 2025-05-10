@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
-// import 'package:nul_app/models/card_model.dart';
 import 'package:nul_app/models/category_model.dart';
-// import 'package:nul_app/utils/image_dir.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
@@ -15,88 +13,99 @@ class CategoryDetailScreen extends StatelessWidget {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
     Category categoryModel = arguments['categoryModel'] as Category;
+
     return Scaffold(
-        body: SafeArea(
-            child: Column(
-      children: [
-        const SizedBox(
-          height: 10.0,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            children: [
-              IconButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  icon: const Icon(Icons.arrow_back_ios)),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.2),
-              Text('Name',
-                  style: GoogleFonts.montserrat(
+      body: SafeArea(
+        child: Column(
+          children: [
+            const SizedBox(height: 10.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: const Icon(Icons.arrow_back_ios),
+                  ),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.2),
+                  Text(
+                    categoryModel.name ?? "Category",
+                    style: GoogleFonts.montserrat(
                       color: appPrimary,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20))
-            ],
-          ),
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30.0),
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                itemCount: categoryModel.locations?.length ?? 0,
+                itemBuilder: (context, index) {
+                  final location = categoryModel.locations![index];
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 15.0),
+                    child: InkWell(
+                      onTap: () {
+                        Get.toNamed('/location-detail', arguments: {
+                          'locationModel': location,
+                        });
+                      },
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 80,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              color: appPrimary.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.location_on,
+                                size: 30,
+                                color: appPrimary,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 15),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  location.name ?? "Location Name",
+                                  style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  location.rating.toString() ?? '0',
+                                  style: GoogleFonts.montserrat(fontSize: 14),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
-        const SizedBox(
-          height: 30.0,
-        ),
-        // Column(
-        //   children: List.generate(cardList.length, (index) {
-        //     return Column(
-        //       children: [
-        //         Padding(
-        //           padding: const EdgeInsets.symmetric(horizontal: 10),
-        //           child: Row(
-        //             children: [
-        //               InkWell(
-        //                 onTap: () {
-
-        //                   Get.toNamed('/card-detail'  , arguments: {'cardModel' : cardList[index]});
-        //                 },
-        //                 child: Container(
-        //                     height: 120,
-        //                     width: 120,
-        //                     decoration: BoxDecoration(
-        //                         color: Colors.transparent,
-        //                         borderRadius: BorderRadius.circular(20)),
-        //                     child: Image.asset(cardList[index].image.toString(),
-        //                         fit: BoxFit.cover)),
-        //               ),
-        //               const SizedBox(
-        //                 width: 10.0,
-        //               ),
-        //               Expanded(
-        //                 child: Column(
-        //                   crossAxisAlignment: CrossAxisAlignment.start,
-        //                   children: [
-        //                     Text(cardList[index].title,
-        //                         style: GoogleFonts.montserrat(
-        //                           fontWeight: FontWeight.bold,
-        //                         )),
-        //                     const SizedBox(
-        //                       height: 10.0,
-        //                     ),
-        //                     Text(
-        //                       cardList[index].description,
-        //                       overflow: TextOverflow.fade,
-        //                     )
-        //                   ],
-        //                 ),
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //         const SizedBox(
-        //           height: 15.0,
-        //         ),
-        //       ],
-        //     );
-        //   }),
-        // )
-      ],
-    )));
+      ),
+    );
   }
 }

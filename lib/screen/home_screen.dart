@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
+import 'package:nul_app/controller/auth/auth_controller.dart';
 import 'package:nul_app/controller/category_controller.dart';
+import 'package:nul_app/controller/umkm/auth_controller.dart';
 import 'package:nul_app/models/card_model.dart';
 import 'package:nul_app/utils/image_dir.dart';
 import 'package:nul_app/widget/card_item.dart';
@@ -10,6 +12,8 @@ import 'package:nul_app/widget/custom_bottom_navbar.dart';
 import 'package:get/get.dart';
 
 import '../models/menu_model.dart';
+
+AuthController _authC = Get.put(AuthController());
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -52,48 +56,56 @@ class HomeScreen extends StatelessWidget {
 }
 
 Widget _buildProfileSection() {
-  return Column(
-    children: [
-      const SizedBox(height: 30),
-      // Header
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+  return Obx(() {
+    final user = _authC.userProfile.value;
+    print(user);
+    return _authC.isLoading.value
+        ? Center(child: CircularProgressIndicator())
+        : Column(
             children: [
-              Text(
-                'Selamat Datang,',
-                style: GoogleFonts.montserrat(
-                    fontSize: 20, fontWeight: FontWeight.w500),
-              ),
-              Text(
-                '白鹿',
-                style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.bold, fontSize: 22),
+              const SizedBox(height: 30),
+              // Header
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Selamat Datang,',
+                        style: GoogleFonts.montserrat(
+                            fontSize: 20, fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        user.name ?? 'No Name',
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.bold, fontSize: 22),
+                      ),
+                    ],
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed('/profile');
+                    },
+                    child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: appPrimary,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: user.pitcureUrl != null
+                              ? NetworkImage('${user.pitcureUrl}')
+                              : AssetImage(ImageDir.profile),
+                        )),
+                  ),
+                ],
               ),
             ],
-          ),
-          InkWell(
-            onTap: () {
-              Get.toNamed('/profile');
-            },
-            child: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: appPrimary,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: const CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage(ImageDir.profile),
-                )),
-          ),
-        ],
-      ),
-    ],
-  );
+          );
+  });
 }
 
 Widget _buildSearch() {

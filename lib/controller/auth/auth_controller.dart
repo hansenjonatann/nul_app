@@ -1,15 +1,18 @@
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:nul_app/constants/color.dart';
 import 'package:nul_app/constants/url.dart';
 import 'package:flutter/material.dart';
+import 'package:nul_app/models/auth/user_model.dart';
 
 final dio = Dio();
 final box = GetStorage();
 
 class AuthController extends GetxController {
   final isLoading = false.obs;
+  final userProfile = Rx<User>(User());
 
   void login({required String name, required String password}) async {
     try {
@@ -22,19 +25,13 @@ class AuthController extends GetxController {
         Get.snackbar('Success', "Login Success!",
             backgroundColor: const Color(0xff28a745), colorText: appWhite);
         box.write('token', response.data['token']);
-        print(response.data['token']);
-        Get.offNamed('/home');
-      } else if (response.statusCode == 500) {
-        isLoading.value = false;
-        Get.snackbar('Failed', 'Invalid Credentialas!',
-            backgroundColor: appRed, colorText: appWhite);
-        return;
+        profile();
+        Get.toNamed('/home');
       }
     } catch (error) {
       isLoading.value = false;
-      Get.snackbar('Failed', 'Internal Server Error',
+      Get.snackbar('Failed', 'Invalid Credentials',
           backgroundColor: appRed, colorText: appWhite);
-      Get.offNamed('/login');
     }
   }
 
@@ -61,7 +58,8 @@ class AuthController extends GetxController {
         return;
       }
 
-      final response = await dio.post('${API_DEV_URL}user/auth/register', data: {
+      final response =
+          await dio.post('${API_DEV_URL}user/auth/register', data: {
         'name': name,
         'email': email,
         'phoneNumber': phone,
@@ -95,7 +93,7 @@ class AuthController extends GetxController {
       final token = box.read('token'); // ambil token dari local storage
 
       final response = await dio.post(
-        '${API_URL}user/auth/logout',
+        '${API_DEV_URL}user/auth/logout',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token', // <-- benerin ini
@@ -104,13 +102,13 @@ class AuthController extends GetxController {
         ),
       );
 
-
       if (response.statusCode == 200) {
-        isLoading.value = false; 
+        isLoading.value = false;
         await box.remove('token');
-    Get.snackbar('Success' , 'Logout Success' , backgroundColor: appSuccess , colorText: appWhite);
-  print('token' , );
-        Get.offAllNamed('/login'); 
+        Get.snackbar('Success', 'Logout Success',
+            backgroundColor: appSuccess, colorText: appWhite);
+
+        Get.offAllNamed('/login');
       } else {
         isLoading.value = false;
         Get.snackbar(
@@ -130,6 +128,27 @@ class AuthController extends GetxController {
         backgroundColor: appRed,
         colorText: appWhite,
       );
+    }
+  }
+
+  void profile() async {
+    try {
+      isLoading.value = true;
+      final token = box.read('token');
+
+      Map<String, dynamic> payload = Jwt.parseJwt(token);
+      final response = await dio.get(
+          '${API_DEV_URL}user/auth/me?id=${payload['id']}',
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+      if (response.statusCode == 200) {
+        isLoading.value = false;
+        userProfile.value = User.fromJson(response.data['data']);
+      }
+    } catch (err) {
+      Get.snackbar('Error', err.toString(),
+          backgroundColor: appRed, colorText: appWhite);
+      print(err);
     }
   }
 }

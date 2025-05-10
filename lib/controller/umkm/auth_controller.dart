@@ -1,13 +1,16 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:dio/dio.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:nul_app/constants/url.dart';
 import 'package:nul_app/core.dart';
+import 'package:nul_app/models/auth/user_model.dart';
 
 class UMKMAuthController extends GetxController {
   final isLoading = false.obs;
   final box = GetStorage();
   Dio dio = Dio();
+  final umkmProfile = Rx<User>(User());
 
   void register(
       {required String name,
@@ -16,12 +19,13 @@ class UMKMAuthController extends GetxController {
       required String phoneNumber}) async {
     try {
       isLoading.value = true;
-      final response = await dio.post('${API_DEV_URL}umkm/auth/register', data: {
-        'name': name,
-        'email': email,
-        'phoneNumber': phoneNumber,
-        'password': password
-      });
+      final response = await dio.post('${API_DEV_URL}umkm/auth/register',
+          data: {
+            'name': name,
+            'email': email,
+            'phoneNumber': phoneNumber,
+            'password': password
+          });
 
       if (response.statusCode == 201) {
         isLoading.value = false;
@@ -39,6 +43,7 @@ class UMKMAuthController extends GetxController {
   void login({required String email, required String password}) async {
     try {
       isLoading.value = true;
+
       final response = await dio.post('${API_DEV_URL}umkm/auth/login',
           data: {'email': email, 'password': password});
 
@@ -51,6 +56,7 @@ class UMKMAuthController extends GetxController {
             'Success Login as UMKM');
 
         box.write('token', response.data['token']);
+        profile();
         Get.offNamed('/umkm/main');
       }
     } catch (e) {
@@ -60,5 +66,25 @@ class UMKMAuthController extends GetxController {
     }
   }
 
-  
+  void profile() async {
+    try {
+      isLoading.value = true;
+      final token = box.read('token');
+      Map<String, dynamic> payload = Jwt.parseJwt(token);
+
+      final response = await dio.get(
+        '${API_DEV_URL}umkm/auth/profile?id=${payload['id']}',
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+
+      if (response.statusCode == 200) {
+        final data = response.data['data'];
+        umkmProfile.value = User.fromJson(data);
+      }
+    } catch (err) {
+      print('Error getting profile: $err');
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }

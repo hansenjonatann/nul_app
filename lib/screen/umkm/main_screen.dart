@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nul_app/controller/umkm/auth_controller.dart';
+import 'package:nul_app/controller/umkm/location_controller.dart';
 import 'package:nul_app/core.dart';
 
+// ignore: must_be_immutable
 class UMKMMainScreen extends StatelessWidget {
   UMKMMainScreen({super.key});
 
@@ -50,21 +53,25 @@ class UMKMMainScreen extends StatelessWidget {
                           children: [
                             const Icon(Icons.logout, size: 30, color: appWhite),
                             const SizedBox(height: 7),
-                           Obx(() => _authC.isLoading.value == true ?  Text(
-                              'Please wait...',
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  color: appWhite),
-                              textAlign: TextAlign.center,
-                            ) : Text(
-                              'Sign Out',
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  color: appWhite),
-                              textAlign: TextAlign.center,
-                            ), )
+                            Obx(
+                              () => _authC.isLoading.value == true
+                                  ? Text(
+                                      'Please wait...',
+                                      style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: appWhite),
+                                      textAlign: TextAlign.center,
+                                    )
+                                  : Text(
+                                      'Sign Out',
+                                      style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: appWhite),
+                                      textAlign: TextAlign.center,
+                                    ),
+                            )
                           ],
                         ),
                       ),
@@ -136,63 +143,72 @@ Widget _buildFeaturesSection() {
 }
 
 Widget _buildProfileSection() {
-  return Container(
-    width: double.infinity,
-    height: 120,
-    decoration: BoxDecoration(
-      color: appPrimary,
-      borderRadius: BorderRadius.only(
-        bottomLeft: Radius.circular(15),
-        bottomRight: Radius.circular(30),
-        topLeft: Radius.circular(30),
-        topRight: Radius.circular(15),
+  UMKMAuthController _umkmAuthC = Get.find<UMKMAuthController>();
+
+  return Obx(() {
+    final user = _umkmAuthC.umkmProfile.value;
+
+    return Container(
+      width: double.infinity,
+      height: 120,
+      decoration: BoxDecoration(
+        color: appPrimary,
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(15),
+          bottomRight: Radius.circular(30),
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(15),
+        ),
       ),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(120)),
-            child: CircleAvatar(
-              radius: 120,
-              backgroundImage: AssetImage(
-                ImageDir.profile,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(120),
+              ),
+              child: const CircleAvatar(
+                radius: 120,
+                backgroundImage: AssetImage(ImageDir.profile),
               ),
             ),
-          ),
-          const SizedBox(
-            width: 20.0,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Nama Owner',
-                style: GoogleFonts.montserrat(
-                    color: appWhite, fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              const SizedBox(
-                height: 5.0,
-              ),
-              Text(
-                'Nama Owner',
-                style: GoogleFonts.montserrat(
-                    color: appWhite, fontWeight: FontWeight.bold, fontSize: 15),
-              ),
-            ],
-          ),
-        ],
+            const SizedBox(width: 20.0),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  user.name ?? 'No Name',
+                  style: GoogleFonts.montserrat(
+                    color: appWhite,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(height: 5.0),
+                Text(
+                  user.email ?? 'No Email',
+                  style: GoogleFonts.montserrat(
+                    color: appWhite,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  });
 }
 
 Widget _buildStatsSection() {
+  UMKMLocationController _locationC = Get.put(UMKMLocationController());
   return Row(
     children: [
       Expanded(
@@ -234,7 +250,7 @@ Widget _buildStatsSection() {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('7',
+              Text(_locationC.locations.value.length.toString(),
                   style: GoogleFonts.montserrat(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

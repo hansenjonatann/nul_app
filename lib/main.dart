@@ -32,6 +32,7 @@ class NulApp extends StatelessWidget {
         GetPage(name: '/favorite', page: () => FavoriteScreen()),
         GetPage(name: '/umkm/main', page: () => UMKMMainScreen()),
         GetPage(name: '/umkm/location', page: () => UMKMLocationScreen()),
+        GetPage(name: '/category-detail', page: () => CategoryDetailScreen()),
       ],
     );
   }
