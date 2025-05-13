@@ -6,6 +6,7 @@ import 'package:nul_app/controller/umkm/location_controller.dart';
 import 'package:nul_app/core.dart';
 
 // ignore: must_be_immutable
+
 class UMKMMainScreen extends StatelessWidget {
   UMKMMainScreen({super.key});
 
@@ -143,7 +144,7 @@ Widget _buildFeaturesSection() {
 }
 
 Widget _buildProfileSection() {
-  UMKMAuthController _umkmAuthC = Get.find<UMKMAuthController>();
+  final _umkmAuthC = Get.put(UMKMAuthController());
 
   return Obx(() {
     final user = _umkmAuthC.umkmProfile.value;
@@ -250,11 +251,11 @@ Widget _buildStatsSection() {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(_locationC.locations.value.length.toString(),
+              Obx(() => Text(_locationC.locations.value.length.toString(),
                   style: GoogleFonts.montserrat(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: appWhite)),
+                      color: appWhite))),
               const SizedBox(
                 width: 10.0,
               ),

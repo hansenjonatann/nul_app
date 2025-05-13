@@ -57,7 +57,7 @@ class UMKMAuthController extends GetxController {
 
         box.write('token', response.data['token']);
         profile();
-        Get.offNamed('/umkm/main');
+        Get.toNamed('/umkm/main');
       }
     } catch (e) {
       isLoading.value = false;
