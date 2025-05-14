@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:nul_app/screen/auth/umkm/location_screen.dart';
 import 'package:nul_app/screen/auth/umkm/login_screen.dart';
 import 'package:nul_app/screen/auth/umkm/register_screen.dart';
+import 'package:nul_app/screen/location_detail_screen.dart';
 import 'package:nul_app/screen/umkm/main_screen.dart';
 
 void main() => runApp(NulApp());
@@ -33,6 +34,7 @@ class NulApp extends StatelessWidget {
         GetPage(name: '/umkm/main', page: () => UMKMMainScreen()),
         GetPage(name: '/umkm/location', page: () => UMKMLocationScreen()),
         GetPage(name: '/category-detail', page: () => CategoryDetailScreen()),
+        GetPage(name: '/location-detail', page: () => LocationDetailScreen()),
       ],
     );
   }

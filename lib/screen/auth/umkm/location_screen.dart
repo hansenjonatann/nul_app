@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
-import 'package:nul_app/controller/umkm/location_controller.dart';
+import 'package:nul_app/controller/location_controller.dart';
 import 'package:nul_app/core.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:nul_app/models/category_model.dart';
 import 'package:nul_app/models/tag_model.dart';
 import 'package:nul_app/controller/tag_controller.dart';
 
-UMKMLocationController _locationC = Get.put(UMKMLocationController());
+LocationController _locationC = Get.put(LocationController());
 
 // ignore: must_be_immutable
 class UMKMLocationScreen extends StatelessWidget {

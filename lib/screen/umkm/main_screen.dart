@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/controller/umkm/auth_controller.dart';
-import 'package:nul_app/controller/umkm/location_controller.dart';
+import 'package:nul_app/controller/location_controller.dart';
 import 'package:nul_app/core.dart';
 
 // ignore: must_be_immutable
@@ -209,7 +209,7 @@ Widget _buildProfileSection() {
 }
 
 Widget _buildStatsSection() {
-  UMKMLocationController _locationC = Get.put(UMKMLocationController());
+  LocationController _locationC = Get.put(LocationController());
   return Row(
     children: [
       Expanded(

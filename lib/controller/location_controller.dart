@@ -10,20 +10,26 @@ import 'package:nul_app/models/location_model.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class UMKMLocationController extends GetxController {
+class LocationController extends GetxController {
   RxBool isLoading = false.obs;
   final box = GetStorage();
   final dio = Dio();
   final locations = Rx<List<Location>>([]);
   final selectedFile = Rxn<PlatformFile>();
+  final selectedLocation = Rx<Location>(Location());
+  final hasFetchedLocations = false.obs;
 
   @override
   void onInit() {
-    getLocations();
     super.onInit();
+    final token = box.read('token');
+    if (token != null && !hasFetchedLocations.value) {
+      getLocations();
+    }
   }
 
   void getLocations() async {
+    if (hasFetchedLocations.value) return;
     try {
       isLoading.value = true;
       final token = box.read('token');
@@ -32,13 +38,13 @@ class UMKMLocationController extends GetxController {
             'Authorization': "Bearer $token",
             "Accept": "application/json"
           }));
+      print(response);
       if (response.statusCode == 200) {
         final data = response.data['data'] as List<dynamic>;
         locations.value = data
             .map((item) => Location.fromJson(item as Map<String, dynamic>))
             .toList();
-        print(data);
-        isLoading.value = false;
+        hasFetchedLocations.value = true;
       }
     } catch (err) {
       isLoading.value = false;
@@ -226,5 +232,37 @@ class UMKMLocationController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Future<void> detailLocation({required int id}) async {
+    try {
+      isLoading.value = true;
+      final token = box.read('token');
+      final response = await dio.get(
+          '${API_DEV_URL}user/location/detail?locationId=${id}',
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+      print(response);
+      if (response.statusCode == 200) {
+        isLoading.value = false;
+        final data = response.data['data'];
+        selectedLocation.value = Location.fromJson(data);
+      }
+    } catch (e) {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> deleteLocation({required int id}) async {
+    try {
+      isLoading.value = true;
+      final token = box.read('token');
+      final response = await dio.delete('${API_DEV_URL}umkm/location/delete',
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+      print(response);
+      if (response.statusCode == 200) {
+        // Get.snackbar('Sucess');
+      }
+    } catch (err) {}
   }
 }

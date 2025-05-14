@@ -3,8 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({super.key, required this.categoryModel});
+  CategoryItem({super.key, required this.categoryModel});
 
   final dynamic categoryModel;
 
@@ -20,10 +21,8 @@ class CategoryItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        if (categoryModel != null) {
-          Get.toNamed('/category-detail',
-              arguments: {'categoryModel': categoryModel});
-        }
+        Get.toNamed('/category-detail',
+            arguments: {'categoryId': categoryModel.id ?? 1});
       },
       child: Container(
         width: 108,

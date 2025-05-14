@@ -8,7 +8,7 @@ class CategoryController extends GetxController {
   final dio = Dio();
   final categories = Rx<List<Category>>([]);
   RxBool isLoading = false.obs;
-  final selectedCategory = Rxn<Category>();
+  final selectedCategory = Rx<Category>(Category());
 
   @override
   void onInit() {
@@ -22,6 +22,7 @@ class CategoryController extends GetxController {
       final response = await dio.get('${API_DEV_URL}category');
 
       if (response.statusCode == 200) {
+        isLoading.value = false;
         final List<dynamic> dataList = response.data['data'];
         categories.value = Category.fromJsonList(dataList);
       }
@@ -38,10 +39,11 @@ class CategoryController extends GetxController {
     }
   }
 
-  void getDetailCategory({required int id}) async {
+  Future<void> getDetailCategory({required int id}) async {
     try {
       isLoading.value = true;
       final response = await dio.get('${API_DEV_URL}category/detail/$id');
+      print(response);
 
       if (response.statusCode == 200) {
         final data = response.data['data'];
