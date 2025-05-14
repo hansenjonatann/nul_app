@@ -1,28 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
+import 'package:nul_app/models/category_model.dart'; // Import modelnya
 import 'package:get/get.dart';
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({super.key, required this.categoryModel});
+   CategoryItem({super.key, required this.categoryModel});
 
-  final dynamic categoryModel;
+ 
+
+
+
+  final Category categoryModel;
 
   @override
   Widget build(BuildContext context) {
-    // Ensure categoryModel is not null before accessing its properties
-    final String icon = categoryModel != null && categoryModel.icon != null
-        ? categoryModel.icon
-        : '';
-    final String name = categoryModel != null && categoryModel.name != null
-        ? categoryModel.name
-        : 'No Name';
+    final String icon = categoryModel.icon ?? '';
+    final String name = categoryModel.name ?? 'No Name';
 
     return GestureDetector(
       onTap: () {
-        if (categoryModel != null) {
-          Get.toNamed('/category-detail',
-              arguments: {'categoryModel': categoryModel});
+        if (categoryModel.id != null) {
+
+          // Setelah dapat detail, navigate ke detail screen
+          Get.toNamed('/category-detail', arguments: {
+            'categoryId': categoryModel.id,
+          });
+        } else {
+          Get.snackbar(
+            'Error',
+            'Invalid category data',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: appRed,
+            colorText: Colors.white,
+          );
         }
       },
       child: Container(
@@ -40,6 +51,11 @@ class CategoryItem extends StatelessWidget {
                     icon,
                     width: 40,
                     height: 40,
+                    errorBuilder: (context, error, stackTrace) => const Icon(
+                      Icons.broken_image,
+                      size: 40,
+                      color: Colors.grey,
+                    ),
                   )
                 : const Icon(Icons.image_not_supported, size: 40),
             const SizedBox(height: 7),

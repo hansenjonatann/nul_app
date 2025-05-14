@@ -6,8 +6,10 @@ class Location {
   String? imageUrl;
   double? rating;
   List<Tag>? tags;
+  String? desc;
+  bool? isFavorite;
 
-  Location({this.id, this.name, this.imageUrl, this.rating, this.tags});
+  Location({this.id, this.name, this.imageUrl, this.rating, this.tags , this.desc , this.isFavorite});
 
   factory Location.fromJson(Map<String, dynamic> json) {
     return Location(
@@ -20,6 +22,8 @@ class Location {
               .map((tagJson) => Tag.fromJson(tagJson))
               .toList()
           : [],
+      desc: json['desc'],
+      isFavorite: json['is_favorite']
     );
   }
 
@@ -30,6 +34,8 @@ class Location {
       'image_url': imageUrl,
       'rating': rating,
       'tags': tags?.map((tag) => tag.toJson()).toList(),
+      'desc':desc , 
+      'is_favorite' : isFavorite
     };
   }
 }

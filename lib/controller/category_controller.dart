@@ -41,12 +41,12 @@ class CategoryController extends GetxController {
   void getDetailCategory({required int id}) async {
     try {
       isLoading.value = true;
-      final response = await dio.get('${API_DEV_URL}category/detail/$id');
+      final response = await dio.get('${API_DEV_URL}category/detail/${id}');
+
 
       if (response.statusCode == 200) {
         final data = response.data['data'];
 
-        // Parsing the response to Category model
         selectedCategory.value = Category.fromJson(data);
       }
     } catch (err) {

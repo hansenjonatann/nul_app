@@ -152,9 +152,11 @@ class UMKMLocationScreen extends StatelessWidget {
 }
 
 Widget _formCreateLocation() {
-  TextEditingController _nameC = new TextEditingController();
+  final TextEditingController _nameC = new TextEditingController();
+  final TextEditingController _descC = new TextEditingController();
   CategoryController _categoryC = Get.put(CategoryController());
   TagController _tagC = Get.put(TagController());
+  
   return Container(
     width: double.infinity,
     decoration: const BoxDecoration(color: appWhite),
@@ -172,6 +174,15 @@ Widget _formCreateLocation() {
               const SizedBox(
                 height: 10.0,
               ),
+               CustomTextField(
+                  label: 'Desc',
+                  fieldController: _descC,
+                  hint: 'Your Location Description',
+                  hidden: false),
+              const SizedBox(
+                height: 10.0,
+              ),
+       
               Obx(
                 () => DropdownButtonHideUnderline(
                   child: DropdownButton2(
@@ -258,6 +269,7 @@ Widget _formCreateLocation() {
               const SizedBox(
                 height: 30.0,
               ),
+              
               GestureDetector(
                   onTap: () {
                     final category = _categoryC.selectedCategory.value;
@@ -276,6 +288,7 @@ Widget _formCreateLocation() {
                       name: _nameC.text,
                       categoryId: category.id ?? 0,
                       tagIds: [tag.id ?? 0],
+                      desc: _descC.text
                     );
                   },
                   child: Container(

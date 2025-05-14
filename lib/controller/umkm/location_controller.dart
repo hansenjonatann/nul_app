@@ -139,6 +139,7 @@ class UMKMLocationController extends GetxController {
 
   Future<void> createLocation({
     required String name,
+    required String desc,
     required int categoryId,
     required List<int> tagIds,
   }) async {

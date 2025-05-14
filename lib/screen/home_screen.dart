@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
 import 'package:nul_app/controller/auth/auth_controller.dart';
 import 'package:nul_app/controller/category_controller.dart';
-import 'package:nul_app/controller/umkm/auth_controller.dart';
 import 'package:nul_app/models/card_model.dart';
 import 'package:nul_app/utils/image_dir.dart';
 import 'package:nul_app/widget/card_item.dart';
