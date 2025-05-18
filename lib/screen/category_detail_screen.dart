@@ -15,7 +15,7 @@ class CategoryDetailScreen extends StatelessWidget {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (categoryId != null &&
-          _categoryC.selectedCategory.value.id != categoryId) {
+          _categoryC.detailedCategory.value.id != categoryId) {
         _categoryC.getDetailCategory(id: categoryId);
       }
     });
@@ -27,7 +27,7 @@ class CategoryDetailScreen extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          final categoryModel = _categoryC.selectedCategory.value;
+          final categoryModel = _categoryC.detailedCategory.value;
 
           if (categoryModel.id == null) {
             return const Center(child: Text("No Data"));

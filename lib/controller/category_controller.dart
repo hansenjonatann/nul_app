@@ -8,7 +8,8 @@ class CategoryController extends GetxController {
   final dio = Dio();
   final categories = Rx<List<Category>>([]);
   RxBool isLoading = false.obs;
-  final selectedCategory = Rx<Category>(Category());
+  final selectedCategory = Rxn<Category>();
+  final detailedCategory = Rx<Category>(Category());
 
   @override
   void onInit() {
@@ -23,8 +24,8 @@ class CategoryController extends GetxController {
 
       if (response.statusCode == 200) {
         isLoading.value = false;
-        final List<dynamic> dataList = response.data['data'];
-        categories.value = Category.fromJsonList(dataList);
+        final List<dynamic> data = response.data['data'];
+        categories.value = Category.fromJsonList(data);
       }
     } catch (e) {
       Get.snackbar(
@@ -49,7 +50,7 @@ class CategoryController extends GetxController {
         final data = response.data['data'];
 
         // Parsing the response to Category model
-        selectedCategory.value = Category.fromJson(data);
+        detailedCategory.value = Category.fromJson(data);
       }
     } catch (err) {
       Get.snackbar(

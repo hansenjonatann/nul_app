@@ -13,6 +13,7 @@ void main() => runApp(NulApp());
 final box = GetStorage();
 
 class NulApp extends StatelessWidget {
+  final AuthController _authC = Get.put(AuthController(), permanent: true);
   final token = box.read('token');
   NulApp({super.key});
   @override

@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nul_app/constants/color.dart';
 import 'package:nul_app/controller/location_controller.dart';
 import 'package:nul_app/core.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:nul_app/models/category_model.dart';
-import 'package:nul_app/models/tag_model.dart';
 import 'package:nul_app/controller/tag_controller.dart';
+import 'package:text_area/text_area.dart';
 
 LocationController _locationC = Get.put(LocationController());
 
-// ignore: must_be_immutable
 class UMKMLocationScreen extends StatelessWidget {
-  UMKMLocationScreen({super.key});
+  const UMKMLocationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +32,7 @@ class UMKMLocationScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
             children: [
-              const SizedBox(
-                height: 10.0,
-              ),
+              const SizedBox(height: 10.0),
               Expanded(
                 child: Obx(
                   () => _locationC.isLoading.value
@@ -64,7 +59,7 @@ class UMKMLocationScreen extends StatelessWidget {
                                   confirmDismiss: (direction) async {
                                     bool? result =
                                         await Get.defaultDialog<bool>(
-                                      contentPadding: EdgeInsets.all(8),
+                                      contentPadding: const EdgeInsets.all(8),
                                       title: 'Delete Confirmation',
                                       middleText:
                                           'Are you sure want to delete this location?',
@@ -72,7 +67,8 @@ class UMKMLocationScreen extends StatelessWidget {
                                       textCancel: 'Cancel',
                                       confirmTextColor: Colors.white,
                                       onConfirm: () {
-                                        Get.back(result: true);
+                                        _locationC.deleteLocation(
+                                            id: location.id ?? 0);
                                       },
                                       onCancel: () {
                                         Get.back(result: false);
@@ -80,20 +76,13 @@ class UMKMLocationScreen extends StatelessWidget {
                                     );
                                     return result ?? false;
                                   },
-                                  onDismissed: (direction) {
-                                    // _locationC.locations.remove(location);
-                                    Get.snackbar('Deleted',
-                                        '${location.name} has been deleted',
-                                        backgroundColor: Colors.red,
-                                        colorText: Colors.white);
-                                  },
                                   background: Container(
                                     color: Colors.red,
                                     alignment: Alignment.centerRight,
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
-                                    child:
-                                        Icon(Icons.delete, color: Colors.white),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: const Icon(Icons.delete,
+                                        color: Colors.white),
                                   ),
                                   child: ListTile(
                                     leading: CircleAvatar(
@@ -106,19 +95,13 @@ class UMKMLocationScreen extends StatelessWidget {
                                       style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    subtitle: Text(
-                                      'Tag: $firstTagName',
-                                      style: GoogleFonts.montserrat(),
-                                    ),
+                                    subtitle: Text('Tag: $firstTagName'),
                                     trailing: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Icon(Icons.star,
+                                        const Icon(Icons.star,
                                             color: Colors.amber, size: 20),
-                                        Text(
-                                          '${location.rating}',
-                                          style: GoogleFonts.montserrat(),
-                                        ),
+                                        Text('${location.rating}'),
                                       ],
                                     ),
                                   ),
@@ -131,169 +114,139 @@ class UMKMLocationScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: GestureDetector(
-        onTap: () {
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
           Get.bottomSheet(_formCreateLocation());
         },
-        child: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-                color: appPrimary, borderRadius: BorderRadius.circular(50)),
-            child: Center(
-                child: Text('+',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: appWhite)))),
+        backgroundColor: appPrimary,
+        child: const Icon(Icons.add, color: appWhite),
       ),
     );
   }
 }
 
 Widget _formCreateLocation() {
-  TextEditingController _nameC = new TextEditingController();
+  final TextEditingController _nameC = TextEditingController();
+  final TextEditingController _descC = TextEditingController();
   CategoryController _categoryC = Get.put(CategoryController());
   TagController _tagC = Get.put(TagController());
+
   return Container(
-    width: double.infinity,
+    padding: const EdgeInsets.all(20),
     decoration: const BoxDecoration(color: appWhite),
     child: SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
+      child: Column(
+        children: [
+          CustomTextField(
+              hidden: false,
+              label: 'Name',
+              fieldController: _nameC,
+              hint: 'Your Location Name'),
+          const SizedBox(height: 10.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomTextField(
-                  label: 'Name',
-                  fieldController: _nameC,
-                  hint: 'Your Location Name',
-                  hidden: false),
+              Text('Description',
+                  style: GoogleFonts.montserrat(
+                      fontSize: 16, fontWeight: FontWeight.bold)),
               const SizedBox(
-                height: 10.0,
+                height: 4.0,
               ),
-              Obx(
-                () => DropdownButtonHideUnderline(
-                  child: DropdownButton2(
-                      isExpanded: true,
-                      hint: Text('Select Category',
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.bold, fontSize: 16)),
-                      items: _categoryC.categories.value
-                          .map((item) => DropdownMenuItem<Category>(
-                                value: item,
-                                child: Text(item.name.toString(),
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: appDarkGrey)),
-                              ))
-                          .toList(),
-                      onChanged: (value) {
-                        _categoryC.selectedCategory.value = value!;
-                      },
-                      value: _categoryC.selectedCategory.value),
-                ),
+              TextArea(
+                borderRadius: 10,
+                borderColor: Colors.black,
+                textEditingController: _descC,
+                suffixIcon: Icons.attach_file_rounded,
+                onSuffixIconPressed: () => {},
+                validation: false,
+                errorText: 'Please type a reason!',
               ),
-              const SizedBox(height: 20),
-              Obx(
-                () => DropdownButtonHideUnderline(
-                  child: DropdownButton2(
-                      isExpanded: true,
-                      hint: Text('Select Tag',
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.bold, fontSize: 16)),
-                      items: _tagC.tags
-                          .map((item) => DropdownMenuItem<Tag>(
-                                value: item,
-                                child: Text(item.name.toString(),
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        color: appDarkGrey)),
-                              ))
-                          .toList(),
-                      onChanged: (value) {
-                        _tagC.selectedTag.value = value!;
-                      },
-                      value: _tagC.selectedTag.value),
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Obx(() => Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _locationC.pickFile();
-                        },
-                        child: Container(
-                            width: double.infinity,
-                            height: 35,
-                            decoration: BoxDecoration(
-                                color: appPrimary,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Center(
-                                child: Text('Upload a image',
-                                    style: GoogleFonts.montserrat(
-                                        color: appWhite, fontSize: 16)))),
-                      ),
-                      if (_locationC.selectedFile.value != null &&
-                          _locationC.selectedFile.value!.bytes != null)
-                        Column(
-                          children: [
-                            const SizedBox(height: 10),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.memory(
-                                _locationC.selectedFile.value!.bytes!,
-                                width: double.infinity,
-                                height: 200,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ],
-                        ),
-                    ],
-                  )),
-              const SizedBox(
-                height: 30.0,
-              ),
-              GestureDetector(
-                  onTap: () {
-                    final category = _categoryC.selectedCategory.value;
-                    final tag = _tagC.selectedTag.value;
-
-                    if (_nameC.text.isEmpty ||
-                        category == null ||
-                        tag == null) {
-                      Get.snackbar('Warning', 'Please fill all fields',
-                          backgroundColor: Colors.orange,
-                          colorText: appDarkGrey);
-                      return;
-                    }
-
-                    _locationC.createLocation(
-                      name: _nameC.text,
-                      categoryId: category.id ?? 0,
-                      tagIds: [tag.id ?? 0],
-                    );
-                  },
-                  child: Container(
-                      width: 200,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          color: appSuccess,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                          child: Obx(() => _locationC.isLoading.value == true
-                              ? const Text('Saving...')
-                              : Text('Save',
-                                  style: GoogleFonts.montserrat(
-                                    color: appWhite,
-                                    fontWeight: FontWeight.bold,
-                                  ))))))
             ],
-          )),
+          ),
+          const SizedBox(
+            height: 10.0,
+          ),
+          GestureDetector(
+            onTap: () {
+              _locationC.pickFile();
+            },
+            child: Container(
+                width: double.infinity,
+                height: 50,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(child: Text('Upload an image'))),
+          ),
+          const SizedBox(
+            height: 10.0,
+          ),
+          if (_locationC.selectedFile.value != null &&
+              _locationC.selectedFile.value!.bytes != null)
+            Column(
+              children: [
+                const SizedBox(height: 10),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.memory(
+                    _locationC.selectedFile.value!.bytes!,
+                    width: double.infinity,
+                    height: 200,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ],
+            ),
+          const SizedBox(
+            height: 10.0,
+          ),
+          Obx(() => DropdownButtonHideUnderline(
+                child: DropdownButton2(
+                  isExpanded: true,
+                  hint: const Text('Select Category'),
+                  items: _categoryC.categories.value
+                      .map((item) => DropdownMenuItem(
+                            value: item,
+                            child: Text(item.name.toString()),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    _categoryC.selectedCategory.value = value;
+                  },
+                  value: _categoryC.selectedCategory.value,
+                ),
+              )),
+          const SizedBox(height: 20),
+          Obx(() => DropdownButtonHideUnderline(
+                child: DropdownButton2(
+                  isExpanded: true,
+                  hint: const Text('Select Tag'),
+                  items: _tagC.tags
+                      .map((item) => DropdownMenuItem(
+                            value: item,
+                            child: Text(item.name.toString()),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    _tagC.selectedTag.value = value;
+                  },
+                  value: _tagC.selectedTag.value,
+                ),
+              )),
+          const SizedBox(height: 30.0),
+          ElevatedButton(
+            onPressed: () {
+              _locationC.createLocation(
+                  name: _nameC.text,
+                  categoryId: _categoryC.selectedCategory.value?.id ?? 0,
+                  tagIds: [_tagC.selectedTag.value?.id ?? 0],
+                  desc: _descC.text);
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
     ),
   );
 }

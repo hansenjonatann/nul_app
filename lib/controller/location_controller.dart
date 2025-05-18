@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:dio/dio.dart';
@@ -7,8 +6,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:nul_app/constants/url.dart';
 import 'package:nul_app/core.dart';
 import 'package:nul_app/models/location_model.dart';
-import 'package:jwt_decode/jwt_decode.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
 class LocationController extends GetxController {
   RxBool isLoading = false.obs;
@@ -17,19 +16,15 @@ class LocationController extends GetxController {
   final locations = Rx<List<Location>>([]);
   final selectedFile = Rxn<PlatformFile>();
   final selectedLocation = Rx<Location>(Location());
-  final hasFetchedLocations = false.obs;
+  final isFavorite = false.obs;
 
   @override
-  void onInit() {
-    super.onInit();
-    final token = box.read('token');
-    if (token != null && !hasFetchedLocations.value) {
-      getLocations();
-    }
+  void onReady() {
+    super.onReady();
+    getLocations();
   }
 
   void getLocations() async {
-    if (hasFetchedLocations.value) return;
     try {
       isLoading.value = true;
       final token = box.read('token');
@@ -38,18 +33,15 @@ class LocationController extends GetxController {
             'Authorization': "Bearer $token",
             "Accept": "application/json"
           }));
-      print(response);
       if (response.statusCode == 200) {
         final data = response.data['data'] as List<dynamic>;
         locations.value = data
             .map((item) => Location.fromJson(item as Map<String, dynamic>))
             .toList();
-        hasFetchedLocations.value = true;
       }
     } catch (err) {
+    } finally {
       isLoading.value = false;
-      Get.snackbar('Error', 'Gagal memuat lokasi: $err',
-          backgroundColor: appRed, colorText: appWhite);
     }
   }
 
@@ -58,22 +50,12 @@ class LocationController extends GetxController {
     final allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
 
     if (ext == null || !allowedExtensions.contains(ext)) {
-      Get.snackbar(
-        'Error',
-        'Only jpeg, jpg, png, or webp files are allowed',
-        backgroundColor: appRed,
-        colorText: appWhite,
-      );
+      Get.snackbar('Error', 'Only jpeg, jpg, png, or webp files are allowed');
       return false;
     }
 
     if (file.size > 2 * 1024 * 1024) {
-      Get.snackbar(
-        'Error',
-        'File size exceeds 2MB limit',
-        backgroundColor: appRed,
-        colorText: appWhite,
-      );
+      Get.snackbar('Error', 'File size exceeds 2MB limit');
       return false;
     }
 
@@ -82,37 +64,14 @@ class LocationController extends GetxController {
 
   Future<void> pickFile() async {
     try {
-      PermissionStatus permission;
-      if (Platform.isAndroid) {
-        try {
-          final version = int.parse(Platform.version.split('.').first);
-          permission = version >= 33
-              ? await Permission.photos.request()
-              : await Permission.storage.request();
-        } catch (e) {
-          permission = await Permission.storage.request();
-        }
-      } else {
-        permission = await Permission.storage.request();
-      }
+      final permission = await Permission.storage.request();
 
       if (permission.isDenied) {
-        Get.snackbar(
-          'Permission Denied',
-          'The app needs permission to select images',
-          backgroundColor: appRed,
-          colorText: appWhite,
-        );
+        Get.snackbar('Permission Denied', 'Storage access is required');
         return;
       }
 
       if (permission.isPermanentlyDenied) {
-        Get.snackbar(
-          'Permission Permanently Denied',
-          'Please enable access in settings',
-          backgroundColor: appRed,
-          colorText: appWhite,
-        );
         await openAppSettings();
         return;
       }
@@ -120,31 +79,19 @@ class LocationController extends GetxController {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.image,
         allowMultiple: false,
-        withData: true,
       );
 
-      if (result != null && result.files.single.path != null) {
-        final file = result.files.single;
-        print(
-            'Selected File: ${file.name}, Extension: ${file.extension}, Path: ${file.path}');
-        if (await _validateImageFile(file)) {
-          selectedFile.value = file;
-          Get.snackbar('Success', 'Image selected successfully',
-              backgroundColor: appSuccess, colorText: appWhite);
-        }
-      } else {
-        Get.snackbar('Cancelled', 'No image selected',
-            backgroundColor: appRed, colorText: appWhite);
+      if (result != null && await _validateImageFile(result.files.single)) {
+        selectedFile.value = result.files.single;
       }
     } catch (err) {
-      Get.snackbar('Error', 'Failed to pick image: $err',
-          backgroundColor: appRed, colorText: appWhite);
-      print('Error picking file: $err');
+      Get.snackbar('Error', 'Failed to pick image: $err');
     }
   }
 
   Future<void> createLocation({
     required String name,
+    required String desc,
     required int categoryId,
     required List<int> tagIds,
   }) async {
@@ -189,6 +136,7 @@ class LocationController extends GetxController {
         'name': name,
         'categoryId': categoryId,
         'tagIds': jsonEncode(tagIds),
+        'desc': desc,
         'image': await MultipartFile.fromFile(
           filePath,
           filename: fileName,
@@ -221,11 +169,7 @@ class LocationController extends GetxController {
       }
     } catch (err) {
       String errorMessage = 'Failed to create location';
-      if (err is DioError && err.response?.data != null) {
-        errorMessage = err.response!.data['error'] ?? errorMessage;
-      } else {
-        errorMessage = err.toString();
-      }
+
       Get.snackbar('Error', errorMessage,
           backgroundColor: appRed, colorText: appWhite);
       print('Error creating location: $err');
@@ -239,15 +183,15 @@ class LocationController extends GetxController {
       isLoading.value = true;
       final token = box.read('token');
       final response = await dio.get(
-          '${API_DEV_URL}user/location/detail?locationId=${id}',
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
-      print(response);
+        '${API_DEV_URL}user/location/detail?locationId=$id',
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
       if (response.statusCode == 200) {
-        isLoading.value = false;
-        final data = response.data['data'];
-        selectedLocation.value = Location.fromJson(data);
+        selectedLocation.value = Location.fromJson(response.data['data']);
       }
-    } catch (e) {
+    } catch (err) {
+      print(err);
+    } finally {
       isLoading.value = false;
     }
   }
@@ -256,13 +200,20 @@ class LocationController extends GetxController {
     try {
       isLoading.value = true;
       final token = box.read('token');
-      final response = await dio.delete('${API_DEV_URL}umkm/location/delete',
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
-
+      final response = await dio.delete(
+        '${API_DEV_URL}umkm/location/delete/$id',
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
       print(response);
       if (response.statusCode == 200) {
-        // Get.snackbar('Sucess');
+        isLoading.value = false;
+        Get.snackbar('Success', 'Location deleted successfully');
+        getLocations();
       }
-    } catch (err) {}
+    } catch (err) {
+      Get.snackbar('Error', 'Failed to delete location: $err');
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

@@ -12,8 +12,6 @@ import 'package:get/get.dart';
 
 import '../models/menu_model.dart';
 
-AuthController _authC = Get.put(AuthController());
-
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -56,6 +54,7 @@ class HomeScreen extends StatelessWidget {
 
 Widget _buildProfileSection() {
   return Obx(() {
+    final _authC = Get.find<AuthController>();
     final user = _authC.userProfile.value;
     print(user);
     return _authC.isLoading.value
