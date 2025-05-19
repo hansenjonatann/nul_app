@@ -44,7 +44,7 @@ class CategoryDetailScreen extends StatelessWidget {
                       onPressed: () => Get.back(),
                       icon: const Icon(Icons.arrow_back_ios),
                     ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.2),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.3),
                     Text(
                       categoryModel.name ?? "Category",
                       style: GoogleFonts.montserrat(
@@ -89,7 +89,7 @@ class CategoryDetailScreen extends StatelessWidget {
                                     height: 80,
                                     width: 80,
                                     decoration: BoxDecoration(
-                                      color: appPrimary.withOpacity(0.1),
+                                      color: appPrimary.withValues(alpha: 0.1),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: const Center(

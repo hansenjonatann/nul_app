@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nul_app/controller/booking_controller.dart';
 import 'package:nul_app/controller/location_controller.dart';
 import 'package:nul_app/core.dart';
 import 'package:intl/intl.dart';
@@ -9,9 +10,11 @@ class LocationDetailScreen extends StatelessWidget {
   LocationDetailScreen({super.key});
 
   final LocationController _locationC = Get.put(LocationController());
+  final BookingController _bookingC = Get.put(BookingController());
 
-  final TextEditingController _dateController = TextEditingController();
-  final TextEditingController _timeController = TextEditingController();
+  final TextEditingController _headCountC = TextEditingController();
+  final TextEditingController _dateC = TextEditingController();
+  final TextEditingController _timeC = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -107,59 +110,110 @@ class LocationDetailScreen extends StatelessWidget {
                   color: appWhite,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const SizedBox(height: 10.0),
-                        CustomTextField(
-                          label: 'Head Count',
-                          hint: 'Number of People',
-                          type: TextInputType.number,
-                          hidden: false,
-                        ),
-                        const SizedBox(height: 10.0),
-                        TextField(
-                          controller: _dateController,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            labelText: 'Select Date',
-                            border: OutlineInputBorder(),
-                            suffixIcon: Icon(Icons.calendar_today),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(height: 10.0),
+                          CustomTextField(
+                            fieldController: _headCountC,
+                            label: 'Head Count',
+                            hint: 'Number of People',
+                            type: TextInputType.number,
+                            hidden: false,
                           ),
-                          onTap: () async {
-                            final DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(2101),
-                            );
-                            if (pickedDate != null) {
-                              _dateController.text =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
-                            }
-                          },
-                        ),
-                        const SizedBox(height: 10.0),
-                        TextField(
-                          controller: _timeController,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            labelText: 'Select Time',
-                            border: OutlineInputBorder(),
-                            suffixIcon: Icon(Icons.access_time),
+                          const SizedBox(height: 10.0),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Booking Date',
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextField(
+                                controller: _dateC,
+                                readOnly: true,
+                                decoration: InputDecoration(
+                                  labelText: 'Select Date',
+                                  border: OutlineInputBorder(),
+                                  suffixIcon: Icon(Icons.calendar_today),
+                                ),
+                                onTap: () async {
+                                  final DateTime? pickedDate =
+                                      await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime.now(),
+                                    lastDate: DateTime(2101),
+                                  );
+                                  if (pickedDate != null) {
+                                    _dateC.text = DateFormat('yyyy-MM-dd')
+                                        .format(pickedDate);
+                                  }
+                                },
+                              ),
+                            ],
                           ),
-                          onTap: () async {
-                            final TimeOfDay? pickedTime = await showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.now(),
-                            );
-                            if (pickedTime != null) {
-                              _timeController.text = pickedTime.format(context);
-                            }
-                          },
-                        ),
-                        const SizedBox(height: 20.0),
-                      ],
+                          const SizedBox(height: 10.0),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Booking Time',
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextField(
+                                controller: _timeC,
+                                readOnly: true,
+                                decoration: InputDecoration(
+                                  labelText: 'Select Time',
+                                  border: OutlineInputBorder(),
+                                  suffixIcon: Icon(Icons.access_time),
+                                ),
+                                onTap: () async {
+                                  final TimeOfDay? pickedTime =
+                                      await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now(),
+                                  );
+                                  if (pickedTime != null) {
+                                    _timeC.text = pickedTime.format(context);
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                          const SizedBox(height: 20.0),
+                          GestureDetector(
+                              onTap: () {
+                                _bookingC.book(
+                                    headCount: int.parse(_headCountC.text),
+                                    bookingTime: _timeC.text,
+                                    locationId: locationId,
+                                    dateTime: _dateC.text);
+                              },
+                              child: Container(
+                                  width: double.infinity,
+                                  height: 50,
+                                  decoration: BoxDecoration(color: appPrimary),
+                                  child: Center(
+                                      child: Text('Book',
+                                          style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.bold,
+                                              color: appLightGrey,
+                                              fontSize: 16))))),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -171,7 +225,7 @@ class LocationDetailScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10)),
             ),
             child: Text(
-              'Book ',
+              'Book Now',
               style: GoogleFonts.montserrat(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

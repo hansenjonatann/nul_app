@@ -2,7 +2,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:nul_app/core.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:nul_app/screen/auth/umkm/location_screen.dart';
+import 'package:nul_app/screen/booking_screen.dart';
+import 'package:nul_app/screen/umkm/location_screen.dart';
 import 'package:nul_app/screen/auth/umkm/login_screen.dart';
 import 'package:nul_app/screen/auth/umkm/register_screen.dart';
 import 'package:nul_app/screen/location_detail_screen.dart';
@@ -36,6 +37,7 @@ class NulApp extends StatelessWidget {
         GetPage(name: '/umkm/location', page: () => UMKMLocationScreen()),
         GetPage(name: '/category-detail', page: () => CategoryDetailScreen()),
         GetPage(name: '/location-detail', page: () => LocationDetailScreen()),
+        GetPage(name: '/booking', page: () => BookingScreen()),
       ],
     );
   }

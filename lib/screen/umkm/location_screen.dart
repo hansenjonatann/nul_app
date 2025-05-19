@@ -51,7 +51,7 @@ class UMKMLocationScreen extends StatelessWidget {
                                     _locationC.locations.value[index];
                                 final firstTagName = location.tags != null &&
                                         location.tags!.isNotEmpty
-                                    ? location.tags!.first.name
+                                    ? location.tags!.first.slug
                                     : '-';
                                 return Dismissible(
                                   key: Key(location.id.toString()),
@@ -95,7 +95,7 @@ class UMKMLocationScreen extends StatelessWidget {
                                       style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    subtitle: Text('Tag: $firstTagName'),
+                                    subtitle: Text('# $firstTagName'),
                                     trailing: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [

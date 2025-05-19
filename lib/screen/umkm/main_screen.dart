@@ -5,12 +5,12 @@ import 'package:nul_app/controller/umkm/auth_controller.dart';
 import 'package:nul_app/controller/location_controller.dart';
 import 'package:nul_app/core.dart';
 
+final _authC = Get.find<AuthController>();
+
 // ignore: must_be_immutable
 
 class UMKMMainScreen extends StatelessWidget {
-  UMKMMainScreen({super.key});
-
-  AuthController _authC = Get.put(AuthController());
+  const UMKMMainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,47 +36,6 @@ class UMKMMainScreen extends StatelessWidget {
                 const SizedBox(
                   height: 12.0,
                 ),
-                Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: () {
-                        _authC.logout();
-                      },
-                      child: Container(
-                        width: 108,
-                        height: 108,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: appRed,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.logout, size: 30, color: appWhite),
-                            const SizedBox(height: 7),
-                            Obx(
-                              () => _authC.isLoading.value == true
-                                  ? Text(
-                                      'Please wait...',
-                                      style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                          color: appWhite),
-                                      textAlign: TextAlign.center,
-                                    )
-                                  : Text(
-                                      'Sign Out',
-                                      style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                          color: appWhite),
-                                      textAlign: TextAlign.center,
-                                    ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )),
               ],
             ),
           ),
@@ -105,8 +64,21 @@ Widget _buildFeaturesSection() {
       "label": "Report",
       "onTap": () {},
     },
+    {
+      "icon": Icons.logout,
+      "label": "Sign Out",
+      "onTap": () {
+        _authC.logout();
+      }
+    }
   ];
-  return Row(
+  return GridView.count(
+    shrinkWrap: true, // Jika berada di dalam scrollable lain
+    physics: NeverScrollableScrollPhysics(), // Supaya tidak scroll sendiri
+    crossAxisCount: 2,
+    mainAxisSpacing: 14,
+    crossAxisSpacing: 14,
+    childAspectRatio: 1, // Untuk menjaga rasio 1:1
     children: List.generate(
       features.length,
       (index) {
@@ -114,9 +86,6 @@ Widget _buildFeaturesSection() {
         return InkWell(
           onTap: feature['onTap'],
           child: Container(
-            margin: EdgeInsets.only(left: 14),
-            width: 108,
-            height: 108,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: appLightGrey,

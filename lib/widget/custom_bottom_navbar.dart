@@ -54,11 +54,22 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
           BottomNavigationBarItem(
               icon: IconButton(
                   onPressed: () {
+                    onTapped(1);
+                    Get.offNamed('/booking');
+                  },
+                  icon: Icon(Icons.book,
+                      color: widget.currentIndex == 2
+                          ? appPrimary
+                          : Colors.black)),
+              label: 'Booking'),
+          BottomNavigationBarItem(
+              icon: IconButton(
+                  onPressed: () {
                     onTapped(2);
-                  Get.offNamed('/favorite');
+                    Get.offNamed('/favorite');
                   },
                   icon: const Icon(Icons.favorite),
-                  color: widget.currentIndex == 2 ? appPrimary : Colors.black),
+                  color: widget.currentIndex == 3 ? appPrimary : Colors.black),
               label: 'Favorit'),
         ]);
   }
