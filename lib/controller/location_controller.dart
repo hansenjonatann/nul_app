@@ -216,4 +216,25 @@ class LocationController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  void rate({required int id, required double rate}) async {
+    try {
+      isLoading.value = true;
+      final token = box.read('token');
+      final response = await dio.put('${API_DEV_URL}user/location/rate/${id}',
+          data: {'rate': rate},
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+      if (response.statusCode == 200) {
+        isLoading.value = false;
+        Get.snackbar('Success', 'Thankyou for giving rate for this location',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: appSuccess,
+            colorText: appWhite);
+        Get.toNamed('/home');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }

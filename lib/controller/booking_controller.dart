@@ -15,8 +15,8 @@ class BookingController extends GetxController {
   final dio = Dio();
 
   @override
-  void onReady() {
-    super.onReady();
+  void onInit() {
+    super.onInit();
     getBookings();
   }
 
@@ -115,6 +115,7 @@ class BookingController extends GetxController {
                   snackPosition: SnackPosition.TOP,
                   colorText: appWhite);
               Get.toNamed('/booking');
+              getBookings();
             },
             child: Container(
                 width: double.infinity,
@@ -128,6 +129,34 @@ class BookingController extends GetxController {
                 )),
           ),
         );
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> cancel({required int id}) async {
+    try {
+      loading.value = true;
+      final token = box.read('token');
+      final payload = Jwt.parseJwt(token);
+
+      final response = await dio.put(
+          '${API_DEV_URL}user/booking/cancel?id=${id}',
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+      if (response.statusCode == 200) {
+        loading.value = false;
+        Get.defaultDialog(
+            title: 'Cancel Confirmation',
+            confirm: InkWell(
+                onTap: () {
+                  Get.back();
+                  getBookings();
+                },
+                child: Text('Yes',
+                    style: GoogleFonts.montserrat(
+                        color: appPrimary, fontWeight: FontWeight.bold))));
       }
     } catch (e) {
       print(e);

@@ -32,6 +32,7 @@ class LocationDetailScreen extends StatelessWidget {
         child: Obx(
           () {
             final location = _locationC.selectedLocation.value;
+            // final isFavorite = location.favorites?.isNotEmpty ?? false;
             return SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
@@ -74,15 +75,21 @@ class LocationDetailScreen extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(width: 5.0),
-                                Obx(() => IconButton(
-                                      onPressed: () {},
-                                      icon: _locationC.isFavorite == true
-                                          ? Icon(
-                                              Icons.favorite,
-                                              color: appRed,
-                                            )
-                                          : Icon(Icons.favorite),
-                                    )),
+                                // IconButton(
+                                //   onPressed: () {
+                                //     if (!isFavorite) {
+                                //       _locationC.unfavorite(id: locationId);
+                                //     } else {
+                                //       _locationC.favorite(id: locationId);
+                                //     }
+                                //   },
+                                //   icon: Icon(
+                                //     !isFavorite
+                                //         ? Icons.favorite
+                                //         : Icons.favorite_border,
+                                //     color: !isFavorite ? appRed : null,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ],

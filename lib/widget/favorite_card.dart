@@ -1,61 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
+import 'package:get/get.dart';
 
 class FavoriteCard extends StatelessWidget {
-  const FavoriteCard(
-      {super.key,
-      required this.storeName,
-      required this.storeTag,
-      required this.quantityTotalOrder,
-      required this.storeImage});
+  const FavoriteCard({
+    super.key,
+    required this.storeName,
+    required this.storeDesc,
+    required this.storeImage,
+  });
 
   final String storeName;
-  final String storeTag;
-  final int quantityTotalOrder;
+  final String storeDesc;
   final String storeImage;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-            width: 150,
-            height: 150,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-            child: Image.asset(storeImage)),
-        const SizedBox(
-          width: 16,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(storeName,
-                style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.bold, fontSize: 16)),
-            Text('#$storeTag', style: GoogleFonts.montserrat(fontSize: 14)),
-            const SizedBox(
-              height: 11,
-            ),
-            Container(
-              height: 72,
-              width: 131,
-              decoration: const BoxDecoration(
-                color: appPrimary,
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Row(
+        children: [
+          Container(
+            width: 120,
+            height: 120,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              image: DecorationImage(
+                image: NetworkImage(storeImage),
+                fit: BoxFit.cover,
               ),
-              child: Center(
-                  child: Text('$quantityTotalOrder Order',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: appWhite))),
             ),
-            const SizedBox(
-              height: 18,
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(storeName,
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.bold, fontSize: 16)),
+                const SizedBox(height: 6),
+                Text(storeDesc,
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w500, fontSize: 12)),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                        width: 100,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            color: appPrimary,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                            child: Text('Book',
+                                style: GoogleFonts.montserrat(
+                                    color: appWhite,
+                                    fontWeight: FontWeight.bold)))),
+                  ),
+                )
+              ],
             ),
-          ],
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/controller/umkm/auth_controller.dart';
 import 'package:nul_app/controller/location_controller.dart';
+import 'package:nul_app/controller/umkm/umkm-booking_controller.dart';
 import 'package:nul_app/core.dart';
 
 final _authC = Get.find<AuthController>();
@@ -57,7 +58,9 @@ Widget _buildFeaturesSection() {
     {
       "icon": Icons.book,
       "label": "Booking",
-      "onTap": () {},
+      "onTap": () {
+        Get.toNamed('/umkm/booking');
+      },
     },
     {
       "icon": Icons.analytics_outlined,
@@ -179,6 +182,7 @@ Widget _buildProfileSection() {
 
 Widget _buildStatsSection() {
   LocationController _locationC = Get.put(LocationController());
+  UMKMBookingController _umkmBookingC = Get.put(UMKMBookingController());
   return Row(
     children: [
       Expanded(
@@ -189,13 +193,14 @@ Widget _buildStatsSection() {
             color: appPrimary.withValues(alpha: 0.3),
           ),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('7',
+              Obx(() => Text(_umkmBookingC.bookings.value.length.toString(),
                   style: GoogleFonts.montserrat(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Colors.brown)),
+                      color: appRed))),
               const SizedBox(
                 width: 10.0,
               ),

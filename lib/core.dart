@@ -19,7 +19,6 @@ export 'package:nul_app/screen/splash_screen.dart';
 export 'package:nul_app/utils/image_dir.dart';
 export 'package:nul_app/utils/svg_dir.dart';
 export 'package:nul_app/widget/activity_card.dart';
-export 'package:nul_app/widget/booking_form.dart';
 export 'package:nul_app/widget/card_item.dart';
 export 'package:nul_app/widget/categoryitem.dart';
 export 'package:nul_app/widget/custom_bottom_navbar.dart';

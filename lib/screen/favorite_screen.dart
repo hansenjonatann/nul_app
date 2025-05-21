@@ -1,43 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nul_app/screen/home_screen.dart';
-import 'package:nul_app/utils/image_dir.dart';
+import 'package:nul_app/controller/location_favorite_controller.dart';
 import 'package:nul_app/widget/custom_bottom_navbar.dart';
 import 'package:nul_app/widget/favorite_card.dart';
+import 'package:get/get.dart';
 
 class FavoriteScreen extends StatelessWidget {
-  const FavoriteScreen({super.key});
+  FavoriteScreen({super.key});
 
-  static const routeName = '/favorite-screen';
-
-  // List favoriteList = [
-  //   {
-  //     "id": 1,
-  //     "name" : "RM Bakso Wonogiri",
-  //     "tag" : "Aneka Bakso Cepat Saji",
-  //     "total" : 40 ,
-  //     "image" : ImageDir.baksoWonogiri
-
-  //   },
-
-  //   {
-  //     "id": 2,
-  //     "name" : "RIVS Kemeja",
-  //     "tag" : "Kemeja Pria dan Wanita",
-  //     "total" : 28 ,
-  //     "image" : ImageDir.rivs
-  //   },
-
-  //   {
-  //     "id": 3,
-  //     "name" : "KFC Batu Aji, Batam",
-  //     "tag" : "Aneka Ayam , Cepat Saji",
-  //     "total" : 21 ,
-  //     "image" : ImageDir.kfc
-  //   },
-
-  // ];
-
+  final LocationFavoriteController _locationFavoriteC =
+      Get.put(LocationFavoriteController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,8 +29,7 @@ class FavoriteScreen extends StatelessWidget {
                   ),
                   GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => HomeScreen()));
+                        Get.toNamed('/home');
                       },
                       child: const Icon(
                         Icons.arrow_circle_left_outlined,
@@ -72,9 +43,12 @@ class FavoriteScreen extends StatelessWidget {
                       Text('Favorit Saya',
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.bold, fontSize: 20)),
-                      Text(' ( 23 )',
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.bold, fontSize: 20)),
+                      Obx(
+                        () => Text(
+                            '(${_locationFavoriteC.favoriteLocations.value.length.toString()})',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.bold, fontSize: 20)),
+                      )
                     ],
                   ),
                 ],
@@ -82,38 +56,42 @@ class FavoriteScreen extends StatelessWidget {
               const SizedBox(
                 height: 41,
               ),
-              const Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      FavoriteCard(
-                          storeName: 'RM Bakso Wonogiri',
-                          storeTag: 'Aneka Bakso , Cepat Saji',
-                          quantityTotalOrder: 40,
-                          storeImage: ImageDir.baksoWonogiri),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      FavoriteCard(
-                          storeName: 'RIVS Kemeja',
-                          storeTag: 'Kemeja Pria dan Wanita',
-                          quantityTotalOrder: 28,
-                          storeImage: ImageDir.rivs),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      FavoriteCard(
-                          storeName: 'KFC Batu Aji , Batam',
-                          storeTag: 'Aneka Ayam , Cepat Saji',
-                          quantityTotalOrder: 21,
-                          storeImage: ImageDir.kfc)
-                    ],
-                  ))
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Obx(() {
+                  if (_locationFavoriteC.loading.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  final favorites = _locationFavoriteC.favoriteLocations.value;
+
+                  if (favorites.isEmpty) {
+                    return const Center(
+                        child: Text("Tidak ada lokasi favorit"));
+                  }
+
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: favorites.length,
+                    itemBuilder: (context, index) {
+                      final location = favorites[index];
+
+                      return FavoriteCard(
+                        storeName: location.location?.name.toString() ?? '',
+                        storeDesc: location.location?.desc.toString() ?? '',
+                        storeImage:
+                            location.location?.imageUrl.toString() ?? '',
+                      );
+                    },
+                  );
+                }),
+              )
             ],
           ),
         ),
       ),
-      bottomNavigationBar: const CustomBottomNavbar(currentIndex: 2),
+      bottomNavigationBar: const CustomBottomNavbar(currentIndex: 3),
     );
   }
 }

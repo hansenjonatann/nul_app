@@ -8,6 +8,7 @@ import 'package:nul_app/screen/auth/umkm/login_screen.dart';
 import 'package:nul_app/screen/auth/umkm/register_screen.dart';
 import 'package:nul_app/screen/location_detail_screen.dart';
 import 'package:nul_app/screen/umkm/main_screen.dart';
+import 'package:nul_app/screen/umkm/umkm_booking_screen.dart';
 
 void main() => runApp(NulApp());
 
@@ -23,21 +24,28 @@ class NulApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: token == null ? const SplashScreen() : HomeScreen(),
       getPages: [
+        // Auth Route
         GetPage(name: '/login', page: () => LoginScreen()),
         GetPage(name: '/home', page: () => HomeScreen()),
         GetPage(name: '/register', page: () => RegisterScreen()),
-        GetPage(name: '/umkm/login', page: () => const UMKMLoginScreen()),
-        GetPage(name: '/umkm/register', page: () => UMKMRegisterScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
+
         GetPage(name: '/card-detail', page: () => CardDetailScreen()),
         GetPage(name: '/activity-detail', page: () => ActivityDetailScreen()),
         GetPage(name: '/activity', page: () => ActivityScreen()),
         GetPage(name: '/favorite', page: () => FavoriteScreen()),
-        GetPage(name: '/umkm/main', page: () => UMKMMainScreen()),
-        GetPage(name: '/umkm/location', page: () => UMKMLocationScreen()),
         GetPage(name: '/category-detail', page: () => CategoryDetailScreen()),
         GetPage(name: '/location-detail', page: () => LocationDetailScreen()),
         GetPage(name: '/booking', page: () => BookingScreen()),
+
+        // UMKM Route
+
+        GetPage(name: '/umkm/main', page: () => UMKMMainScreen()),
+        GetPage(name: '/umkm/login', page: () => const UMKMLoginScreen()),
+        GetPage(name: '/umkm/register', page: () => UMKMRegisterScreen()),
+
+        GetPage(name: '/umkm/location', page: () => UMKMLocationScreen()),
+        GetPage(name: '/umkm/booking', page: () => UMKMBookingScreen())
       ],
     );
   }
