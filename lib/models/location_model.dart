@@ -5,7 +5,7 @@ class Location {
   int? id;
   String? name;
   String? imageUrl;
-  int? rating;
+  double? rating;
   String? desc;
   List<Favorite>? favorites;
   List<Tag>? tags;
@@ -27,7 +27,8 @@ class Location {
       name: json['name'],
       desc: json['desc'],
       imageUrl: json['image_url'],
-      rating: json['rating'],
+      rating:
+          (json['rating'] != null) ? (json['rating'] as num).toDouble() : null,
       tags: json['tags'] != null
           ? (json['tags'] as List<dynamic>)
               .map((tagJson) => Tag.fromJson(tagJson))

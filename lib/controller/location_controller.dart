@@ -164,8 +164,8 @@ class LocationController extends GetxController {
           backgroundColor: appSuccess,
           colorText: appWhite,
         );
-        getLocations();
         Get.back();
+        getLocations();
       }
     } catch (err) {
       String errorMessage = 'Failed to create location';

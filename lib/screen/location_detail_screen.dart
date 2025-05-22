@@ -67,8 +67,8 @@ class LocationDetailScreen extends StatelessWidget {
                                 Icon(Icons.star, color: Colors.amber),
                                 const SizedBox(width: 5.0),
                                 Text(
-                                  location.rateCount != null
-                                      ? location.rateCount.toString()
+                                  location.rating != null
+                                      ? location.rating.toString()
                                       : '0',
                                   style: GoogleFonts.montserrat(fontSize: 14),
                                   maxLines: 2,

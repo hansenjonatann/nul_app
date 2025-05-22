@@ -46,7 +46,7 @@ class CategoryItem extends StatelessWidget {
               name,
               style: GoogleFonts.montserrat(
                 fontWeight: FontWeight.bold,
-                fontSize: 14,
+                fontSize: 13,
               ),
               textAlign: TextAlign.center,
             ),

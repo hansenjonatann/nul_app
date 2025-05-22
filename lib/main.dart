@@ -3,6 +3,7 @@ import 'package:nul_app/core.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:nul_app/screen/booking_screen.dart';
+import 'package:nul_app/screen/edit_profile_screen.dart';
 import 'package:nul_app/screen/umkm/location_screen.dart';
 import 'package:nul_app/screen/auth/umkm/login_screen.dart';
 import 'package:nul_app/screen/auth/umkm/register_screen.dart';
@@ -29,10 +30,9 @@ class NulApp extends StatelessWidget {
         GetPage(name: '/home', page: () => HomeScreen()),
         GetPage(name: '/register', page: () => RegisterScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
+        GetPage(name: '/edit-profile', page: () => EditProfileScreen()),
 
         GetPage(name: '/card-detail', page: () => CardDetailScreen()),
-        GetPage(name: '/activity-detail', page: () => ActivityDetailScreen()),
-        GetPage(name: '/activity', page: () => ActivityScreen()),
         GetPage(name: '/favorite', page: () => FavoriteScreen()),
         GetPage(name: '/category-detail', page: () => CategoryDetailScreen()),
         GetPage(name: '/location-detail', page: () => LocationDetailScreen()),

@@ -18,6 +18,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    nameC.clear();
+    passwordC.clear();
     return Scaffold(
         body: SafeArea(
             child: SingleChildScrollView(
@@ -44,19 +46,6 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(
                     height: 7,
                   ),
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text('Forgot Password?',
-                            style: GoogleFonts.montserrat(
-                                color: appDarkGrey,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500)),
-                      )),
-                  const SizedBox(
-                    height: 34,
-                  ),
                   _buildLoginFooter()
                 ],
               ))
@@ -72,9 +61,9 @@ Widget _buildLoginFormField() {
         alignment: Alignment.centerLeft,
         child: Text('Login Details',
             style: GoogleFonts.montserrat(
-                fontWeight: FontWeight.w500, fontSize: 24))),
+                fontWeight: FontWeight.w500, fontSize: 20))),
     const SizedBox(
-      height: 11,
+      height: 13,
     ),
     CustomTextField(
       hidden: false,
@@ -83,7 +72,7 @@ Widget _buildLoginFormField() {
       label: 'Name',
     ),
     const SizedBox(
-      height: 11,
+      height: 6,
     ),
     CustomTextField(
       hidden: true,
@@ -135,7 +124,7 @@ Widget _buildLoginFooter() {
         height: 30,
       ),
       const SizedBox(
-        height: 20.0,
+        height: 10.0,
       ),
       GestureDetector(
           onTap: () => {Get.offNamed('/umkm/login')},
@@ -149,7 +138,6 @@ Widget _buildLoginFooter() {
                   child: Text('Login as UMKM',
                       style: GoogleFonts.montserrat(
                           color: appWhite, fontWeight: FontWeight.w500))))),
-      SvgPicture.asset(SvgDir.wave)
     ],
   ));
 }

@@ -19,7 +19,10 @@ class UMKMLoginScreen extends StatelessWidget {
             height: 49.0,
           ),
           Center(
-            child: Image.asset(ImageDir.waterAuthLogo),
+            child: Image.asset(
+              ImageDir.waterAuthLogo,
+              width: 240,
+            ),
           ),
           const SizedBox(
             height: 60.0,
@@ -31,7 +34,7 @@ class UMKMLoginScreen extends StatelessWidget {
                 children: [
                   _buildLoginFormField(),
                   const SizedBox(
-                    height: 34,
+                    height: 10,
                   ),
                   Center(
                       child: Row(
@@ -93,9 +96,9 @@ Widget _buildLoginFormField() {
           alignment: Alignment.centerLeft,
           child: Text('Login UMKM',
               style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.w500, fontSize: 24))),
+                  fontWeight: FontWeight.w500, fontSize: 20))),
       const SizedBox(
-        height: 11,
+        height: 15,
       ),
       CustomTextField(
         hint: 'yourname@gmail.com',
@@ -104,7 +107,7 @@ Widget _buildLoginFormField() {
         fieldController: _emailC,
       ),
       const SizedBox(
-        height: 11,
+        height: 8,
       ),
       CustomTextField(
         hint: '******',

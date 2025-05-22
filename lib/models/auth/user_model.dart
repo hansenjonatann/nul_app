@@ -5,7 +5,7 @@ class User {
   String? phone;
   String? gender;
   String? country;
-  String? pitcureUrl;
+  String? pictureUrl;
   String? dob;
   String? role;
 
@@ -15,7 +15,7 @@ class User {
       this.phone,
       this.role,
       this.name,
-      this.pitcureUrl,
+      this.pictureUrl,
       this.country,
       this.dob,
       this.gender});
@@ -30,7 +30,7 @@ class User {
         country: json['country'],
         dob: json['dob'],
         gender: json['gender'],
-        pitcureUrl: json['pitcureUrl']);
+        pictureUrl: json['pictureUrl']);
   }
 
   Map<String, dynamic> toJson() {
@@ -43,7 +43,7 @@ class User {
     data['dob'] = dob;
     data['phoneNumber'] = phone;
     data['country'] = country;
-    data['pitcureUrl'] = pitcureUrl;
+    data['pictureUrl'] = pictureUrl;
     return data;
   }
 

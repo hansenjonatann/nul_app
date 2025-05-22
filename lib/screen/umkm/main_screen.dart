@@ -5,6 +5,7 @@ import 'package:nul_app/controller/umkm/auth_controller.dart';
 import 'package:nul_app/controller/location_controller.dart';
 import 'package:nul_app/controller/umkm/umkm-booking_controller.dart';
 import 'package:nul_app/core.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 final _authC = Get.find<AuthController>();
 
@@ -31,12 +32,29 @@ class UMKMMainScreen extends StatelessWidget {
                 ),
                 _buildStatsSection(),
                 const SizedBox(
-                  height: 15.0,
+                  height: 30.0,
                 ),
-                _buildFeaturesSection(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Menu',
+                          style: GoogleFonts.montserrat(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      _buildFeaturesSection(),
+                    ],
+                  ),
+                ),
                 const SizedBox(
                   height: 12.0,
                 ),
+                _buildBookingCalendar(),
               ],
             ),
           ),
@@ -66,20 +84,13 @@ Widget _buildFeaturesSection() {
       "icon": Icons.analytics_outlined,
       "label": "Report",
       "onTap": () {},
-    },
-    {
-      "icon": Icons.logout,
-      "label": "Sign Out",
-      "onTap": () {
-        _authC.logout();
-      }
     }
   ];
   return GridView.count(
     shrinkWrap: true, // Jika berada di dalam scrollable lain
     physics: NeverScrollableScrollPhysics(), // Supaya tidak scroll sendiri
-    crossAxisCount: 2,
-    mainAxisSpacing: 14,
+    crossAxisCount: 3,
+    mainAxisSpacing: 1,
     crossAxisSpacing: 14,
     childAspectRatio: 1, // Untuk menjaga rasio 1:1
     children: List.generate(
@@ -121,60 +132,54 @@ Widget _buildProfileSection() {
   return Obx(() {
     final user = _umkmAuthC.umkmProfile.value;
 
-    return Container(
-      width: double.infinity,
-      height: 120,
-      decoration: BoxDecoration(
-        color: appPrimary,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(15),
-          bottomRight: Radius.circular(30),
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(15),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(120),
-              ),
-              child: const CircleAvatar(
-                radius: 120,
-                backgroundImage: AssetImage(ImageDir.profile),
-              ),
-            ),
-            const SizedBox(width: 20.0),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  user.name ?? 'No Name',
-                  style: GoogleFonts.montserrat(
-                    color: appWhite,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 55,
+                height: 55,
+                decoration: BoxDecoration(
+                  color: appPrimary,
+                  borderRadius: BorderRadius.circular(120),
                 ),
-                const SizedBox(height: 5.0),
-                Text(
-                  user.email ?? 'No Email',
-                  style: GoogleFonts.montserrat(
-                    color: appWhite,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
+                child: const CircleAvatar(
+                  backgroundColor: appPrimary,
+                  child: Center(child: Icon(Icons.person, color: appWhite)),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+              const SizedBox(width: 17.0),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    user.name ?? 'No Name',
+                    style: GoogleFonts.montserrat(
+                      color: appDarkGrey,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 15,
+                    ),
+                  ),
+                  const SizedBox(height: 5.0),
+                  Text(
+                    user.role ?? 'No Email',
+                    style: GoogleFonts.montserrat(
+                      color: appDarkGrey,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          IconButton(onPressed: () => _authC.logout(), icon: Icon(Icons.logout))
+        ],
       ),
     );
   });
@@ -244,4 +249,78 @@ Widget _buildStatsSection() {
       )
     ],
   );
+}
+
+Widget _buildBookingCalendar() {
+  final UMKMBookingController _bookingC = Get.put(UMKMBookingController());
+
+  return Obx(() {
+    final bookings = _bookingC.bookings.value;
+
+    // Mapping tanggal ke list booking
+    Map<DateTime, List<String>> events = {};
+    for (var booking in bookings) {
+      final date =
+          DateTime.parse(booking.dateTime.toString()); // Sesuaikan field 'date'
+      events.update(
+        DateTime(date.year, date.month, date.day),
+        (existing) => [...existing, booking.user?.name.toString() ?? ''],
+        ifAbsent: () => [booking.user?.name.toString() ?? ''],
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Booking Calendar",
+              style: GoogleFonts.montserrat(
+                  fontSize: 18, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 10),
+          TableCalendar(
+            firstDay: DateTime.utc(2023, 1, 1),
+            lastDay: DateTime.utc(2030, 12, 31),
+            focusedDay: DateTime.now(),
+            eventLoader: (day) {
+              return events[DateTime(day.year, day.month, day.day)] ?? [];
+            },
+            calendarStyle: CalendarStyle(
+              markerDecoration: BoxDecoration(
+                color: appPrimary,
+                shape: BoxShape.circle,
+              ),
+              todayDecoration: BoxDecoration(
+                color: appRed,
+                shape: BoxShape.circle,
+              ),
+              selectedDecoration: BoxDecoration(
+                color: appPrimary.withOpacity(0.6),
+                shape: BoxShape.circle,
+              ),
+            ),
+            calendarBuilders: CalendarBuilders(
+              markerBuilder: (context, date, events) {
+                if (events.isNotEmpty) {
+                  return Positioned(
+                    right: 1,
+                    bottom: 1,
+                    child: Container(
+                      width: 6,
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: Colors.redAccent,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  );
+                }
+                return const SizedBox();
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  });
 }

@@ -44,21 +44,10 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
               icon: IconButton(
                   onPressed: () {
                     onTapped(1);
-                    Get.offNamed('/activity');
-                  },
-                  icon: Icon(Icons.menu,
-                      color: widget.currentIndex == 1
-                          ? appPrimary
-                          : Colors.black)),
-              label: 'Aktivitas'),
-          BottomNavigationBarItem(
-              icon: IconButton(
-                  onPressed: () {
-                    onTapped(1);
                     Get.offNamed('/booking');
                   },
                   icon: Icon(Icons.book,
-                      color: widget.currentIndex == 2
+                      color: widget.currentIndex == 1
                           ? appPrimary
                           : Colors.black)),
               label: 'Booking'),
@@ -69,7 +58,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
                     Get.offNamed('/favorite');
                   },
                   icon: const Icon(Icons.favorite),
-                  color: widget.currentIndex == 3 ? appPrimary : Colors.black),
+                  color: widget.currentIndex == 2 ? appPrimary : Colors.black),
               label: 'Favorit'),
         ]);
   }
