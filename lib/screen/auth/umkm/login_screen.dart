@@ -86,7 +86,7 @@ class UMKMLoginScreen extends StatelessWidget {
 }
 
 Widget _buildLoginFormField() {
-  final UMKMAuthController _umkmC = Get.put(UMKMAuthController());
+  final UMKMAuthController _umkmC = Get.find<UMKMAuthController>();
   final TextEditingController _emailC = new TextEditingController();
   final TextEditingController _passwordC = new TextEditingController();
 

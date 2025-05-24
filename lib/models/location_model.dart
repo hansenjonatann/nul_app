@@ -10,6 +10,7 @@ class Location {
   List<Favorite>? favorites;
   List<Tag>? tags;
   int? rateCount;
+  String? address;
 
   Location(
       {this.id,
@@ -19,6 +20,7 @@ class Location {
       this.favorites,
       this.rating,
       this.tags,
+      this.address,
       this.rateCount});
 
   factory Location.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class Location {
       id: json['id'],
       name: json['name'],
       desc: json['desc'],
+      address: json['address'],
       imageUrl: json['image_url'],
       rating:
           (json['rating'] != null) ? (json['rating'] as num).toDouble() : null,
@@ -51,6 +54,7 @@ class Location {
       'rating': rating,
       'tags': tags?.map((tag) => tag.toJson()).toList(),
       'rate_count': rateCount,
+      'address': address,
       'favorites': favorites?.map((fav) => fav.toJson()).toList(),
       'desc': desc
     };

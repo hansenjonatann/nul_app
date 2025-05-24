@@ -3,11 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
 import 'package:nul_app/constants/url.dart';
 import 'package:nul_app/controller/auth/auth_controller.dart';
-import 'package:nul_app/utils/image_dir.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
-  final authC = Get.put(AuthController());
+  final authC = Get.find<AuthController>();
   ProfileScreen({super.key});
 
   @override

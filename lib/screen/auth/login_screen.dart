@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
 import 'package:get/get.dart';
 import 'package:nul_app/core.dart';
 import 'package:nul_app/utils/image_dir.dart';
-import 'package:nul_app/utils/svg_dir.dart';
-import 'package:nul_app/widget/login_alternative.dart';
 import 'package:nul_app/widget/custom_textfield.dart';
 
 final authC = Get.put(AuthController());

@@ -83,7 +83,7 @@ Widget _buildFeaturesSection() {
     {
       "icon": Icons.analytics_outlined,
       "label": "Report",
-      "onTap": () {},
+      "onTap": () => Get.toNamed('/umkm/report'),
     }
   ];
   return GridView.count(
@@ -127,7 +127,7 @@ Widget _buildFeaturesSection() {
 }
 
 Widget _buildProfileSection() {
-  final _umkmAuthC = Get.put(UMKMAuthController());
+  final _umkmAuthC = Get.find<UMKMAuthController>();
 
   return Obx(() {
     final user = _umkmAuthC.umkmProfile.value;
@@ -186,8 +186,8 @@ Widget _buildProfileSection() {
 }
 
 Widget _buildStatsSection() {
-  LocationController _locationC = Get.put(LocationController());
-  UMKMBookingController _umkmBookingC = Get.put(UMKMBookingController());
+  LocationController _locationC = Get.find<LocationController>();
+  UMKMBookingController _umkmBookingC = Get.find<UMKMBookingController>();
   return Row(
     children: [
       Expanded(
@@ -252,7 +252,7 @@ Widget _buildStatsSection() {
 }
 
 Widget _buildBookingCalendar() {
-  final UMKMBookingController _bookingC = Get.put(UMKMBookingController());
+  final UMKMBookingController _bookingC = Get.find<UMKMBookingController>();
 
   return Obx(() {
     final bookings = _bookingC.bookings.value;

@@ -4,17 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/constants/color.dart';
 import 'package:nul_app/constants/url.dart';
-import 'package:nul_app/controller/auth/auth_controller.dart';
-import 'package:nul_app/controller/category_controller.dart';
 import 'package:nul_app/controller/homepage_controller.dart';
-import 'package:nul_app/models/card_model.dart';
+import 'package:nul_app/core.dart';
 import 'package:nul_app/utils/image_dir.dart';
 import 'package:nul_app/widget/card_item.dart';
 import 'package:nul_app/widget/categoryitem.dart';
 import 'package:nul_app/widget/custom_bottom_navbar.dart';
 import 'package:get/get.dart';
-
-import '../models/menu_model.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -58,9 +54,8 @@ class HomeScreen extends StatelessWidget {
 
 Widget _buildProfileSection() {
   return Obx(() {
-    final _authC = Get.find<AuthController>();
+    final AuthController _authC = Get.find<AuthController>();
     final user = _authC.userProfile.value;
-    print(user);
     return _authC.isLoading.value
         ? Center(child: CircularProgressIndicator())
         : Column(
@@ -305,7 +300,7 @@ Widget _buildCategorySection() {
 }
 
 Widget _buildRecomendationSection() {
-  final homePageC = Get.put(HomePageController());
+  final homePageC = Get.find<HomePageController>();
 
   return Obx(() {
     final recomendations = homePageC.recommendations.value;

@@ -1,0 +1,2 @@
+D:/project/university/mobile_apps/nul_app/android/app/.cxx/Debug/13y356d4/x86/CMakeFiles/edit_cache.dir
+D:/project/university/mobile_apps/nul_app/android/app/.cxx/Debug/13y356d4/x86/CMakeFiles/rebuild_cache.dir

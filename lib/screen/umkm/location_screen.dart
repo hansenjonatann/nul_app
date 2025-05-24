@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nul_app/controller/location_controller.dart';
@@ -8,13 +7,12 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:nul_app/controller/tag_controller.dart';
 import 'package:text_area/text_area.dart';
 
-LocationController _locationC = Get.put(LocationController());
-
 class UMKMLocationScreen extends StatelessWidget {
   const UMKMLocationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final LocationController _locationC = Get.find<LocationController>();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -128,8 +126,18 @@ class UMKMLocationScreen extends StatelessWidget {
 Widget _formCreateLocation() {
   final TextEditingController _nameC = TextEditingController();
   final TextEditingController _descC = TextEditingController();
-  CategoryController _categoryC = Get.put(CategoryController());
-  TagController _tagC = Get.put(TagController());
+  final TextEditingController _addressC = TextEditingController();
+  final CategoryController _categoryC = Get.find<CategoryController>();
+  final TagController _tagC = Get.find<TagController>();
+  final LocationController _locationC = Get.find<LocationController>();
+
+  // Update address when selected from map
+  ever(_locationC.selectedAddress, (String address) {
+    _addressC.text = address;
+  });
+
+  // Set initial address if already selected
+  _addressC.text = _locationC.selectedAddress.value;
 
   return Container(
     padding: const EdgeInsets.all(20),
@@ -149,23 +157,19 @@ Widget _formCreateLocation() {
               Text('Description',
                   style: GoogleFonts.montserrat(
                       fontSize: 16, fontWeight: FontWeight.bold)),
-              const SizedBox(
-                height: 4.0,
-              ),
+              const SizedBox(height: 4.0),
               TextArea(
                 borderRadius: 10,
                 borderColor: Colors.black,
                 textEditingController: _descC,
                 suffixIcon: Icons.attach_file_rounded,
                 onSuffixIconPressed: () => {},
-                validation: false,
-                errorText: 'Please type a reason!',
+                validation: true,
+                errorText: 'Please type a description',
               ),
             ],
           ),
-          const SizedBox(
-            height: 10.0,
-          ),
+          const SizedBox(height: 10.0),
           GestureDetector(
             onTap: () {
               _locationC.pickFile();
@@ -177,30 +181,27 @@ Widget _formCreateLocation() {
                   border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Center(child: Text('Upload an image'))),
+                child: const Center(child: Text('Upload an image'))),
           ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          if (_locationC.selectedFile.value != null &&
-              _locationC.selectedFile.value!.bytes != null)
-            Column(
-              children: [
-                const SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.memory(
-                    _locationC.selectedFile.value!.bytes!,
-                    width: double.infinity,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ],
-            ),
-          const SizedBox(
-            height: 10.0,
-          ),
+          const SizedBox(height: 10.0),
+          Obx(() => _locationC.selectedFile.value != null &&
+                  _locationC.selectedFile.value!.bytes != null
+              ? Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.memory(
+                        _locationC.selectedFile.value!.bytes!,
+                        width: double.infinity,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
+                )
+              : const SizedBox.shrink()),
+          const SizedBox(height: 10.0),
           Obx(() => DropdownButtonHideUnderline(
                 child: DropdownButton2(
                   isExpanded: true,
@@ -234,17 +235,72 @@ Widget _formCreateLocation() {
                   value: _tagC.selectedTag.value,
                 ),
               )),
-          const SizedBox(height: 30.0),
-          ElevatedButton(
-            onPressed: () {
-              _locationC.createLocation(
-                  name: _nameC.text,
-                  categoryId: _categoryC.selectedCategory.value?.id ?? 0,
-                  tagIds: [_tagC.selectedTag.value?.id ?? 0],
-                  desc: _descC.text);
-            },
-            child: const Text('Save'),
+          const SizedBox(height: 10.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Address',
+                  style: GoogleFonts.montserrat(
+                      fontSize: 16, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 4.0),
+              TextArea(
+                borderRadius: 10,
+                borderColor: Colors.black,
+                textEditingController: _addressC,
+                validation: false,
+                errorText: 'Please select an address',
+              ),
+            ],
           ),
+          const SizedBox(height: 8.0),
+          GestureDetector(
+            onTap: () async {
+              final result = await Get.toNamed('/maps');
+              if (result != null && result is String) {
+                _locationC.selectedAddress.value = result;
+              }
+            },
+            child: Container(
+                width: double.infinity,
+                height: 40,
+                decoration: BoxDecoration(
+                    color: appSuccess, borderRadius: BorderRadius.circular(10)),
+                child: Center(
+                    child: Text('Select From Map',
+                        style: GoogleFonts.montserrat(
+                          color: appWhite,
+                          fontWeight: FontWeight.bold,
+                        )))),
+          ),
+          const SizedBox(height: 30.0),
+          Obx(() => ElevatedButton(
+                onPressed: _locationC.isLoading.value
+                    ? null
+                    : () {
+                        if (_nameC.text.isEmpty ||
+                            _descC.text.isEmpty ||
+                            _categoryC.selectedCategory.value == null ||
+                            _tagC.selectedTag.value == null) {
+                          Get.snackbar(
+                              'Error', 'Please fill all required fields',
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white);
+                          return;
+                        }
+                        _locationC.createLocation(
+                          name: _nameC.text,
+                          categoryId:
+                              _categoryC.selectedCategory.value!.id ?? 0,
+                          tagIds: [_tagC.selectedTag.value!.id ?? 0],
+                          desc: _descC.text,
+                          address:
+                              _addressC.text.isEmpty ? null : _addressC.text,
+                        );
+                      },
+                child: _locationC.isLoading.value
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : const Text('Save'),
+              )),
         ],
       ),
     ),

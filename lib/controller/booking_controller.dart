@@ -15,8 +15,8 @@ class BookingController extends GetxController {
   final dio = Dio();
 
   @override
-  void onInit() {
-    super.onInit();
+  void onReady() {
+    super.onReady();
     getBookings();
   }
 
@@ -26,8 +26,9 @@ class BookingController extends GetxController {
       final token = box.read('token');
       final payload = Jwt.parseJwt(token);
       final response = await dio.get(
-          '${API_DEV_URL}user/booking/history?userId=${payload['id']}',
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
+        '${API_DEV_URL}user/booking/history?userId=${payload['id']}',
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
       print(response);
       if (response.statusCode == 200) {
         loading.value = false;
@@ -39,94 +40,38 @@ class BookingController extends GetxController {
     }
   }
 
-  Future<void> book(
-      {required int headCount,
-      required String bookingTime,
-      required int locationId,
-      required String? dateTime}) async {
+  Future<void> book({
+    required int headCount,
+    required String bookingTime,
+    required int locationId,
+    required String? dateTime,
+  }) async {
     try {
       loading.value = true;
       final token = box.read('token');
       final payload = Jwt.parseJwt(token);
-      final response = await dio.post('${API_DEV_URL}user/booking/create',
-          data: {
-            'locationId': locationId,
-            'headCount': headCount,
-            'bookingTime': bookingTime,
-            'userId': payload['id'],
-            'dateTime': dateTime
-          },
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
+      final response = await dio.post(
+        '${API_DEV_URL}user/booking/create',
+        data: {
+          'locationId': locationId,
+          'headCount': headCount,
+          'bookingTime': bookingTime,
+          'userId': payload['id'],
+          'dateTime': dateTime,
+        },
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
 
       print(response);
       if (response.statusCode == 201) {
         loading.value = false;
-        Get.defaultDialog(
-          contentPadding: EdgeInsets.all(10),
-          title: 'Booking Confirmation',
-          content: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Date : ',
-                      style:
-                          GoogleFonts.montserrat(fontWeight: FontWeight.w500)),
-                  Text('${dateTime}',
-                      style:
-                          GoogleFonts.montserrat(fontWeight: FontWeight.bold)),
-                ],
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Time : ',
-                      style:
-                          GoogleFonts.montserrat(fontWeight: FontWeight.w500)),
-                  Text('${bookingTime}',
-                      style:
-                          GoogleFonts.montserrat(fontWeight: FontWeight.bold)),
-                ],
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Head : ',
-                      style:
-                          GoogleFonts.montserrat(fontWeight: FontWeight.w500)),
-                  Text('${headCount}',
-                      style:
-                          GoogleFonts.montserrat(fontWeight: FontWeight.bold)),
-                ],
-              )
-            ],
-          ),
-          confirm: InkWell(
-            onTap: () {
-              Get.back();
-              Get.snackbar('Booking Created', response.data['message'],
-                  backgroundColor: appSuccess,
-                  snackPosition: SnackPosition.TOP,
-                  colorText: appWhite);
-              Get.toNamed('/booking');
-              getBookings();
-            },
-            child: Container(
-                width: double.infinity,
-                height: 30,
-                decoration: BoxDecoration(
-                    color: appPrimary, borderRadius: BorderRadius.circular(10)),
-                child: Center(
-                  child: Text('Confirm',
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.bold, color: appLightGrey)),
-                )),
+        Get.dialog(
+          _buildBookingConfirmationDialog(
+            dateTime: dateTime ?? 'N/A',
+            bookingTime: bookingTime,
+            headCount: headCount,
+            response: response.data,
+            getBookings: getBookings,
           ),
         );
       }
@@ -140,26 +85,220 @@ class BookingController extends GetxController {
       loading.value = true;
       final token = box.read('token');
       final payload = Jwt.parseJwt(token);
-
       final response = await dio.put(
-          '${API_DEV_URL}user/booking/cancel?id=${id}',
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
+        '${API_DEV_URL}user/booking/cancel?id=$id',
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
 
       if (response.statusCode == 200) {
         loading.value = false;
-        Get.defaultDialog(
-            title: 'Cancel Confirmation',
-            confirm: InkWell(
-                onTap: () {
-                  Get.back();
-                  getBookings();
-                },
-                child: Text('Yes',
-                    style: GoogleFonts.montserrat(
-                        color: appPrimary, fontWeight: FontWeight.bold))));
+        Get.dialog(
+          _buildCancelConfirmationDialog(getBookings: getBookings),
+        );
       }
     } catch (e) {
       print(e);
     }
+  }
+
+  // Refactored Booking Confirmation Dialog
+  Widget _buildBookingConfirmationDialog({
+    required String dateTime,
+    required String bookingTime,
+    required int headCount,
+    required Map<String, dynamic> response,
+    required VoidCallback getBookings,
+  }) {
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      elevation: 8,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        constraints: const BoxConstraints(maxWidth: 400),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Title
+            Text(
+              'Booking Confirmation',
+              style: GoogleFonts.montserrat(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 16),
+            // Content
+            ListView(
+              shrinkWrap: true,
+              children: [
+                _buildInfoRow(label: 'Date', value: dateTime),
+                const SizedBox(height: 12),
+                _buildInfoRow(label: 'Time', value: bookingTime),
+                const SizedBox(height: 12),
+                _buildInfoRow(label: 'Head', value: headCount.toString()),
+              ],
+            ),
+            const SizedBox(height: 24),
+            // Buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Get.back(),
+                    style: TextButton.styleFrom(
+                      foregroundColor: appLightGrey,
+                      textStyle: GoogleFonts.montserrat(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    child: const Text('Cancel'),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Get.back();
+                      Get.snackbar(
+                        'Booking Created',
+                        response['message'],
+                        backgroundColor: appSuccess,
+                        snackPosition: SnackPosition.TOP,
+                        colorText: appWhite,
+                      );
+                      Get.toNamed('/booking');
+                      getBookings();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: appPrimary,
+                      foregroundColor: appLightGrey,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      minimumSize: const Size(double.infinity, 48),
+                      textStyle: GoogleFonts.montserrat(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    child: const Text('Confirm'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Refactored Cancel Confirmation Dialog
+  Widget _buildCancelConfirmationDialog({
+    required VoidCallback getBookings,
+  }) {
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      elevation: 8,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        constraints: const BoxConstraints(maxWidth: 400),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Title
+            Text(
+              'Cancel Confirmation',
+              style: GoogleFonts.montserrat(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 16),
+            // Content
+            Text(
+              'Are you sure you want to cancel this booking?',
+              style: GoogleFonts.montserrat(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Colors.black54,
+              ),
+            ),
+            const SizedBox(height: 24),
+            // Buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Get.back(),
+                    style: TextButton.styleFrom(
+                      foregroundColor: appLightGrey,
+                      textStyle: GoogleFonts.montserrat(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    child: const Text('No'),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Get.back();
+                      getBookings();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: appPrimary,
+                      foregroundColor: appLightGrey,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      minimumSize: const Size(double.infinity, 48),
+                      textStyle: GoogleFonts.montserrat(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    child: const Text('Yes'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Helper widget for info rows in booking confirmation
+  Widget _buildInfoRow({required String label, required String value}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          '$label:',
+          style: GoogleFonts.montserrat(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: Colors.black54,
+          ),
+        ),
+        Text(
+          value,
+          style: GoogleFonts.montserrat(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+      ],
+    );
   }
 }

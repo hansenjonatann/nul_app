@@ -9,8 +9,8 @@ import 'package:intl/intl.dart';
 class LocationDetailScreen extends StatelessWidget {
   LocationDetailScreen({super.key});
 
-  final LocationController _locationC = Get.put(LocationController());
-  final BookingController _bookingC = Get.put(BookingController());
+  final LocationController _locationC = Get.find<LocationController>();
+  final BookingController _bookingC = Get.find<BookingController>();
 
   final TextEditingController _headCountC = TextEditingController();
   final TextEditingController _dateC = TextEditingController();
@@ -95,6 +95,23 @@ class LocationDetailScreen extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 15.0),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.location_on, color: appRed),
+                            const SizedBox(
+                              width: 5.0,
+                            ),
+                            Expanded(
+                              child: Text(
+                                ' ${location.address}',
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
                         Text(location.desc.toString()),
                       ],
                     ),

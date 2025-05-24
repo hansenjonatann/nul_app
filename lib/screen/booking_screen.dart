@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:nul_app/controller/booking_controller.dart';
 import 'package:get/get.dart';
+import 'package:nul_app/controller/booking_controller.dart';
 import 'package:nul_app/controller/location_controller.dart';
 import 'package:nul_app/core.dart';
 import 'package:nul_app/models/booking_model.dart';
@@ -11,8 +11,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 class BookingScreen extends StatelessWidget {
   BookingScreen({super.key});
 
-  final BookingController _bookingC = Get.put(BookingController());
-  final LocationController _locationC = Get.put(LocationController());
+  final BookingController _bookingC = Get.find<BookingController>();
+  final LocationController _locationC = Get.find<LocationController>();
 
   @override
   Widget build(BuildContext context) {

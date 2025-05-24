@@ -1,22 +1,15 @@
 import 'package:get_storage/get_storage.dart';
+
 import 'package:nul_app/core.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:nul_app/screen/booking_screen.dart';
-import 'package:nul_app/screen/edit_profile_screen.dart';
-import 'package:nul_app/screen/umkm/location_screen.dart';
-import 'package:nul_app/screen/auth/umkm/login_screen.dart';
-import 'package:nul_app/screen/auth/umkm/register_screen.dart';
-import 'package:nul_app/screen/location_detail_screen.dart';
-import 'package:nul_app/screen/umkm/main_screen.dart';
-import 'package:nul_app/screen/umkm/umkm_booking_screen.dart';
+import 'package:nul_app/utils/app_routes.dart';
 
 void main() => runApp(NulApp());
 
 final box = GetStorage();
 
 class NulApp extends StatelessWidget {
-  final AuthController _authC = Get.put(AuthController(), permanent: true);
   final token = box.read('token');
   NulApp({super.key});
   @override
@@ -24,29 +17,7 @@ class NulApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: token == null ? const SplashScreen() : HomeScreen(),
-      getPages: [
-        // Auth Route
-        GetPage(name: '/login', page: () => LoginScreen()),
-        GetPage(name: '/home', page: () => HomeScreen()),
-        GetPage(name: '/register', page: () => RegisterScreen()),
-        GetPage(name: '/profile', page: () => ProfileScreen()),
-        GetPage(name: '/edit-profile', page: () => EditProfileScreen()),
-
-        GetPage(name: '/card-detail', page: () => CardDetailScreen()),
-        GetPage(name: '/favorite', page: () => FavoriteScreen()),
-        GetPage(name: '/category-detail', page: () => CategoryDetailScreen()),
-        GetPage(name: '/location-detail', page: () => LocationDetailScreen()),
-        GetPage(name: '/booking', page: () => BookingScreen()),
-
-        // UMKM Route
-
-        GetPage(name: '/umkm/main', page: () => UMKMMainScreen()),
-        GetPage(name: '/umkm/login', page: () => const UMKMLoginScreen()),
-        GetPage(name: '/umkm/register', page: () => UMKMRegisterScreen()),
-
-        GetPage(name: '/umkm/location', page: () => UMKMLocationScreen()),
-        GetPage(name: '/umkm/booking', page: () => UMKMBookingScreen())
-      ],
+      getPages: appRoutes,
     );
   }
 }

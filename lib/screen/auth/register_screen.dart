@@ -9,7 +9,7 @@ import 'package:nul_app/widget/login_alternative.dart';
 import 'package:get/get.dart';
 
 class RegisterScreen extends StatelessWidget {
-  final authC = Get.put(AuthController());
+  final authC = Get.find<AuthController>();
 
   final TextEditingController nameC = new TextEditingController();
   final TextEditingController emailC = new TextEditingController();
@@ -18,7 +18,6 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController confirmPasswordC = new TextEditingController();
 
   RegisterScreen({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,49 +41,60 @@ class RegisterScreen extends StatelessWidget {
                   const SizedBox(
                     height: 9,
                   ),
-                   CustomTextField(
-                    hidden: false,
-                    fieldController: nameC,
-                      label: 'Name', hint: 'Your name , e.g: John Doe'),
-                   CustomTextField(
-                    hidden: false,
+                  CustomTextField(
+                      hidden: false,
+                      fieldController: nameC,
+                      label: 'Name',
+                      hint: 'Your name , e.g: John Doe'),
+                  CustomTextField(
+                      hidden: false,
                       fieldController: emailC,
                       label: 'Email',
                       hint: 'Your email, e.g : johndoe@gmail.com'),
-                   CustomTextField(
+                  CustomTextField(
                     hidden: false,
                     fieldController: phoneC,
                     label: 'Phone Number',
                     hint: 'Your phone number, e.g : +01 112 xxx xxx',
                   ),
-                   CustomTextField(
+                  CustomTextField(
                     hidden: true,
                     fieldController: passwordC,
                     label: 'Password',
                     hint: 'Your password, at least 8 character.',
                   ),
-                   CustomTextField(
-                    hidden: true,
-                    fieldController: confirmPasswordC,
-                      label: 'Confirm Password', hint: 'Re-type your password'),
+                  CustomTextField(
+                      hidden: true,
+                      fieldController: confirmPasswordC,
+                      label: 'Confirm Password',
+                      hint: 'Re-type your password'),
                   const SizedBox(
                     height: 34,
                   ),
                   GestureDetector(
                     onTap: () {
-                  authC.register(name: nameC.text, email: emailC.text, phone: phoneC.text, password: passwordC.text, confirmPassword: confirmPasswordC.text);
+                      authC.register(
+                          name: nameC.text,
+                          email: emailC.text,
+                          phone: phoneC.text,
+                          password: passwordC.text,
+                          confirmPassword: confirmPasswordC.text);
                     },
                     child: Container(
-                        height: 70,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: appPrimary),
-                        child: Center(
-                            child: Obx(() => Text(authC.isLoading.value == true ? 'Signuping...' : 'Sign Up',
-                                style: GoogleFonts.montserrat(
-                                    color: appWhite,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 24)))),),
+                      height: 70,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: appPrimary),
+                      child: Center(
+                          child: Obx(() => Text(
+                              authC.isLoading.value == true
+                                  ? 'Signuping...'
+                                  : 'Sign Up',
+                              style: GoogleFonts.montserrat(
+                                  color: appWhite,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24)))),
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Row(
@@ -95,7 +105,7 @@ class RegisterScreen extends StatelessWidget {
                               fontSize: 12, fontWeight: FontWeight.bold)),
                       GestureDetector(
                         onTap: () {
-                        Get.offNamed('/login');
+                          Get.offNamed('/login');
                         },
                         child: Text('here',
                             style: GoogleFonts.montserrat(

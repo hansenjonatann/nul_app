@@ -17,6 +17,7 @@ class LocationController extends GetxController {
   final selectedFile = Rxn<PlatformFile>();
   final selectedLocation = Rx<Location>(Location());
   final isFavorite = false.obs;
+  final selectedAddress = ''.obs;
 
   @override
   void onReady() {
@@ -93,6 +94,7 @@ class LocationController extends GetxController {
     required String name,
     required String desc,
     required int categoryId,
+    String? address,
     required List<int> tagIds,
   }) async {
     try {
@@ -143,6 +145,7 @@ class LocationController extends GetxController {
           contentType: DioMediaType('image', ext == 'jpg' ? 'jpeg' : ext),
         ),
         'userId': payload['id'],
+        'address': address
       });
 
       final response = await dio.post(

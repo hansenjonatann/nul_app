@@ -65,7 +65,7 @@ class UMKMRegisterScreen extends StatelessWidget {
 }
 
 Widget _buildRegisterFormField() {
-  final UMKMAuthController _umkmAuthC = Get.put(UMKMAuthController());
+  final UMKMAuthController _umkmAuthC = Get.find<UMKMAuthController>();
   final TextEditingController _nameC = new TextEditingController();
   final TextEditingController _emailC = new TextEditingController();
   final TextEditingController _phoneC = new TextEditingController();
