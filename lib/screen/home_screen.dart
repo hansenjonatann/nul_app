@@ -2,17 +2,28 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nul_app/constants/color.dart';
 import 'package:nul_app/constants/url.dart';
 import 'package:nul_app/controller/homepage_controller.dart';
 import 'package:nul_app/core.dart';
-import 'package:nul_app/utils/image_dir.dart';
-import 'package:nul_app/widget/card_item.dart';
-import 'package:nul_app/widget/categoryitem.dart';
-import 'package:nul_app/widget/custom_bottom_navbar.dart';
 import 'package:get/get.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final _authC = Get.find<AuthController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _authC.profile();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,8 +64,8 @@ class HomeScreen extends StatelessWidget {
 }
 
 Widget _buildProfileSection() {
+  final AuthController _authC = Get.find<AuthController>();
   return Obx(() {
-    final AuthController _authC = Get.find<AuthController>();
     final user = _authC.userProfile.value;
     return _authC.isLoading.value
         ? Center(child: CircularProgressIndicator())

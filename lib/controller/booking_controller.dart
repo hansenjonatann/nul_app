@@ -32,8 +32,10 @@ class BookingController extends GetxController {
       print(response);
       if (response.statusCode == 200) {
         loading.value = false;
-        final data = response.data['data'];
-        bookings.value = Booking.fromJsonList(data);
+        final data = response.data['data'] as List;
+        bookings.value = data
+            .map((item) => Booking.fromJson(item as Map<String, dynamic>))
+            .toList();
       }
     } catch (e) {
       print(e);
@@ -62,7 +64,6 @@ class BookingController extends GetxController {
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
 
-      print(response);
       if (response.statusCode == 201) {
         loading.value = false;
         Get.dialog(
@@ -84,7 +85,6 @@ class BookingController extends GetxController {
     try {
       loading.value = true;
       final token = box.read('token');
-      final payload = Jwt.parseJwt(token);
       final response = await dio.put(
         '${API_DEV_URL}user/booking/cancel?id=$id',
         options: Options(headers: {'Authorization': 'Bearer $token'}),

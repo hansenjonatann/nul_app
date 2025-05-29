@@ -32,7 +32,7 @@ class LocationDetailScreen extends StatelessWidget {
         child: Obx(
           () {
             final location = _locationC.selectedLocation.value;
-            // final isFavorite = location.favorites?.isNotEmpty ?? false;
+            final isFavorite = _locationC.isFavorite.value;
             return SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
@@ -75,26 +75,28 @@ class LocationDetailScreen extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(width: 5.0),
-                                // IconButton(
-                                //   onPressed: () {
-                                //     if (!isFavorite) {
-                                //       _locationC.unfavorite(id: locationId);
-                                //     } else {
-                                //       _locationC.favorite(id: locationId);
-                                //     }
-                                //   },
-                                //   icon: Icon(
-                                //     !isFavorite
-                                //         ? Icons.favorite
-                                //         : Icons.favorite_border,
-                                //     color: !isFavorite ? appRed : null,
-                                //   ),
-                                // ),
+                                IconButton(
+                                  onPressed: () {
+                                    if (isFavorite == true) {
+                                      _locationC.unfavorite(
+                                          locationId: location.id ?? 0);
+                                    } else {
+                                      _locationC.favorite(
+                                          locationId: location.id ?? 0);
+                                    }
+                                  },
+                                  icon: Icon(
+                                    isFavorite == true
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: isFavorite == true ? appRed : null,
+                                  ),
+                                ),
                               ],
                             ),
                           ],
                         ),
-                        const SizedBox(height: 15.0),
+                        const SizedBox(height: 25.0),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [

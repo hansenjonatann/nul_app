@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:nul_app/constants/color.dart';
+import 'package:permission_handler/permission_handler.dart'
+    hide PermissionStatus;
 
 class LocationUtilsController extends GetxController {
   final Location _locationService = Location();
@@ -14,6 +16,7 @@ class LocationUtilsController extends GetxController {
     bool serviceEnabled = await _locationService.serviceEnabled();
     if (!serviceEnabled) {
       serviceEnabled = await _locationService.requestService();
+      await openAppSettings();
       if (!serviceEnabled) return;
     }
 

@@ -240,4 +240,44 @@ class LocationController extends GetxController {
       print(e);
     }
   }
+
+  void favorite({required int locationId}) async {
+    try {
+      isLoading.value = true;
+      final token = box.read('token');
+      final response = await dio.post(
+          '${API_DEV_URL}user/locationfavorite/favorite',
+          options: Options(headers: {'Authorization': 'Bearer $token'}),
+          data: {'locationId': locationId});
+      if (response.statusCode == 201) {
+        isLoading.value = false;
+        isFavorite.value = true;
+        Get.snackbar('Success', response.data['message'],
+            backgroundColor: appSuccess, colorText: appWhite);
+      }
+    } catch (e) {
+      isLoading.value = false;
+      print(e);
+    }
+  }
+
+  void unfavorite({required int locationId}) async {
+    try {
+      isLoading.value = true;
+      final token = box.read('token');
+      final response = await dio.delete(
+          '${API_DEV_URL}user/locationfavorite/unfavorite',
+          options: Options(headers: {'Authorization': 'Bearer $token'}),
+          data: {'locationId': locationId});
+      if (response.statusCode == 201) {
+        isLoading.value = false;
+        isFavorite.value = false;
+        Get.snackbar('Success', response.data['message'],
+            backgroundColor: appSuccess, colorText: appWhite);
+      }
+    } catch (e) {
+      isLoading.value = false;
+      print(e);
+    }
+  }
 }

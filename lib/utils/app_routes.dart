@@ -5,6 +5,7 @@ import 'package:nul_app/bindings/features/category_binding.dart';
 import 'package:nul_app/bindings/features/umkm/umkm_auth_binding.dart';
 import 'package:nul_app/bindings/features/umkm/umkm_binding.dart';
 import 'package:nul_app/bindings/features/umkm/umkm_location_binding.dart';
+import 'package:nul_app/bindings/features/umkm/umkm_report_binding.dart';
 import 'package:nul_app/bindings/home_binding.dart';
 import 'package:nul_app/core.dart';
 import 'package:nul_app/screen/auth/umkm/login_screen.dart';
@@ -99,6 +100,8 @@ final List<GetPage> appRoutes = [
     page: () => MapScreen(),
   ),
 
-  GetPage(name: '/umkm/report',
-      page: () => BookingReportScreen(), binding: LocationBookingBinding()),
+  GetPage(
+      name: '/umkm/report',
+      page: () => BookingReportScreen(),
+      binding: UmkmReportBinding()),
 ];

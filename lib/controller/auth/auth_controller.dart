@@ -69,10 +69,11 @@ class AuthController extends GetxController {
 
       if (response.statusCode == 200) {
         isLoading.value = false;
+        await box.write('token', response.data['token']);
+        await profile();
         Get.snackbar('Success', "Login Success!",
             backgroundColor: const Color(0xff28a745), colorText: appWhite);
-        box.write('token', response.data['token']);
-        profile();
+
         Get.toNamed('/home');
       }
     } catch (error) {
@@ -184,7 +185,7 @@ class AuthController extends GetxController {
     }
   }
 
-  void profile() async {
+  Future<void> profile() async {
     try {
       isLoading.value = true;
       final token = box.read('token');
