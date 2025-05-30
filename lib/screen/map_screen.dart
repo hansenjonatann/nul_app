@@ -22,12 +22,21 @@ class _MapScreenState extends State<MapScreen> {
     super.initState();
     _locationController = Get.put(LocationUtilsController());
     _locationController.checkLocationPermission();
+    getLocation();
   }
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  void getLocation() {
+    _locationController.getCurrentLocation();
+    final selected = _locationController.selectedLocation.value;
+    if (selected != null) {
+      _mapController.move(selected, 15.0);
+    }
   }
 
   void _saveLocation() {
@@ -63,7 +72,6 @@ class _MapScreenState extends State<MapScreen> {
               children: [
                 TileLayer(
                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  userAgentPackageName: 'com.example.app',
                 ),
                 MarkerLayer(
                   markers: _locationController.selectedLocation.value != null

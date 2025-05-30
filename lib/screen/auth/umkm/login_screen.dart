@@ -43,7 +43,7 @@ class UMKMLoginScreen extends StatelessWidget {
                     children: [
                       Text('You are not registered UMKM? ',
                           style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600)),
+                              fontWeight: FontWeight.w600, fontSize: 12)),
                       const SizedBox(
                         width: 5.0,
                       ),
@@ -55,7 +55,7 @@ class UMKMLoginScreen extends StatelessWidget {
                               style: GoogleFonts.montserrat(
                                   color: appPrimary,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16))),
+                                  fontSize: 10))),
                     ],
                   )),
                   const SizedBox(

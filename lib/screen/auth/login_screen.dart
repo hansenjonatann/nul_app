@@ -106,7 +106,7 @@ Widget _buildLoginFooter() {
         children: [
           Text("Don't have an account yet ? Register ",
               style: GoogleFonts.montserrat(
-                  fontSize: 12, fontWeight: FontWeight.bold)),
+                  fontSize: 10, fontWeight: FontWeight.bold)),
           GestureDetector(
             onTap: () {
               Get.offNamed('/register');

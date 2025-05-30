@@ -16,13 +16,13 @@ class LocationUtilsController extends GetxController {
     bool serviceEnabled = await _locationService.serviceEnabled();
     if (!serviceEnabled) {
       serviceEnabled = await _locationService.requestService();
-      await openAppSettings();
       if (!serviceEnabled) return;
     }
 
     PermissionStatus permission = await _locationService.hasPermission();
     if (permission == PermissionStatus.denied) {
       permission = await _locationService.requestPermission();
+
       if (permission != PermissionStatus.granted) return;
     }
 

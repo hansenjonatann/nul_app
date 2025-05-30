@@ -67,14 +67,8 @@ class LocationController extends GetxController {
     try {
       final permission = await Permission.storage.request();
 
-      if (permission.isDenied) {
-        Get.snackbar('Permission Denied', 'Storage access is required');
-        return;
-      }
-
       if (permission.isPermanentlyDenied) {
         await openAppSettings();
-        return;
       }
 
       final result = await FilePicker.platform.pickFiles(
