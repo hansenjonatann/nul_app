@@ -20,7 +20,7 @@ class LocationFavoriteController extends GetxController {
     try {
       loading.value = true;
       final token = box.read('token');
-      final response = await dio.get('${API_DEV_URL}user/locationfavorite/',
+      final response = await dio.get('${API_URL}user/locationfavorite/',
           options: Options(headers: {'Authorization': 'Bearer $token'}));
       print(response);
       if (response.statusCode == 200) {

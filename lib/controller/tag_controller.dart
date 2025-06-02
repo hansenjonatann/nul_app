@@ -19,7 +19,7 @@ class TagController extends GetxController {
   void getTags() async {
     try {
       isLoading.value = true;
-      final response = await dio.get('${API_DEV_URL}tag');
+      final response = await dio.get('${API_URL}tag');
 
       if (response.statusCode == 200) {
         final List<dynamic> dataList = response.data['data'];

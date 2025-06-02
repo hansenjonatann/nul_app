@@ -20,7 +20,7 @@ class CategoryController extends GetxController {
   void getCategories() async {
     try {
       isLoading.value = true;
-      final response = await dio.get('${API_DEV_URL}category');
+      final response = await dio.get('${API_URL}category');
 
       if (response.statusCode == 200) {
         isLoading.value = false;
@@ -43,7 +43,7 @@ class CategoryController extends GetxController {
   Future<void> getDetailCategory({required int id}) async {
     try {
       isLoading.value = true;
-      final response = await dio.get('${API_DEV_URL}category/detail/$id');
+      final response = await dio.get('${API_URL}category/detail/$id');
       print(response);
 
       if (response.statusCode == 200) {

@@ -17,7 +17,7 @@ class UMKMBookingController extends GetxController {
     try {
       loading.value = true;
       final token = box.read('token');
-      final response = await dio.get('${API_DEV_URL}umkm/booking?page=${page}',
+      final response = await dio.get('${API_URL}umkm/booking?page=${page}',
           options: Options(headers: {'Authorization': 'Bearer $token'}));
       print(response);
 
@@ -38,7 +38,7 @@ class UMKMBookingController extends GetxController {
       loading.value = true;
       final token = box.read('token');
       final response = await dio.patch(
-          '${API_DEV_URL}umkm/booking/accept?id=${id}',
+          '${API_URL}umkm/booking/accept?id=${id}',
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
       if (response.statusCode == 200) {
@@ -60,7 +60,7 @@ class UMKMBookingController extends GetxController {
       loading.value = true;
       final token = box.read('token');
       final response = await dio.patch(
-          '${API_DEV_URL}umkm/booking/decline?id=${id}',
+          '${API_URL}umkm/booking/decline?id=${id}',
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
       if (response.statusCode == 200) {

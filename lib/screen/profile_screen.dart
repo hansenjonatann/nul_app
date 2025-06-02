@@ -67,8 +67,8 @@ class ProfileScreen extends StatelessWidget {
                   child: user.pictureUrl != null
                       ? CircleAvatar(
                           radius: 70,
-                          backgroundImage: NetworkImage(
-                              '${API_DEV_URL}api${user.pictureUrl}'),
+                          backgroundImage:
+                              NetworkImage('${API_URL}api${user.pictureUrl}'),
                         )
                       : CircleAvatar(
                           backgroundColor: appPrimary,

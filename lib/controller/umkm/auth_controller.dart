@@ -19,7 +19,7 @@ class UMKMAuthController extends GetxController {
       required String phoneNumber}) async {
     try {
       isLoading.value = true;
-      final response = await dio.post('${API_DEV_URL}umkm/auth/register',
+      final response = await dio.post('${API_URL}umkm/auth/register',
           data: {
             'name': name,
             'email': email,
@@ -44,7 +44,7 @@ class UMKMAuthController extends GetxController {
     try {
       isLoading.value = true;
 
-      final response = await dio.post('${API_DEV_URL}umkm/auth/login',
+      final response = await dio.post('${API_URL}umkm/auth/login',
           data: {'email': email, 'password': password});
 
       if (response.statusCode == 200) {
@@ -73,7 +73,7 @@ class UMKMAuthController extends GetxController {
       Map<String, dynamic> payload = Jwt.parseJwt(token);
 
       final response = await dio.get(
-        '${API_DEV_URL}umkm/auth/profile?id=${payload['id']}',
+        '${API_URL}umkm/auth/profile?id=${payload['id']}',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
 

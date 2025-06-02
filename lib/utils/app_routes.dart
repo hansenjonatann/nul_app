@@ -7,6 +7,7 @@ import 'package:nul_app/bindings/features/umkm/umkm_binding.dart';
 import 'package:nul_app/bindings/features/umkm/umkm_location_binding.dart';
 import 'package:nul_app/bindings/features/umkm/umkm_report_binding.dart';
 import 'package:nul_app/bindings/home_binding.dart';
+import 'package:nul_app/controller/more_screen.dart';
 import 'package:nul_app/core.dart';
 import 'package:nul_app/screen/auth/umkm/login_screen.dart';
 import 'package:nul_app/screen/auth/umkm/register_screen.dart';
@@ -70,6 +71,10 @@ final List<GetPage> appRoutes = [
   GetPage(
     name: '/card-detail',
     page: () => const CardDetailScreen(),
+  ),
+  GetPage(
+    name: '/more',
+    page: () => MoreScreen(),
   ),
 
   // UMKM Routes

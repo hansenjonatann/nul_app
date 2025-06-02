@@ -28,7 +28,7 @@ class HomePageController extends GetxController {
       final token = box.read('token');
 
       final response = await dio.get(
-        '${API_DEV_URL}user/homepage/search?name=$keyword',
+        '${API_URL}user/homepage/search?name=$keyword',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
 
@@ -52,7 +52,7 @@ class HomePageController extends GetxController {
       final token = box.read('token');
 
       final response = await dio.get(
-        '${API_DEV_URL}user/homepage/recomend',
+        '${API_URL}user/homepage/recomend',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
 

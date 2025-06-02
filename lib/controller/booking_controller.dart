@@ -26,7 +26,7 @@ class BookingController extends GetxController {
       final token = box.read('token');
       final payload = Jwt.parseJwt(token);
       final response = await dio.get(
-        '${API_DEV_URL}user/booking/history?userId=${payload['id']}',
+        '${API_URL}user/booking/history?userId=${payload['id']}',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
       print(response);
@@ -53,7 +53,7 @@ class BookingController extends GetxController {
       final token = box.read('token');
       final payload = Jwt.parseJwt(token);
       final response = await dio.post(
-        '${API_DEV_URL}user/booking/create',
+        '${API_URL}user/booking/create',
         data: {
           'locationId': locationId,
           'headCount': headCount,
@@ -86,7 +86,7 @@ class BookingController extends GetxController {
       loading.value = true;
       final token = box.read('token');
       final response = await dio.put(
-        '${API_DEV_URL}user/booking/cancel?id=$id',
+        '${API_URL}user/booking/cancel?id=$id',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
 

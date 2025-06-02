@@ -29,7 +29,7 @@ class LocationController extends GetxController {
     try {
       isLoading.value = true;
       final token = box.read('token');
-      final response = await dio.get('${API_DEV_URL}umkm/location',
+      final response = await dio.get('${API_URL}umkm/location',
           options: Options(headers: {
             'Authorization': "Bearer $token",
             "Accept": "application/json"
@@ -143,7 +143,7 @@ class LocationController extends GetxController {
       });
 
       final response = await dio.post(
-        '${API_DEV_URL}umkm/location/create',
+        '${API_URL}umkm/location/create',
         data: formData,
         options: Options(
           headers: {
@@ -180,7 +180,7 @@ class LocationController extends GetxController {
       isLoading.value = true;
       final token = box.read('token');
       final response = await dio.get(
-        '${API_DEV_URL}user/location/detail?locationId=$id',
+        '${API_URL}user/location/detail?locationId=$id',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
       if (response.statusCode == 200) {
@@ -198,7 +198,7 @@ class LocationController extends GetxController {
       isLoading.value = true;
       final token = box.read('token');
       final response = await dio.delete(
-        '${API_DEV_URL}umkm/location/delete/$id',
+        '${API_URL}umkm/location/delete/$id',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
       print(response);
@@ -218,7 +218,7 @@ class LocationController extends GetxController {
     try {
       isLoading.value = true;
       final token = box.read('token');
-      final response = await dio.put('${API_DEV_URL}user/location/rate/${id}',
+      final response = await dio.put('${API_URL}user/location/rate/${id}',
           data: {'rate': rate},
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
@@ -240,7 +240,7 @@ class LocationController extends GetxController {
       isLoading.value = true;
       final token = box.read('token');
       final response = await dio.post(
-          '${API_DEV_URL}user/locationfavorite/favorite',
+          '${API_URL}user/locationfavorite/favorite',
           options: Options(headers: {'Authorization': 'Bearer $token'}),
           data: {'locationId': locationId});
       if (response.statusCode == 201) {
@@ -260,7 +260,7 @@ class LocationController extends GetxController {
       isLoading.value = true;
       final token = box.read('token');
       final response = await dio.delete(
-          '${API_DEV_URL}user/locationfavorite/unfavorite',
+          '${API_URL}user/locationfavorite/unfavorite',
           options: Options(headers: {'Authorization': 'Bearer $token'}),
           data: {'locationId': locationId});
       if (response.statusCode == 201) {

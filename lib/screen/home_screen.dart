@@ -107,7 +107,7 @@ Widget _buildProfileSection() {
                             radius: 50,
                             backgroundImage: user.pictureUrl != null
                                 ? NetworkImage(
-                                    '${API_DEV_URL}api${user.pictureUrl}')
+                                    '${API_URL}api${user.pictureUrl}')
                                 : null,
                             child: user.pictureUrl == null
                                 ? Center(
@@ -275,7 +275,7 @@ Widget _buildCategorySection() {
                   CategoryItem(categoryModel: category),
                   const SizedBox(width: 16),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () => Get.toNamed('/more'),
                     child: Container(
                       width: 108,
                       height: 108,

@@ -64,7 +64,7 @@ class AuthController extends GetxController {
   void login({required String name, required String password}) async {
     try {
       isLoading.value = true;
-      final response = await dio.post('${API_DEV_URL}user/auth/login',
+      final response = await dio.post('${API_URL}user/auth/login',
           data: {'name': name, 'password': password});
 
       if (response.statusCode == 200) {
@@ -111,8 +111,7 @@ class AuthController extends GetxController {
         return;
       }
 
-      final response =
-          await dio.post('${API_DEV_URL}user/auth/register', data: {
+      final response = await dio.post('${API_URL}user/auth/register', data: {
         'name': name,
         'email': email,
         'phoneNumber': phone,
@@ -146,7 +145,7 @@ class AuthController extends GetxController {
       final token = box.read('token'); // ambil token dari local storage
 
       final response = await dio.post(
-        '${API_DEV_URL}user/auth/logout',
+        '${API_URL}user/auth/logout',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token', // <-- benerin ini
@@ -192,7 +191,7 @@ class AuthController extends GetxController {
 
       Map<String, dynamic> payload = Jwt.parseJwt(token);
       final response = await dio.get(
-          '${API_DEV_URL}user/auth/me?id=${payload['id']}',
+          '${API_URL}user/auth/me?id=${payload['id']}',
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
       if (response.statusCode == 200) {
@@ -245,6 +244,8 @@ class AuthController extends GetxController {
         final filePath = selectedFile.value!.path!;
         final fileName = filePath.split('/').last;
         final ext = fileName.split('.').last.toLowerCase();
+        print(filePath);
+        print(fileName);
 
         final mimeTypeMap = {
           'jpg': 'image/jpeg',
@@ -264,7 +265,7 @@ class AuthController extends GetxController {
       final formData = FormData.fromMap(dataMap);
 
       final response = await dio.patch(
-        '${API_DEV_URL}user/profile/update?userId=${payload['id']}',
+        '${API_URL}user/profile/update?userId=${payload['id']}',
         data: formData,
         options: Options(
           headers: {

@@ -22,7 +22,7 @@ class BookingReportController extends GetxController {
     try {
       loading.value = true;
       final token = box.read('token');
-      final response = await dio.get('${API_DEV_URL}umkm/report/booking',
+      final response = await dio.get('${API_URL}umkm/report/booking',
           options: Options(headers: {'Authorization': 'Bearer $token'}));
       print(response);
       if (response.statusCode == 200) {

@@ -53,12 +53,28 @@ class CardItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    cardModel.name,
-                    style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.bold, fontSize: 12),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        cardModel.name,
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.bold, fontSize: 12),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 14,
+                          ),
+                          Text(cardModel.rating.toString(),
+                              style: GoogleFonts.montserrat(fontSize: 11))
+                        ],
+                      )
+                    ],
                   ),
                   const SizedBox(height: 5),
                   Text(

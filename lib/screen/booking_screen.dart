@@ -75,7 +75,7 @@ class BookingScreen extends StatelessWidget {
                                     ),
                                     child: Image.network(
                                       booking.location?.imageUrl ??
-                                          'https://via.placeholder.com/120',
+                                          'https://placehold.co/600x400/EEE/31343C',
                                       width: 120,
                                       height: 130,
                                       fit: BoxFit.cover,

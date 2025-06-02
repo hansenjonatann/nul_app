@@ -31,11 +31,13 @@ class _MapScreenState extends State<MapScreen> {
     super.dispose();
   }
 
-  void getLocation() {
-    _locationController.getCurrentLocation();
+  Future<void> getLocation() async {
+    await _locationController
+        .getCurrentLocation(); // tunggu hingga lokasi didapat
+
     final selected = _locationController.selectedLocation.value;
     if (selected != null) {
-      _mapController.move(selected, 15.0);
+      _mapController.move(selected, 15.0); // pindah ke lokasi dengan zoom
     }
   }
 
